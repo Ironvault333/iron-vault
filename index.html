@@ -1,199 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
 <title>Iron Vault</title>
 <style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f6efe4;
-    color: #14202b;
-  }
-  header {
-    padding: 22px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .brand { font-weight: 800; font-size: 22px; }
-  .sub { font-size: 12px; color: #777; }
-  button {
-    cursor: pointer;
-    border: 0;
-    border-radius: 12px;
-    padding: 12px 18px;
-    font-weight: 800;
-  }
-  .hero {
-    min-height: 75vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: center;
-    padding: 20px 7%;
-  }
-  h1 {
-    font-size: clamp(42px, 6vw, 82px);
-    line-height: .92;
-    margin: 0 0 20px;
-  }
-  .vault-box {
-    background: #102131;
-    border-radius: 30px;
-    padding: 40px;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 25px 60px rgba(0,0,0,.2);
-  }
-  .vault {
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #eee 0 12%, #888 13% 25%, #ddd 26% 38%, #495560 39% 52%, #1b2a38 53%);
-    border: 14px solid #34495a;
-    position: relative;
-    transition: transform 1.2s ease, opacity 1.2s ease;
-  }
-  .vault.open {
-    transform: rotate(540deg) scale(.1);
-    opacity: 0;
-  }
-  .dot {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background: #f29b24;
-    border-radius: 50%;
-  }
-  .d1 { top: 15px; left: 118px; }
-  .d2 { top: 55px; right: 34px; }
-  .d3 { top: 118px; right: 12px; }
-  .d4 { bottom: 55px; right: 34px; }
-  .d5 { bottom: 15px; left: 118px; }
-  .d6 { bottom: 55px; left: 34px; }
-  .d7 { top: 118px; left: 12px; }
-  .d8 { top: 55px; left: 34px; }
-  .open-btn { margin-top: 25px; background: #fff; color: #102131; }
-  .products { display: none; padding: 25px 7% 60px; }
-  .filters { margin: 15px 0 25px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { background: #fff; border: 1px solid #ddd; padding: 9px 13px; border-radius: 999px; font-size: 13px; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 18px;
-  }
-  .card {
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0,0,0,.08);
-  }
-  .pic {
-    height: 120px;
-    background: linear-gradient(135deg, #ffe6c9, #f7f0e8);
-    display: grid;
-    place-items: center;
-    font-size: 45px;
-  }
-  .info { padding: 16px; }
-  .cat { color: #c06a21; font-size: 11px; font-weight: 800; text-transform: uppercase; }
-  .name { font-size: 18px; font-weight: 900; margin: 5px 0; }
-  .desc { color: #555; font-size: 13px; min-height: 42px; }
-  .nums { display: flex; gap: 8px; margin-top: 12px; }
-  .num { background:#f3f3f3; padding: 8px; border-radius: 10px; flex: 1; font-size: 12px; }
-  .num b { display:block; }
-  @media(max-width: 800px) {
-    .hero { grid-template-columns: 1fr; }
-  }
+body{margin:0;font-family:Arial,sans-serif;background:#060b10;color:white}
+header{padding:25px 8%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:24px}
+.hero{min-height:85vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;gap:40px}
+h1{font-size:70px;line-height:.9;margin:0}
+p{color:#b8c2cc;font-size:18px}
+button{border:0;border-radius:14px;padding:14px 22px;font-weight:900;cursor:pointer}
+.vaultScene{height:460px;background:radial-gradient(circle,#15334a,#071018 65%);border-radius:35px;display:grid;place-items:center;box-shadow:0 0 80px #0b95ff55;position:relative;overflow:hidden}
+.vaultScene:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;background:repeating-radial-gradient(circle,#ffffff10 0 12px,#0000 13px 35px)}
+.door{width:310px;height:310px;border-radius:50%;background:radial-gradient(circle,#d8e6ef 0 10%,#657987 11% 23%,#202b35 24% 38%,#758999 39% 43%,#111922 44%);border:18px solid #7f96a8;box-shadow:0 0 40px #000 inset,0 0 60px #67c7ff;position:relative;transition:1.2s}
+.door.open{transform:rotate(720deg) scale(.05);opacity:0}
+.bolt{position:absolute;width:22px;height:22px;background:#ff9d18;border-radius:50%;box-shadow:0 0 15px #ff9d18}
+.b1{top:18px;left:145px}.b2{top:62px;right:45px}.b3{right:18px;top:145px}.b4{right:45px;bottom:62px}
+.b5{bottom:18px;left:145px}.b6{left:45px;bottom:62px}.b7{left:18px;top:145px}.b8{left:45px;top:62px}
+.openBtn{position:absolute;bottom:45px;background:white;color:#071018}
+.products{display:none;padding:45px 8%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:#101923;border:1px solid #25384a;border-radius:20px;padding:20px;box-shadow:0 15px 35px #0008}
+.icon{font-size:45px}.name{font-size:20px;font-weight:900;margin:10px 0}.cat{color:#ff9d18;font-size:12px;font-weight:900}
+.stats{display:flex;gap:8px;margin-top:15px}.stat{background:#182536;border-radius:10px;padding:8px;flex:1;font-size:12px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}h1{font-size:48px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="brand">IV Iron Vault</div>
-    <div class="sub">Products worth stopping for.</div>
-  </div>
+  <div class="logo">IV Iron Vault</div>
   <button onclick="showProducts()">Store</button>
 </header>
 
 <section class="hero" id="hero">
   <div>
-    <p><b>50 products loaded</b></p>
-    <h1>Cool products.<br>Strong margins.<br>Built to test fast.</h1>
-    <p>Sports products, clever inventions, family items, and high-demand niche products people want to show their friends.</p>
-    <button onclick="showProducts()">View Products</button>
+    <p>50 products loaded</p>
+    <h1>Unlock<br>the Iron<br>Vault.</h1>
+    <p>Trendy products, strong margins, and ideas worth testing fast.</p>
+    <button onclick="openVault()">Open Products</button>
   </div>
 
-  <div class="vault-box">
-    <div class="vault" id="vault">
-      <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span>
-      <span class="dot d5"></span><span class="dot d6"></span><span class="dot d7"></span><span class="dot d8"></span>
+  <div class="vaultScene">
+    <div class="door" id="door">
+      <span class="bolt b1"></span><span class="bolt b2"></span><span class="bolt b3"></span><span class="bolt b4"></span>
+      <span class="bolt b5"></span><span class="bolt b6"></span><span class="bolt b7"></span><span class="bolt b8"></span>
     </div>
-    <button class="open-btn" onclick="openVault()">Open the Vault<br><small>Click to unlock products</small></button>
+    <button class="openBtn" onclick="openVault()">Open the Vault</button>
   </div>
 </section>
 
 <section class="products" id="products">
   <h1>Product Board</h1>
-  <div class="filters">
-    <button class="chip">All</button><button class="chip">Sports</button><button class="chip">Family</button>
-    <button class="chip">Car</button><button class="chip">Outdoor</button><button class="chip">Nice-To-Have</button>
-  </div>
   <div class="grid" id="grid"></div>
 </section>
 
 <script>
-const products = [
-["🚗","Car Inventions","Seat Gap Crumb Catcher","Stops crumbs, fries, coins, toys, and phones from falling between seats.",24.99,6.80],
-["👟","Sports Families","QuickDry Cleat & Shoe Dryer","Forced-air dryer for wet cleats, rain boots, ski boots, and sneakers.",49.99,18.50],
-["💡","Backyard Games","Glow Boundary Game Kit","Light-up boundary strips for driveway games, night sports, and backyard challenges.",59.99,19.00],
-["🏓","Sports Products","Portable Pickleball Net","Fast-set driveway pickleball net for families and casual players.",89.99,34.00],
-["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for tailgates, camping chairs, and carts.",22.99,5.20],
-["⚽","Sports Products","Pop-Up Soccer Wall","Foldable practice wall with target zones.",49.99,15.00],
-["🧊","Outdoor Products","Cooler Chair Shade Clip","Clip-on shade canopy for coolers and chairs.",24.99,4.75],
-["🔥","Camping","Fire Pit Color Pack","Safe decorative color packs for backyard fire pits.",19.99,4.50],
-["🔦","Camping","Rechargeable Tent Light Rope","Flexible light rope for tents, canopies, and ladders.",27.99,6.90],
-["🧰","Nice-To-Have","Cord Snap Labels","Snap-on labels for chargers, cords, hoses, and bags.",14.99,2.80],
-["🛶","Outdoor Products","Kayak Scratch Guard Pads","Stick-on pads to protect kayaks and paddleboards.",34.99,9.50],
-["🏀","Sports Products","Ball Garage Rack","Wall rack for balls, helmets, and sports gear.",39.99,12.00],
-["🧺","Home & Patio","Auto-Centering Hose Guide","Garden hose guide that keeps hoses from hitting plants.",24.99,6.20],
-["🧽","Car Inventions","Backseat Trash Bin Clip","Clip-on mini trash bin for cars and vans.",19.99,4.80],
-["🪁","Family Products","Kite Stabilizer Kit","Simple stabilizers for wobbly patio umbrellas and kites.",14.99,3.80]
+const products=[
+["🚗","Car","Seat Gap Crumb Catcher","Stops crumbs, coins, and phones from falling between seats.",24.99,6.80],
+["👟","Sports","QuickDry Shoe Dryer","Forced-air dryer for cleats, boots, and sneakers.",49.99,18.50],
+["💡","Backyard","Glow Boundary Kit","Light-up boundary strips for driveway games.",59.99,19.00],
+["🏓","Sports","Portable Pickleball Net","Fast-set driveway pickleball net.",89.99,34.00],
+["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for chairs and carts.",22.99,5.20],
+["🔥","Camping","Fire Pit Color Packs","Color packs for backyard fire pits.",19.99,4.50],
+["🧊","Outdoor","Cooler Shade Clip","Clip-on shade for coolers and chairs.",24.99,4.75],
+["🧰","Travel","Cord Snap Labels","Labels for chargers, hoses, and cords.",14.99,2.80]
 ];
 
-const grid = document.getElementById("grid");
-
-products.forEach(p => {
-  const margin = (p[4] - p[5]).toFixed(2);
-  grid.innerHTML += `
-    <div class="card">
-      <div class="pic">${p[0]}</div>
-      <div class="info">
-        <div class="cat">${p[1]}</div>
-        <div class="name">${p[2]}</div>
-        <div class="desc">${p[3]}</div>
-        <div class="nums">
-          <div class="num"><b>$${p[4]}</b>Sell</div>
-          <div class="num"><b>$${p[5]}</b>Cost</div>
-          <div class="num"><b>$${margin}</b>Margin</div>
-        </div>
-      </div>
-    </div>`;
+const grid=document.getElementById("grid");
+products.forEach(p=>{
+let margin=(p[4]-p[5]).toFixed(2);
+grid.innerHTML+=`
+<div class="card">
+  <div class="icon">${p[0]}</div>
+  <div class="cat">${p[1]}</div>
+  <div class="name">${p[2]}</div>
+  <p>${p[3]}</p>
+  <div class="stats">
+    <div class="stat">Sell<br><b>$${p[4]}</b></div>
+    <div class="stat">Cost<br><b>$${p[5]}</b></div>
+    <div class="stat">Margin<br><b>$${margin}</b></div>
+  </div>
+</div>`;
 });
 
-function openVault() {
-  document.getElementById("vault").classList.add("open");
-  setTimeout(showProducts, 900);
+function openVault(){
+ document.getElementById("door").classList.add("open");
+ setTimeout(showProducts,900);
 }
-
-function showProducts() {
-  document.getElementById("hero").style.display = "none";
-  document.getElementById("products").style.display = "block";
-  window.scrollTo(0,0);
+function showProducts(){
+ document.getElementById("hero").style.display="none";
+ document.getElementById("products").style.display="block";
+ window.scrollTo(0,0);
 }
 </script>
 
