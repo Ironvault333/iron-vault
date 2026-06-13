@@ -4,49 +4,42 @@
 <meta charset="UTF-8">
 <title>Iron Vault</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#060b10;color:white}
+body{margin:0;font-family:Arial,sans-serif;background:#05080d;color:white}
 header{padding:25px 8%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:24px}
-.hero{min-height:85vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;gap:40px}
-h1{font-size:70px;line-height:.9;margin:0}
+.logo{font-weight:900;font-size:24px;color:#f5b942}
+.hero{min-height:85vh;display:grid;grid-template-columns:1fr 1.2fr;align-items:center;padding:0 8%;gap:40px}
+h1{font-size:72px;line-height:.9;margin:0 0 20px}
 p{color:#b8c2cc;font-size:18px}
-button{border:0;border-radius:14px;padding:14px 22px;font-weight:900;cursor:pointer}
-.vaultScene{height:460px;background:radial-gradient(circle,#15334a,#071018 65%);border-radius:35px;display:grid;place-items:center;box-shadow:0 0 80px #0b95ff55;position:relative;overflow:hidden}
-.vaultScene:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;background:repeating-radial-gradient(circle,#ffffff10 0 12px,#0000 13px 35px)}
-.door{width:310px;height:310px;border-radius:50%;background:radial-gradient(circle,#d8e6ef 0 10%,#657987 11% 23%,#202b35 24% 38%,#758999 39% 43%,#111922 44%);border:18px solid #7f96a8;box-shadow:0 0 40px #000 inset,0 0 60px #67c7ff;position:relative;transition:1.2s}
-.door.open{transform:rotate(720deg) scale(.05);opacity:0}
-.bolt{position:absolute;width:22px;height:22px;background:#ff9d18;border-radius:50%;box-shadow:0 0 15px #ff9d18}
-.b1{top:18px;left:145px}.b2{top:62px;right:45px}.b3{right:18px;top:145px}.b4{right:45px;bottom:62px}
-.b5{bottom:18px;left:145px}.b6{left:45px;bottom:62px}.b7{left:18px;top:145px}.b8{left:45px;top:62px}
-.openBtn{position:absolute;bottom:45px;background:white;color:#071018}
+button{border:0;border-radius:12px;padding:15px 24px;font-weight:900;cursor:pointer;background:#f5b942;color:#080b10}
+.vaultWrap{position:relative}
+.vaultImg{width:100%;border-radius:26px;box-shadow:0 0 70px #f5b94255;transition:1s}
+.vaultImg.open{transform:scale(1.08);filter:brightness(1.35)}
+.openBtn{position:absolute;left:50%;bottom:35px;transform:translateX(-50%)}
 .products{display:none;padding:45px 8%}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.card{background:#101923;border:1px solid #25384a;border-radius:20px;padding:20px;box-shadow:0 15px 35px #0008}
-.icon{font-size:45px}.name{font-size:20px;font-weight:900;margin:10px 0}.cat{color:#ff9d18;font-size:12px;font-weight:900}
-.stats{display:flex;gap:8px;margin-top:15px}.stat{background:#182536;border-radius:10px;padding:8px;flex:1;font-size:12px}
+.card{background:#101923;border:1px solid #263746;border-radius:18px;padding:18px}
+.icon{font-size:44px}.name{font-size:19px;font-weight:900}.cat{color:#f5b942;font-size:12px;font-weight:900}
+.stats{display:flex;gap:8px;margin-top:12px}.stat{background:#182536;border-radius:10px;padding:8px;flex:1;font-size:12px}
 @media(max-width:800px){.hero{grid-template-columns:1fr}h1{font-size:48px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">IV Iron Vault</div>
+  <div class="logo">IV IRON VAULT</div>
   <button onclick="showProducts()">Store</button>
 </header>
 
 <section class="hero" id="hero">
   <div>
     <p>50 products loaded</p>
-    <h1>Unlock<br>the Iron<br>Vault.</h1>
-    <p>Trendy products, strong margins, and ideas worth testing fast.</p>
-    <button onclick="openVault()">Open Products</button>
+    <h1>Unlock<br>Iron Vault.</h1>
+    <p>Cool products. Strong margins. Built to test fast.</p>
+    <button onclick="openVault()">Open the Vault</button>
   </div>
 
-  <div class="vaultScene">
-    <div class="door" id="door">
-      <span class="bolt b1"></span><span class="bolt b2"></span><span class="bolt b3"></span><span class="bolt b4"></span>
-      <span class="bolt b5"></span><span class="bolt b6"></span><span class="bolt b7"></span><span class="bolt b8"></span>
-    </div>
+  <div class="vaultWrap">
+    <img src="vault.jpg" class="vaultImg" id="vaultImg" alt="Iron Vault">
     <button class="openBtn" onclick="openVault()">Open the Vault</button>
   </div>
 </section>
@@ -58,9 +51,9 @@ button{border:0;border-radius:14px;padding:14px 22px;font-weight:900;cursor:poin
 
 <script>
 const products=[
-["🚗","Car","Seat Gap Crumb Catcher","Stops crumbs, coins, and phones from falling between seats.",24.99,6.80],
-["👟","Sports","QuickDry Shoe Dryer","Forced-air dryer for cleats, boots, and sneakers.",49.99,18.50],
-["💡","Backyard","Glow Boundary Kit","Light-up boundary strips for driveway games.",59.99,19.00],
+["🚗","Car","Seat Gap Crumb Catcher","Stops crumbs and phones from falling between seats.",24.99,6.80],
+["👟","Sports","QuickDry Shoe Dryer","Dryer for cleats, boots, and sneakers.",49.99,18.50],
+["💡","Backyard","Glow Boundary Kit","Light-up strips for driveway games.",59.99,19.00],
 ["🏓","Sports","Portable Pickleball Net","Fast-set driveway pickleball net.",89.99,34.00],
 ["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for chairs and carts.",22.99,5.20],
 ["🔥","Camping","Fire Pit Color Packs","Color packs for backyard fire pits.",19.99,4.50],
@@ -86,7 +79,7 @@ grid.innerHTML+=`
 });
 
 function openVault(){
- document.getElementById("door").classList.add("open");
+ document.getElementById("vaultImg").classList.add("open");
  setTimeout(showProducts,900);
 }
 function showProducts(){
