@@ -2,25 +2,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Iron Vault Admin</title>
+<title>Side Quests Admin</title>
 <style>
-body{font-family:Arial,sans-serif;background:#faf7f0;margin:0;color:#111}
-header{padding:22px 8%;display:flex;justify-content:space-between;align-items:center;background:white}
-.logo{font-weight:900;font-size:24px}
-main{padding:30px 8%}
+body{margin:0;font-family:Arial,sans-serif;background:#f7efe6;color:#111}
+header{height:58px;background:#080b10;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 8%;box-sizing:border-box}
+.logo{font-size:25px;font-weight:900}
+a{color:white;text-decoration:none;font-weight:900}
+main{padding:35px 8%}
 .card{background:white;border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
-input,select,textarea{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:10px;font-size:15px;box-sizing:border-box}
-button{background:#111;color:white;border:0;border-radius:12px;padding:13px 20px;font-weight:900;cursor:pointer}
+input,textarea{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:10px;font-size:15px;box-sizing:border-box}
+textarea{min-height:90px}
+button{background:#111;color:white;border:0;border-radius:12px;padding:12px 18px;font-weight:900;cursor:pointer}
 .danger{background:#b00020}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.item{border:1px solid #ddd;border-radius:12px;padding:15px;margin-top:12px}
-.small{color:#666;font-size:14px}
+.yellow{background:#ffc400;color:#111}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.catBox{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.catLabel{background:#eee;border-radius:999px;padding:8px 12px;font-size:13px}
+.product{border:1px solid #ddd;border-radius:14px;padding:15px;margin-top:14px}
+.small{font-size:13px;color:#666}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="logo">IRON VAULT ADMIN</div>
+  <div class="logo">Side Quests Admin</div>
   <a href="index.html">View Store</a>
 </header>
 
@@ -28,26 +34,31 @@ button{background:#111;color:white;border:0;border-radius:12px;padding:13px 20px
 
 <div class="card">
   <h2>Add / Manage Categories</h2>
-  <input id="categoryName" placeholder="New category name, example: Camping">
+  <input id="newCategory" placeholder="New category name">
   <button onclick="addCategory()">Add Category</button>
-
   <div id="categoryList"></div>
 </div>
 
 <div class="card">
   <h2>Add Product</h2>
 
-  <div class="row">
+  <div class="grid">
     <input id="productName" placeholder="Product name">
-    <input id="productPrice" placeholder="Price, example: 24.99">
+    <input id="productPrice" placeholder="Price">
   </div>
 
-  <select id="productCategory"></select>
-
   <input id="productImage" placeholder="Image URL">
-  <textarea id="productDescription" placeholder="Product description"></textarea>
+  <textarea id="productDescription" placeholder="Description"></textarea>
 
-  <button onclick="addProduct()">Add Product</button>
+  <h3>Categories</h3>
+  <p class="small">Check as many categories as you want.</p>
+  <div id="categoryCheckboxes" class="catBox"></div>
+
+  <h3>Search Keywords</h3>
+  <p class="small">Add words people might search. Example: cleaning supplies, cleaner, scrub, brush, wash</p>
+  <textarea id="productKeywords" placeholder="Search keywords"></textarea>
+
+  <button class="yellow" onclick="addProduct()">Add Product</button>
 </div>
 
 <div class="card">
@@ -58,77 +69,90 @@ button{background:#111;color:white;border:0;border-radius:12px;padding:13px 20px
 </main>
 
 <script>
-let categories = JSON.parse(localStorage.getItem("categories")) || [
-  "Camping",
-  "Water",
-  "Sports",
-  "Games",
-  "Survival",
-  "Outdoor"
+const defaultCategories=[
+"Home","Kitchen","Pets","Car","Travel","Cleaning","Sports","Water","Games","Camping","Outdoor","Tools","Safety","Kids","Tech","Storage"
 ];
 
-let products = JSON.parse(localStorage.getItem("products")) || [];
+const defaultProducts=[
+{id:1,name:"Water Basketball Hoop",price:"39.99",description:"A floating pool basketball hoop for summer games.",image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",categories:["Water","Sports","Games","Kids","Outdoor"],keywords:"pool swim floating basketball ball summer toy"},
+{id:2,name:"Portable Cleaning Brush Kit",price:"19.99",description:"A compact brush kit for cleaning shoes, tools, gear, and tight spaces.",image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",categories:["Cleaning","Home","Tools","Travel"],keywords:"clean cleaning cleaner supplies product scrub brush wash"},
+{id:3,name:"Magnetic Cable Clips",price:"12.99",description:"Small clips that keep charging cables from falling behind desks.",image:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",categories:["Tech","Home","Storage"],keywords:"cord cable charger desk organize organizer"}
+];
+
+let savedCategories=JSON.parse(localStorage.getItem("categories"));
+let savedProducts=JSON.parse(localStorage.getItem("products"));
+
+let categories=Array.isArray(savedCategories)&&savedCategories.length?savedCategories:defaultCategories;
+let products=Array.isArray(savedProducts)&&savedProducts.length?savedProducts:defaultProducts;
 
 function saveData(){
-  localStorage.setItem("categories", JSON.stringify(categories));
-  localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem("categories",JSON.stringify(categories));
+  localStorage.setItem("products",JSON.stringify(products));
 }
 
 function renderCategories(){
-  const list = document.getElementById("categoryList");
-  const select = document.getElementById("productCategory");
+  let list=document.getElementById("categoryList");
+  let boxes=document.getElementById("categoryCheckboxes");
 
-  list.innerHTML = "";
-  select.innerHTML = "";
+  list.innerHTML="";
+  boxes.innerHTML="";
 
-  categories.forEach((cat, index) => {
-    select.innerHTML += `<option value="${cat}">${cat}</option>`;
-
-    list.innerHTML += `
-      <div class="item">
-        <input value="${cat}" onchange="editCategory(${index}, this.value)">
+  categories.forEach((cat,index)=>{
+    list.innerHTML+=`
+      <div class="product">
+        <input value="${cat}" onchange="renameCategory(${index},this.value)">
         <button class="danger" onclick="deleteCategory(${index})">Delete Category</button>
       </div>
+    `;
+
+    boxes.innerHTML+=`
+      <label class="catLabel">
+        <input type="checkbox" value="${cat}" class="productCategoryBox"> ${cat}
+      </label>
     `;
   });
 }
 
 function addCategory(){
-  const name = document.getElementById("categoryName").value.trim();
+  let name=document.getElementById("newCategory").value.trim();
 
   if(!name){
     alert("Enter a category name.");
     return;
   }
 
-  if(categories.some(c => c.toLowerCase() === name.toLowerCase())){
+  if(categories.some(cat=>cat.toLowerCase()===name.toLowerCase())){
     alert("That category already exists.");
     return;
   }
 
   categories.push(name);
-  document.getElementById("categoryName").value = "";
+  document.getElementById("newCategory").value="";
   saveData();
   renderCategories();
+  renderProducts();
 }
 
-function editCategory(index, newName){
-  newName = newName.trim();
+function renameCategory(index,newName){
+  newName=newName.trim();
 
   if(!newName){
-    alert("Category name cannot be blank.");
+    alert("Category cannot be blank.");
     renderCategories();
     return;
   }
 
-  const oldName = categories[index];
-  categories[index] = newName;
+  let oldName=categories[index];
+  categories[index]=newName;
 
-  products = products.map(product => {
-    if(product.category === oldName){
-      product.category = newName;
+  products.forEach(product=>{
+    if(Array.isArray(product.categories)){
+      product.categories=product.categories.map(cat=>cat===oldName?newName:cat);
     }
-    return product;
+
+    if(product.category===oldName){
+      product.category=newName;
+    }
   });
 
   saveData();
@@ -137,73 +161,145 @@ function editCategory(index, newName){
 }
 
 function deleteCategory(index){
-  const category = categories[index];
+  let category=categories[index];
 
-  const used = products.some(product => product.category === category);
-
-  if(used){
-    alert("You cannot delete this category because products are using it. Move or delete those products first.");
+  if(products.some(product=>getProductCategories(product).includes(category))){
+    alert("This category is being used by a product. Remove it from products first.");
     return;
   }
 
-  categories.splice(index, 1);
+  categories.splice(index,1);
   saveData();
   renderCategories();
+  renderProducts();
+}
+
+function getCheckedCategories(){
+  return Array.from(document.querySelectorAll(".productCategoryBox:checked")).map(box=>box.value);
+}
+
+function clearProductForm(){
+  document.getElementById("productName").value="";
+  document.getElementById("productPrice").value="";
+  document.getElementById("productImage").value="";
+  document.getElementById("productDescription").value="";
+  document.getElementById("productKeywords").value="";
+  document.querySelectorAll(".productCategoryBox").forEach(box=>box.checked=false);
 }
 
 function addProduct(){
-  const name = document.getElementById("productName").value.trim();
-  const price = document.getElementById("productPrice").value.trim();
-  const category = document.getElementById("productCategory").value;
-  const image = document.getElementById("productImage").value.trim();
-  const description = document.getElementById("productDescription").value.trim();
+  let name=document.getElementById("productName").value.trim();
+  let price=document.getElementById("productPrice").value.trim();
+  let image=document.getElementById("productImage").value.trim();
+  let description=document.getElementById("productDescription").value.trim();
+  let keywords=document.getElementById("productKeywords").value.trim();
+  let selectedCategories=getCheckedCategories();
 
-  if(!name || !price || !category){
-    alert("Product name, price, and category are required.");
+  if(!name||!price){
+    alert("Product name and price are required.");
+    return;
+  }
+
+  if(selectedCategories.length===0){
+    alert("Choose at least one category.");
     return;
   }
 
   products.push({
-    id: Date.now(),
+    id:Date.now(),
     name,
     price,
-    category,
     image,
-    description
+    description,
+    categories:selectedCategories,
+    keywords
   });
 
-  document.getElementById("productName").value = "";
-  document.getElementById("productPrice").value = "";
-  document.getElementById("productImage").value = "";
-  document.getElementById("productDescription").value = "";
-
   saveData();
+  clearProductForm();
   renderProducts();
 }
 
-function renderProducts(){
-  const list = document.getElementById("productList");
-  list.innerHTML = "";
+function getProductCategories(product){
+  if(Array.isArray(product.categories)) return product.categories;
+  if(product.category) return [product.category];
+  return [];
+}
 
-  if(products.length === 0){
-    list.innerHTML = `<p class="small">No products added yet.</p>`;
+function renderProducts(){
+  let list=document.getElementById("productList");
+  list.innerHTML="";
+
+  if(products.length===0){
+    list.innerHTML="<p>No products yet.</p>";
     return;
   }
 
-  products.forEach((product, index) => {
-    list.innerHTML += `
-      <div class="item">
+  products.forEach((product,index)=>{
+    let cats=getProductCategories(product);
+
+    list.innerHTML+=`
+      <div class="product">
         <h3>${product.name}</h3>
-        <p class="small">Category: ${product.category}</p>
-        <p class="small">Price: $${product.price}</p>
-        <button class="danger" onclick="deleteProduct(${index})">Delete Product</button>
+        <p><strong>Price:</strong> $${product.price}</p>
+        <p><strong>Categories:</strong> ${cats.join(", ")}</p>
+        <p><strong>Search Keywords:</strong> ${product.keywords||""}</p>
+        <button onclick="editProduct(${index})">Edit</button>
+        <button class="danger" onclick="deleteProduct(${index})">Delete</button>
       </div>
     `;
   });
 }
 
+function editProduct(index){
+  let product=products[index];
+
+  let name=prompt("Product name:",product.name);
+  if(name===null) return;
+
+  let price=prompt("Price:",product.price);
+  if(price===null) return;
+
+  let image=prompt("Image URL:",product.image||"");
+  if(image===null) return;
+
+  let description=prompt("Description:",product.description||"");
+  if(description===null) return;
+
+  let currentCats=getProductCategories(product).join(", ");
+  let catsInput=prompt("Categories separated by commas:",currentCats);
+  if(catsInput===null) return;
+
+  let keywords=prompt("Search keywords:",product.keywords||"");
+  if(keywords===null) return;
+
+  let newCats=catsInput.split(",").map(cat=>cat.trim()).filter(Boolean);
+
+  newCats.forEach(cat=>{
+    if(!categories.includes(cat)){
+      categories.push(cat);
+    }
+  });
+
+  products[index]={
+    ...product,
+    name:name.trim(),
+    price:price.trim(),
+    image:image.trim(),
+    description:description.trim(),
+    categories:newCats,
+    keywords:keywords.trim()
+  };
+
+  saveData();
+  renderCategories();
+  renderProducts();
+}
+
 function deleteProduct(index){
-  products.splice(index, 1);
+  if(!confirm("Delete this product?")) return;
+
+  products.splice(index,1);
   saveData();
   renderProducts();
 }
