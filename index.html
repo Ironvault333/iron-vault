@@ -2,72 +2,118 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Iron Vault</title>
+<title>Side Quests</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#faf7f0;color:#111}
-header{padding:25px 8%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:24px}
-.hero{min-height:85vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;gap:40px}
-h1{font-size:72px;line-height:.9;margin:0 0 20px}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f2e8;color:#121212}
+header{padding:24px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:25px}.logo span{color:#b77912}
+.hero{min-height:82vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 7%;gap:45px}
+h1{font-size:76px;line-height:.9;margin:0 0 20px}
 p{font-size:18px;color:#555}
-button{background:#111;color:white;border:0;border-radius:12px;padding:15px 24px;font-weight:900;cursor:pointer}
-.vaultBox{display:grid;place-items:center}
-.lock{width:330px;height:330px;border-radius:50%;background:radial-gradient(circle,#fff 0 10%,#cfd4d8 11% 20%,#4f5963 21% 35%,#111 36% 42%,#bfc6cc 43% 48%,#2d3339 49% 100%);border:18px solid #111;position:relative;box-shadow:0 25px 50px #0004;transition:1s}
-.lock.open{transform:rotate(720deg) scale(.2);opacity:0}
-.handle{position:absolute;top:140px;left:55px;width:220px;height:48px;background:#111;border-radius:30px;transform:rotate(0deg)}
-.handle:before{content:"";position:absolute;left:86px;top:-86px;width:48px;height:220px;background:#111;border-radius:30px}
-.center{position:absolute;top:125px;left:125px;width:80px;height:80px;background:#f6b72f;border:8px solid #111;border-radius:50%;z-index:5}
-.bolt{position:absolute;width:26px;height:26px;background:#f6b72f;border:4px solid #111;border-radius:50%}
-.b1{top:18px;left:145px}.b2{top:65px;right:45px}.b3{right:18px;top:145px}.b4{bottom:65px;right:45px}
-.b5{bottom:18px;left:145px}.b6{left:45px;bottom:65px}.b7{left:18px;top:145px}.b8{left:45px;top:65px}
-.products{display:none;padding:45px 8%}
+button{background:#121212;color:white;border:0;border-radius:14px;padding:15px 24px;font-weight:900;cursor:pointer}
+.vaultBox{display:grid;place-items:center;background:linear-gradient(145deg,#fff,#e9dfcf);border-radius:34px;padding:45px;box-shadow:0 25px 60px #0002}
+.lock{width:360px;height:360px;border-radius:50%;position:relative;cursor:pointer;transition:1.1s;box-shadow:0 30px 60px #0005,inset 0 0 35px #0008;background:radial-gradient(circle,#f7f7f7 0 8%,#9aa3a9 9% 18%,#2b333b 19% 31%,#d7dde0 32% 37%,#111820 38% 48%,#69727a 49% 55%,#1a2027 56% 100%);border:20px solid #20262c}
+.lock.open{transform:rotate(720deg) scale(.08);opacity:0}
+.spoke{position:absolute;top:165px;left:50px;width:260px;height:30px;background:linear-gradient(#e7eef2,#343b42,#111);border-radius:20px;box-shadow:0 4px 10px #0008}
+.s2{transform:rotate(45deg)}.s3{transform:rotate(90deg)}.s4{transform:rotate(135deg)}
+.center{position:absolute;top:128px;left:128px;width:86px;height:86px;background:radial-gradient(circle,#f8c24a,#9b650b);border:9px solid #171717;border-radius:50%;z-index:5;display:grid;place-items:center;font-size:28px;font-weight:900}
+.bolt{position:absolute;width:28px;height:28px;background:radial-gradient(circle,#ffd36b,#996400);border:4px solid #111;border-radius:50%;z-index:6}
+.b1{top:18px;left:158px}.b2{top:70px;right:45px}.b3{right:18px;top:158px}.b4{bottom:70px;right:45px}.b5{bottom:18px;left:158px}.b6{left:45px;bottom:70px}.b7{left:18px;top:158px}.b8{left:45px;top:70px}
+.products{display:none;padding:45px 7%}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 28px}.chip{background:white;color:#111;border:1px solid #ddd;padding:9px 14px;border-radius:999px;font-size:13px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
 .card{background:white;border-radius:18px;padding:18px;box-shadow:0 10px 30px #0002}
-.icon{font-size:44px}.cat{color:#b47a00;font-size:12px;font-weight:900}.name{font-size:19px;font-weight:900}
-.stats{display:flex;gap:8px;margin-top:12px}.stat{background:#f0f0f0;border-radius:10px;padding:8px;flex:1;font-size:12px}
-@media(max-width:800px){.hero{grid-template-columns:1fr}h1{font-size:48px}}
+.icon{font-size:42px}.cat{color:#b77912;font-size:12px;font-weight:900;text-transform:uppercase}.name{font-size:19px;font-weight:900;margin:6px 0}
+.desc{font-size:14px;color:#555;min-height:52px}.stats{display:flex;gap:8px;margin-top:12px}.stat{background:#f1f1f1;border-radius:10px;padding:8px;flex:1;font-size:12px}.stat b{display:block}
+@media(max-width:800px){.hero{grid-template-columns:1fr}h1{font-size:48px}.lock{width:290px;height:290px}}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">IV Iron Vault</div>
+  <div class="logo"><span>SQ</span> Side Quests</div>
   <button onclick="showProducts()">Store</button>
 </header>
 
 <section class="hero" id="hero">
   <div>
-    <p>50 products loaded</p>
-    <h1>Open the<br>Iron Vault.</h1>
-    <p>Cool products. Strong margins. Built to test fast.</p>
+    <p><b>50 products loaded</b></p>
+    <h1>Open the<br>Side Quest<br>Vault.</h1>
+    <p>High-demand, useful, almost must-have products worth testing fast.</p>
     <button onclick="openVault()">Open the Vault</button>
   </div>
 
   <div class="vaultBox">
     <div class="lock" id="lock" onclick="openVault()">
-      <div class="handle"></div>
-      <div class="center"></div>
+      <div class="spoke"></div><div class="spoke s2"></div><div class="spoke s3"></div><div class="spoke s4"></div>
+      <div class="center">SQ</div>
       <span class="bolt b1"></span><span class="bolt b2"></span><span class="bolt b3"></span><span class="bolt b4"></span>
       <span class="bolt b5"></span><span class="bolt b6"></span><span class="bolt b7"></span><span class="bolt b8"></span>
     </div>
-    <br>
-    <button onclick="openVault()">Click Vault to Open</button>
+    <br><button onclick="openVault()">Click Vault to Open</button>
   </div>
 </section>
 
 <section class="products" id="products">
   <h1>Product Board</h1>
+  <div class="filters">
+    <button class="chip">All</button><button class="chip">Car</button><button class="chip">Sports</button><button class="chip">Outdoor</button><button class="chip">Home</button><button class="chip">Travel</button>
+  </div>
   <div class="grid" id="grid"></div>
 </section>
 
 <script>
 const products=[
-["🚗","Car","Seat Gap Crumb Catcher","Stops crumbs and phones from falling between seats.",24.99,6.80],
-["👟","Sports","QuickDry Shoe Dryer","Dryer for cleats, boots, and sneakers.",49.99,18.50],
-["💡","Backyard","Glow Boundary Kit","Light-up strips for driveway games.",59.99,19.00],
-["🏓","Sports","Portable Pickleball Net","Fast-set driveway pickleball net.",89.99,34.00],
-["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for chairs and carts.",22.99,5.20],
-["🔥","Camping","Fire Pit Color Packs","Color packs for backyard fire pits.",19.99,4.50]
+["🚗","Car","Seat Gap Crumb Catcher","Stops crumbs, coins, toys, and phones from falling between seats.",24.99,6.80],
+["👟","Sports","QuickDry Cleat & Shoe Dryer","Forced-air dryer for wet cleats, boots, and sneakers.",49.99,18.50],
+["💡","Backyard","Glow Boundary Game Kit","Light-up boundary strips for driveway games and night sports.",59.99,19.00],
+["🏓","Sports","Portable Pickleball Net","Fast-set driveway pickleball net for families and casual players.",89.99,34.00],
+["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for chairs, carts, strollers, and tailgates.",22.99,5.20],
+["🔥","Outdoor","Fire Pit Color Packs","Safe color packs for backyard fire pits and camping.",19.99,4.50],
+["🧊","Outdoor","Cooler Shade Clip","Clip-on shade canopy for coolers and camp chairs.",24.99,4.75],
+["🧰","Travel","Cord Snap Labels","Snap-on labels for chargers, hoses, cords, and bags.",14.99,2.80],
+["🪫","Tech","Cable Saver Elbow Clips","Protects phone chargers from bending and breaking.",12.99,1.90],
+["🧲","Garage","Magnetic Tool Tray Mat","Keeps screws, bolts, and tools from rolling away.",24.99,5.50],
+["🚲","Sports","Helmet Turn Signal Light","Clip-on turn signal light for bikes and scooters.",34.99,9.25],
+["🪑","Outdoor","Chair Shade Clip-On","Portable shade for folding chairs at games and parks.",24.99,6.00],
+["🧼","Car","Backseat Trash Bin Clip","Small clip-on car trash bin for road trips.",19.99,4.80],
+["📱","Car","Backseat Phone Dock","Clip-on phone and drink dock for backseat passengers.",29.99,7.40],
+["🏕️","Camping","Rechargeable Tent Light Rope","Flexible light rope for tents, canopies, and ladders.",27.99,6.90],
+["🧴","Travel","Leakproof Toiletry Bag Insert","Stops shampoo and lotion spills from ruining bags.",18.99,3.70],
+["🧽","Home","Sink Splash Guard Mat","Keeps counter dry behind kitchen and bathroom sinks.",16.99,2.90],
+["🧦","Laundry","Sock Pair Keeper Clips","Keeps socks paired through wash and drying.",12.99,1.80],
+["🐶","Pet","Car Door Scratch Guard","Protects car doors from dog claw scratches.",29.99,6.50],
+["🧺","Garage","Collapsible Sports Bin","Quick storage bin for balls, bats, helmets, and pads.",39.99,12.00],
+["🌧️","Outdoor","Wet Umbrella Car Sleeve","Stops dripping umbrellas from soaking car seats.",17.99,3.60],
+["🛒","Shopping","Cart Cup & Phone Holder","Clips to shopping carts for drinks and phones.",19.99,3.90],
+["🧯","Home","Stove Gap Blocker","Blocks food from falling beside stove and counters.",14.99,2.40],
+["🧳","Travel","Suitcase Shelf Divider","Keeps clothes organized inside luggage.",22.99,4.90],
+["⚽","Sports","Pop-Up Soccer Goal Wall","Foldable target wall for soccer practice.",49.99,15.00],
+["🎣","Outdoor","Fishing Rod Vehicle Mount","Temporary mount for transporting fishing rods.",34.99,8.00],
+["🪴","Garden","Hose Corner Guide Roller","Keeps hoses from crushing plants and corners.",24.99,6.20],
+["🏀","Sports","Ball Garage Rack","Wall rack for sports balls and helmets.",39.99,12.00],
+["🛶","Outdoor","Kayak Scratch Guard Pads","Stick-on protection pads for kayaks and paddleboards.",34.99,9.50],
+["🪛","Tools","Drill Bit Quick Sort Case","Fast organizer for drill bits and screws.",24.99,4.80],
+["🧊","Outdoor","Cooler Feet Add-On","Raises coolers off hot pavement and wet ground.",22.99,3.80],
+["🧦","Travel","Dirty Clothes Compression Bag","Compresses laundry on trips and keeps clean clothes separate.",19.99,3.40],
+["🚪","Home","No-Drill Door Draft Blocker","Easy draft blocker for doors and apartments.",19.99,4.00],
+["🔦","Safety","Emergency Car Light Pod","Small rechargeable warning light for breakdowns.",29.99,7.80],
+["🧻","Camping","Portable Trash Bag Ring","Holds trash bags open at campsites and tailgates.",19.99,3.20],
+["🍼","Family","Stroller Snack Tray Extender","Adds cup and snack space to strollers.",24.99,5.90],
+["🏖️","Outdoor","Beach Towel Sand Clips","Clips towels to chairs so they don't blow away.",14.99,2.10],
+["🎒","School","Backpack Clip-On Organizer","Quick-access clip pouch for keys, cards, and earbuds.",16.99,2.75],
+["🧲","Kitchen","Fridge Can Rail Organizer","Keeps cans aligned and easy to grab.",19.99,4.25],
+["🧼","Bathroom","Shower Bottle Inverter Stand","Stores shampoo upside-down for easier use.",14.99,2.60],
+["🪝","Garage","Ladder Strap Divider","Stops ladders and tools from sliding in trucks.",22.99,6.00],
+["🔌","Tech","Outlet Cable Shelf","Tiny shelf that holds chargers and devices by outlets.",14.99,2.50],
+["🧤","Winter","Glove Drying Clip Rack","Clips gloves over vents to dry faster.",18.99,3.90],
+["🪟","Home","Window Track Cleaning Tool","Tool shaped to clean window and sliding door tracks.",12.99,1.70],
+["🧃","Family","Kid Cup Spill Stopper","Reusable insert that reduces cup spills.",12.99,1.60],
+["🏈","Sports","Mouthguard Case Clip","Clips mouthguard case to sports bags.",9.99,1.20],
+["🚿","Travel","Hotel Shower Caddy Hook","Temporary hook for travel toiletries.",14.99,2.40],
+["🧯","Car","Trunk Grocery Divider","Adjustable divider to stop groceries sliding.",24.99,5.70],
+["🛏️","Home","Bedside Remote Pocket","Slides under mattress to hold remotes and phones.",16.99,3.20],
+["🧰","Tools","Extension Cord Quick Wrap","Reusable wrap with built-in label for cords and hoses.",19.99,3.50]
 ];
 
 const grid=document.getElementById("grid");
@@ -78,11 +124,11 @@ grid.innerHTML+=`
   <div class="icon">${p[0]}</div>
   <div class="cat">${p[1]}</div>
   <div class="name">${p[2]}</div>
-  <p>${p[3]}</p>
+  <div class="desc">${p[3]}</div>
   <div class="stats">
-    <div class="stat">Sell<br><b>$${p[4]}</b></div>
-    <div class="stat">Cost<br><b>$${p[5]}</b></div>
-    <div class="stat">Margin<br><b>$${margin}</b></div>
+    <div class="stat">Sell<b>$${p[4]}</b></div>
+    <div class="stat">Cost<b>$${p[5]}</b></div>
+    <div class="stat">Margin<b>$${margin}</b></div>
   </div>
 </div>`;
 });
