@@ -1,78 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Side Quests</title>
+<title>Iron Vault</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
-header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
-.logo{font-size:30px;font-weight:900}
-nav{display:flex;align-items:center}
-nav button{background:transparent;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
-.categorySelect{padding:10px 14px;border-radius:10px;border:none;margin-left:15px;font-weight:700;background:white;color:#111}
-.cart{font-weight:900}
-button{border:0;cursor:pointer;font-weight:900}
-.page{display:none;padding:35px 5%}
-.page.show{display:block}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#faf7f0;
+  color:#111;
+}
 
-.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
-h1{font-size:72px;line-height:.9;margin:0 0 20px;letter-spacing:-3px}
-.hero p{font-size:20px;color:#444;line-height:1.5}
-.openBtn{background:#f5c542;color:#111;border-radius:999px;padding:16px 30px;font-size:16px}
+header{
+  padding:22px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:white;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
 
-.safeScene{height:520px;display:flex;align-items:center;justify-content:center;perspective:1500px}
-.safeWall{width:520px;height:500px;background:linear-gradient(135deg,#b8bec6,#59616a);border-radius:34px;box-shadow:inset 0 0 60px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);position:absolute}
-.safeOpening{width:350px;height:390px;background:#111827;border-radius:22px;position:absolute;box-shadow:inset 0 0 50px #000}
-.safeDoor{width:380px;height:420px;border-radius:26px;background:linear-gradient(135deg,#e5e7eb,#9ca3af 30%,#64748b 58%,#303741);border:16px solid #6b7280;position:absolute;box-shadow:inset 0 0 45px #111,0 25px 55px rgba(0,0,0,.45);transform-origin:left center;transition:1.25s ease}
-.safeScene.open .safeDoor{transform:rotateY(-105deg) translateX(-18px)}
-.panel{position:absolute;inset:35px;border:10px solid #aab2bb;border-radius:20px}
-.wheel{position:absolute;width:145px;height:145px;border-radius:50%;border:17px solid #d1d5db;top:137px;left:117px}
-.wheel span{position:absolute;width:128px;height:15px;background:linear-gradient(90deg,#374151,#fff,#374151);top:49px;left:-9px;border-radius:999px}
-.wheel span:nth-child(2){transform:rotate(60deg)}
-.wheel span:nth-child(3){transform:rotate(-60deg)}
-.wheel:after{content:"";position:absolute;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle,#fff,#555);top:29px;left:29px;border:5px solid #374151}
-.bolt{position:absolute;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3af,#374151);border:3px solid #374151}
-.b1{top:28px;left:40px}.b2{top:28px;right:40px}.b3{bottom:28px;left:40px}.b4{bottom:28px;right:40px}
-.b5{top:105px;left:24px}.b6{top:105px;right:24px}.b7{bottom:105px;left:24px}.b8{bottom:105px;right:24px}
+.logo{
+  font-weight:900;
+  font-size:24px;
+}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;margin-top:25px}
-.card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;transition:.2s}
-.card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
-.placeholder{width:100%;height:190px;border-radius:10px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
-.card h3{margin:12px 0 6px;font-size:18px}
-.desc{font-size:14px;color:#555;min-height:58px}
-.price{font-size:25px;font-weight:900;margin:10px 0}
-.tap{font-size:13px;color:#2563eb;font-weight:900}
+nav{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+}
 
-.detailWrap{display:grid;grid-template-columns:1.1fr 1fr 310px;gap:25px;align-items:start}
-.box{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
-.mainPlaceholder{height:420px;border-radius:12px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:20px}
-.thumbs{display:flex;gap:10px;margin-top:12px}
-.thumbPlaceholder{width:75px;height:75px;border-radius:9px;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569}
-.likeBtn{background:#eef2ff;color:#1d4ed8;border-radius:999px;padding:10px 16px;margin:10px 0}
-.buyBox{position:sticky;top:92px}
-select{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0 14px}
-.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:10px}
-.buy{width:100%;padding:15px;background:#f5a623;border-radius:999px;margin-top:10px}
-.sectionGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:25px}
-.similarGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-.small{font-size:14px;color:#555}
+input,select{
+  padding:11px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:14px;
+}
 
-@media(max-width:1000px){
-header{height:auto;flex-direction:column;gap:12px;padding:16px 6%}
-nav{flex-wrap:wrap;justify-content:center}
-.hero,.detailWrap{grid-template-columns:1fr}
-h1{font-size:52px}
-.buyBox{position:static}
-.safeScene{height:390px}
-.safeWall{width:340px;height:350px}
-.safeOpening{width:240px;height:280px}
-.safeDoor{width:260px;height:300px}
-.wheel{width:105px;height:105px;top:95px;left:77px}
-.wheel span{width:90px;top:33px}
+button{
+  background:#111;
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.85;
+}
+
+.hero{
+  min-height:70vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:0 8%;
+  gap:40px;
+}
+
+h1{
+  font-size:72px;
+  line-height:.9;
+  margin:0 0 20px;
+}
+
+p{
+  font-size:18px;
+  color:#555;
+}
+
+.vaultBox{
+  display:grid;
+  place-items:center;
+}
+
+.lock{
+  width:280px;
+  height:330px;
+  border-radius:30px;
+  background:linear-gradient(145deg,#333,#111);
+  position:relative;
+  box-shadow:0 30px 70px rgba(0,0,0,.35);
+}
+
+.lock:before{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:120px;
+  border:26px solid #222;
+  border-bottom:0;
+  border-radius:90px 90px 0 0;
+  top:-95px;
+  left:39px;
+}
+
+.dial{
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle,#777,#222);
+  border-radius:50%;
+  position:absolute;
+  top:80px;
+  left:80px;
+  box-shadow:inset 0 0 20px rgba(255,255,255,.25);
+}
+
+.dial:after{
+  content:"";
+  width:14px;
+  height:45px;
+  background:#ddd;
+  position:absolute;
+  top:18px;
+  left:53px;
+  border-radius:8px;
+}
+
+.shop{
+  padding:40px 8%;
+}
+
+.shopTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:22px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:14px;
+  background:#eee;
+}
+
+.price{
+  font-weight:900;
+  font-size:20px;
+}
+
+.tags{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin:8px 0;
+}
+
+.tag{
+  font-size:12px;
+  background:#eee;
+  padding:5px 8px;
+  border-radius:999px;
+}
+
+.empty{
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.cartBox{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  width:300px;
+  box-shadow:0 8px 30px rgba(0,0,0,.18);
+  display:none;
+  z-index:20;
+}
+
+.cartItem{
+  border-bottom:1px solid #ddd;
+  padding:8px 0;
+}
+
+.small{
+  font-size:13px;
+  color:#777;
+}
+
+a{
+  color:#111;
+  font-weight:900;
+  text-decoration:none;
+}
+
+@media(max-width:800px){
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:50px;
+  }
+
+  h1{
+    font-size:52px;
+  }
+
+  header{
+    align-items:flex-start;
+    gap:15px;
+    flex-direction:column;
+  }
+
+  nav{
+    width:100%;
+  }
+
+  nav input,nav select{
+    width:100%;
+  }
 }
 </style>
 </head>
@@ -80,325 +249,288 @@ h1{font-size:52px}
 <body>
 
 <header>
-  <div class="logo">Side Quests</div>
+  <div class="logo">IRON VAULT</div>
 
   <nav>
-    <button onclick="showHome()">Home</button>
-    <button onclick="showProducts()">Products</button>
+    <input id="searchInput" placeholder="Search products..." oninput="renderProducts()">
 
-    <select id="categorySelect" class="categorySelect" onchange="filterCategory(this.value)">
+    <select id="categoryFilter" onchange="renderProducts()">
       <option value="All">All Categories</option>
     </select>
-  </nav>
 
-  <div class="cart">Cart: <span id="cartCount">0</span></div>
+    <button onclick="clearFilters()">Home</button>
+    <button onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
+    <a href="admin.html">Admin</a>
+  </nav>
 </header>
 
-<section class="hero" id="homePage">
+<section class="hero">
   <div>
-    <h1>Better. Faster. Stronger. Products.</h1>
-    <p>Useful, clever, almost-need-to-have products for home, kitchen, pets, car, travel, cleaning, and everyday upgrades.</p>
-    <button class="openBtn" onclick="openSafe()">Open Vault</button>
+    <h1>Unlock Gear You’ll Actually Want</h1>
+    <p>
+      Interesting, useful, almost-need-to-have products for outdoors,
+      water, games, survival, sports, and more.
+    </p>
+    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+      Shop Now
+    </button>
   </div>
 
-  <div class="safeScene" id="safeScene" onclick="openSafe()">
-    <div class="safeWall"></div>
-    <div class="safeOpening"></div>
-    <div class="safeDoor">
-      <div class="panel"></div>
-      <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
-      <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
-      <div class="wheel"><span></span><span></span><span></span></div>
+  <div class="vaultBox">
+    <div class="lock">
+      <div class="dial"></div>
     </div>
   </div>
 </section>
 
-<main class="page" id="productsPage">
-  <h2 id="productsTitle">Products</h2>
-  <p>Click a product to view the full product page.</p>
-  <div class="grid" id="productGrid"></div>
-</main>
-
-<main class="page" id="detailPage"></main>
-
-<main class="page" id="cartPage">
-  <div class="box">
-    <h2>Your Cart</h2>
-    <p id="cartText">Your cart is empty.</p>
+<section class="shop" id="shop">
+  <div class="shopTop">
+    <h2>Products</h2>
   </div>
-</main>
+
+  <div id="productGrid" class="grid"></div>
+</section>
+
+<div class="cartBox" id="cartBox">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <h3>Total: $<span id="cartTotal">0.00</span></h3>
+  <button onclick="checkout()">Checkout</button>
+</div>
 
 <script>
-let cart = Number(localStorage.getItem("cartCount") || 0);
-document.getElementById("cartCount").innerText = cart;
-
-let selectedCategory = "All";
-
-const CATALOG_VERSION = "50-products-v2-category-menu";
-
-const starterProducts = [
-{name:"Vegetable Chopper Pro",price:24.99,category:"Kitchen",sizes:"Small, Medium, Large",desc:"Fast chop container for onions, peppers, fruit, and meal prep.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Mini Heat Bag Sealer",price:9.99,category:"Kitchen",sizes:"Standard",desc:"Portable sealer that helps keep chips, snacks, and pantry bags fresh.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Silicone Scrub Gloves",price:13.99,category:"Cleaning",sizes:"Small, Medium, Large",desc:"Dish gloves with built-in scrub bristles for dishes, sinks, and quick cleaning.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Magnetic Spice Rack",price:22.99,category:"Kitchen",sizes:"2-Pack, 4-Pack",desc:"Space-saving magnetic shelves for spices, oils, and small kitchen items.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Air Fryer Oil Sprayer",price:12.99,category:"Kitchen",sizes:"250ml, 500ml",desc:"Refillable oil sprayer for air fryers, pans, grilling, and salads.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Pet Hair Remover Roller",price:16.99,category:"Pets",sizes:"Standard",desc:"Reusable roller that pulls pet hair from couches, clothes, blankets, and car seats.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Portable Dog Water Bottle",price:18.99,category:"Pets",sizes:"Small, Large",desc:"Travel water bottle for dogs on walks, hikes, road trips, and parks.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Cat Window Hammock",price:24.99,category:"Pets",sizes:"Standard",desc:"Window-mounted cat perch for sun lounging, resting, and watching outside.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Slow Feeder Pet Bowl",price:14.99,category:"Pets",sizes:"Small, Large",desc:"Pet bowl designed to slow down fast eating and make meals last longer.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Pet Grooming Glove",price:12.99,category:"Pets",sizes:"Left Hand, Right Hand",desc:"Grooming glove that removes loose fur while you pet your dog or cat.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Car Seat Gap Organizer",price:19.99,category:"Car",sizes:"Driver Side, Passenger Side",desc:"Fills the seat gap and holds phone, wallet, keys, cards, and small items.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Leakproof Car Trash Can",price:15.99,category:"Car",sizes:"Standard",desc:"Compact trash bin for wrappers, receipts, tissues, and road trip mess.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Foldable Trunk Organizer",price:28.99,category:"Car",sizes:"Medium, Large",desc:"Keeps groceries, emergency supplies, tools, and sports gear from rolling around.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Dashboard Phone Mount",price:13.99,category:"Car",sizes:"Standard",desc:"Simple phone mount for maps, music, calls, and hands-free driving.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Portable Tire Inflator",price:39.99,category:"Car",sizes:"Standard",desc:"Compact inflator for car tires, bike tires, balls, and emergency use.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Under Sink Organizer",price:25.99,category:"Home",sizes:"1-Tier, 2-Tier",desc:"Sliding organizer for cleaning bottles, soaps, sponges, and bathroom supplies.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"No-Drill Shower Shelf",price:18.99,category:"Home",sizes:"Black, Silver",desc:"Wall shelf for shampoo, body wash, razors, soap, and shower accessories.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Adjustable Drawer Dividers",price:14.99,category:"Home",sizes:"4-Pack, 8-Pack",desc:"Dividers for kitchen drawers, bathroom drawers, office drawers, and junk drawers.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Cable Management Box",price:21.99,category:"Home",sizes:"Small, Large",desc:"Hides messy power strips, cords, chargers, and desk cables.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Laundry Backpack Bag",price:17.99,category:"Home",sizes:"Standard",desc:"Laundry bag with backpack straps for dorms, apartments, and shared laundry rooms.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Electric Lint Remover",price:16.99,category:"Cleaning",sizes:"Standard",desc:"Rechargeable fabric shaver for sweaters, blankets, couches, and clothing.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Mini Desk Vacuum",price:12.99,category:"Cleaning",sizes:"Standard",desc:"Tiny vacuum for crumbs, keyboards, desks, drawers, and car cup holders.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Drill Brush Scrubber Set",price:14.99,category:"Cleaning",sizes:"4-Piece, 8-Piece",desc:"Brush attachments that turn a drill into a powerful cleaning scrubber.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Baseboard Cleaner Tool",price:18.99,category:"Cleaning",sizes:"Standard",desc:"Long-handled cleaner for baseboards, wall edges, and hard-to-reach dust lines.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Blind Cleaner Brush",price:8.99,category:"Cleaning",sizes:"Standard",desc:"Multi-slat brush that cleans window blinds faster than wiping one by one.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Rechargeable Closet Light",price:18.99,category:"Home Tech",sizes:"1-Pack, 3-Pack",desc:"Motion light for closets, cabinets, hallways, pantries, and dark corners.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Sunset Projector Lamp",price:19.99,category:"Home Tech",sizes:"Standard",desc:"Small room lamp that creates sunset-style lighting for rooms and videos.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Large Display Alarm Clock",price:17.99,category:"Home Tech",sizes:"White, Black",desc:"Minimal bedside alarm clock with an easy-to-read display.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Mini Desk Humidifier",price:21.99,category:"Home Tech",sizes:"White, Black",desc:"Compact humidifier for desk, bedroom, travel, and dry rooms.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Smart Plug Timer",price:16.99,category:"Home Tech",sizes:"1-Pack, 2-Pack",desc:"Plug-in timer for lamps, holiday lights, appliances, and routines.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Resistance Band Set",price:14.99,category:"Fitness",sizes:"Light, Medium, Heavy",desc:"Portable workout bands for stretching, strength training, and home workouts.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Posture Corrector Brace",price:19.99,category:"Fitness",sizes:"Small, Medium, Large",desc:"Adjustable support for posture reminders while working, studying, or sitting.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Massage Roller Ball",price:11.99,category:"Fitness",sizes:"Standard",desc:"Handheld roller for feet, back, shoulders, and sore muscles.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Wearable Neck Fan",price:24.99,category:"Travel",sizes:"White, Black",desc:"Hands-free fan for sports, outdoor work, travel, heat, and summer days.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Insulated Bottle Sleeve",price:13.99,category:"Travel",sizes:"Small, Large",desc:"Bottle holder with strap and pocket for walks, games, school, and travel.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Hanging Toiletry Bag",price:16.99,category:"Travel",sizes:"Standard",desc:"Travel bathroom organizer that hangs in hotels, camps, and small bathrooms.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Packing Cube Set",price:18.99,category:"Travel",sizes:"6-Pack, 8-Pack",desc:"Suitcase organizers that separate clothes, shoes, laundry, and accessories.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Slim RFID Wallet",price:14.99,category:"Travel",sizes:"Black, Brown",desc:"Slim card wallet with RFID-blocking storage and pocket-friendly design.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Luggage Cup Holder",price:11.99,category:"Travel",sizes:"Standard",desc:"Cup holder that straps to suitcase handles for airport and road travel.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Travel Cable Organizer",price:12.99,category:"Travel",sizes:"Small, Large",desc:"Pouch for chargers, cords, earbuds, adapters, and tech accessories.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Mini Waffle Maker",price:22.99,category:"Kitchen",sizes:"Standard",desc:"Small waffle maker for quick breakfasts, snacks, dorms, and tiny kitchens.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Milk Frother Wand",price:9.99,category:"Kitchen",sizes:"Black, Silver",desc:"Handheld frother for coffee, matcha, protein drinks, and hot chocolate.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Digital Kitchen Scale",price:13.99,category:"Kitchen",sizes:"Standard",desc:"Compact scale for baking, meal prep, coffee, and portion measuring.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Magnetic Screen Door",price:24.99,category:"Outdoor",sizes:"Single Door, Sliding Door",desc:"Hands-free mesh screen door for patios, back doors, pets, and fresh air.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Solar Outdoor Path Lights",price:26.99,category:"Outdoor",sizes:"4-Pack, 8-Pack",desc:"Solar lights for gardens, patios, pathways, driveways, and yards.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Reusable Produce Bags",price:11.99,category:"Kitchen",sizes:"6-Pack, 12-Pack",desc:"Washable mesh bags for groceries, produce, pantry storage, and organizing.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Cold Brew Pitcher",price:21.99,category:"Kitchen",sizes:"1 Quart, 2 Quart",desc:"Simple pitcher for homemade cold brew coffee and flavored drinks.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Glass Food Storage Set",price:27.99,category:"Kitchen",sizes:"5-Pack, 10-Pack",desc:"Stackable containers for leftovers, lunch prep, snacks, and fridge storage.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Silicone Ice Cube Tray",price:10.99,category:"Kitchen",sizes:"2-Pack, 4-Pack",desc:"Easy-release trays for drinks, smoothies, iced coffee, and coolers.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Bamboo Cutting Board Set",price:29.99,category:"Kitchen",sizes:"3-Piece Set",desc:"Cutting board set for meal prep, serving, chopping, and everyday cooking.",shipping:"Estimated delivery: 5–10 business days."}
+let categories = JSON.parse(localStorage.getItem("categories")) || [
+  "Camping",
+  "Water",
+  "Sports",
+  "Games",
+  "Survival",
+  "Outdoor",
+  "Cleaning",
+  "Tools"
 ];
 
-function getProducts(){
-  const version = localStorage.getItem("sqCatalogVersion");
-  const saved = localStorage.getItem("sqProducts");
-
-  if(version !== CATALOG_VERSION || !saved){
-    localStorage.setItem("sqProducts", JSON.stringify(starterProducts));
-    localStorage.setItem("sqCatalogVersion", CATALOG_VERSION);
-    return starterProducts;
+let products = JSON.parse(localStorage.getItem("products")) || [
+  {
+    id:1,
+    name:"Water Basketball Hoop",
+    price:"39.99",
+    image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
+    description:"Floating basketball hoop for pool games.",
+    categories:["Water","Sports","Games","Outdoor"],
+    keywords:"pool floating basketball hoop summer toy"
+  },
+  {
+    id:2,
+    name:"Campfire Starter Kit",
+    price:"14.99",
+    image:"https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&fit=crop&w=800&q=80",
+    description:"Compact fire starter kit for camping and emergencies.",
+    categories:["Camping","Survival","Outdoor"],
+    keywords:"fire starter camping survival emergency hiking"
+  },
+  {
+    id:3,
+    name:"Portable Cleaning Brush Set",
+    price:"19.99",
+    image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+    description:"Useful brush kit for cleaning gear, shoes, tools, and outdoor equipment.",
+    categories:["Cleaning","Tools","Outdoor"],
+    keywords:"cleaning supplies cleaner product brush scrub washing maintenance"
   }
+];
 
-  return JSON.parse(saved);
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const synonymGroups = [
+  ["clean","cleaning","cleaner","supplies","supply","product","products","soap","wash","washing","scrub","brush","sanitize","sanitizer"],
+  ["water","pool","swim","swimming","lake","beach","floating","float","splash"],
+  ["camp","camping","tent","outdoor","outside","hiking","trail"],
+  ["sport","sports","game","games","ball","basketball","football","soccer"],
+  ["survival","emergency","prep","preparedness","safety"],
+  ["tool","tools","gear","equipment","kit"],
+  ["toy","toys","fun","kids","family"],
+  ["light","lights","glow","led","bright"],
+  ["food","cooking","cook","grill","kitchen","snack"],
+  ["travel","portable","compact","carry"]
+];
+
+function normalizeText(text){
+  return String(text || "").toLowerCase().replace(/[^a-z0-9 ]/g," ");
 }
 
-function imageHTML(p){
-  if(p.images && p.images[0]) return `<img src="${p.images[0]}" alt="${p.name}" style="width:100%;height:190px;object-fit:cover;border-radius:10px;">`;
-  return `<div class="placeholder">${p.name}<br><span class="small">Image coming soon</span></div>`;
-}
+function getSearchWords(query){
+  query = normalizeText(query);
+  let words = query.split(/\s+/).filter(Boolean);
+  let expanded = new Set(words);
 
-function buildCategoryDropdown(){
-  const products = getProducts();
-  const categories = [...new Set(products.map(p => p.category).filter(Boolean))].sort();
-  const dropdown = document.getElementById("categorySelect");
-
-  dropdown.innerHTML = `<option value="All">All Categories</option>`;
-
-  categories.forEach(category=>{
-    dropdown.innerHTML += `<option value="${category}">${category}</option>`;
+  words.forEach(word => {
+    synonymGroups.forEach(group => {
+      if(group.includes(word)){
+        group.forEach(similar => expanded.add(similar));
+      }
+    });
   });
 
-  dropdown.value = selectedCategory;
+  return Array.from(expanded);
 }
 
-function filterCategory(category){
-  selectedCategory = category;
-  renderProducts();
-  showOnly("productsPage");
-}
-
-function showOnly(id){
-  document.getElementById("homePage").style.display = "none";
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
-
-  if(id === "homePage"){
-    document.getElementById("homePage").style.display = "grid";
-  } else {
-    document.getElementById(id).classList.add("show");
+function getProductCategories(product){
+  if(Array.isArray(product.categories)){
+    return product.categories;
   }
 
-  window.scrollTo(0,0);
+  if(product.category){
+    return [product.category];
+  }
+
+  return [];
 }
 
-function showHome(){
-  document.getElementById("safeScene").classList.remove("open");
-  showOnly("homePage");
+function productSearchText(product){
+  return normalizeText([
+    product.name,
+    product.description,
+    product.keywords,
+    ...getProductCategories(product)
+  ].join(" "));
 }
 
-function showProducts(){
-  selectedCategory = "All";
-  buildCategoryDropdown();
-  renderProducts();
-  showOnly("productsPage");
+function matchesSearch(product, query){
+  if(!query.trim()){
+    return true;
+  }
+
+  const searchWords = getSearchWords(query);
+  const text = productSearchText(product);
+
+  return searchWords.some(word => text.includes(word));
 }
 
-function openSafe(){
-  document.getElementById("safeScene").classList.add("open");
-  setTimeout(showProducts, 1100);
+function matchesCategory(product, category){
+  if(category === "All"){
+    return true;
+  }
+
+  return getProductCategories(product).includes(category);
+}
+
+function renderCategoryDropdown(){
+  const dropdown = document.getElementById("categoryFilter");
+  dropdown.innerHTML = `<option value="All">All Categories</option>`;
+
+  categories.forEach(cat => {
+    dropdown.innerHTML += `<option value="${cat}">${cat}</option>`;
+  });
 }
 
 function renderProducts(){
-  buildCategoryDropdown();
+  const grid = document.getElementById("productGrid");
+  const selectedCategory = document.getElementById("categoryFilter").value || "All";
+  const searchQuery = document.getElementById("searchInput").value || "";
 
-  const allProducts = getProducts();
-  let products = allProducts;
+  const filteredProducts = products.filter(product => {
+    return matchesCategory(product, selectedCategory) && matchesSearch(product, searchQuery);
+  });
 
-  if(selectedCategory !== "All"){
-    products = allProducts.filter(p => p.category === selectedCategory);
-  }
+  grid.innerHTML = "";
 
-  document.getElementById("productsTitle").innerText =
-    selectedCategory === "All" ? "Products" : selectedCategory + " Products";
-
-  document.getElementById("productGrid").innerHTML = products.map((p)=>{
-    const realIndex = allProducts.findIndex(x => x.name === p.name);
-
-    return `
-      <div class="card" onclick="openProduct(${realIndex})">
-        ${imageHTML(p)}
-        <h3>${p.name}</h3>
-        <p class="desc">${p.desc}</p>
-        <div class="price">$${Number(p.price).toFixed(2)}</div>
-        <div class="tap">View product details</div>
+  if(filteredProducts.length === 0){
+    grid.innerHTML = `
+      <div class="empty">
+        <h3>No products found</h3>
+        <p>Try searching a different word or choose another category.</p>
       </div>
     `;
-  }).join("");
-}
+    return;
+  }
 
-function openProduct(i){
-  const products = getProducts();
-  const p = products[i];
-  const imgs = p.images || [];
-  const similar = products.filter((x,idx)=>idx!==i && x.category===p.category).slice(0,4);
+  filteredProducts.forEach(product => {
+    const productCategories = getProductCategories(product);
 
-  document.getElementById("detailPage").innerHTML = `
-    <button onclick="showProducts()" style="padding:10px 16px;border-radius:10px;margin-bottom:18px">← Back to Products</button>
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${product.image || ''}" onerror="this.style.display='none'">
+        <h3>${product.name}</h3>
 
-    <div class="detailWrap">
-      <div class="box">
-        ${
-          imgs[0]
-          ? `<img class="mainImg" id="mainImg" src="${imgs[0]}" alt="${p.name}" style="width:100%;height:420px;object-fit:cover;border-radius:12px;">`
-          : `<div class="mainPlaceholder">${p.name}<br><span class="small">Main product image coming soon</span></div>`
-        }
-
-        <div class="thumbs">
-          ${
-            imgs.length
-            ? imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'" style="width:75px;height:75px;object-fit:cover;border-radius:9px;">`).join("")
-            : `
-              <div class="thumbPlaceholder">Front</div>
-              <div class="thumbPlaceholder">Side</div>
-              <div class="thumbPlaceholder">In Use</div>
-              <div class="thumbPlaceholder">Box</div>
-            `
-          }
+        <div class="tags">
+          ${productCategories.map(cat => `<span class="tag">${cat}</span>`).join("")}
         </div>
+
+        <p>${product.description || ""}</p>
+        <div class="price">$${product.price}</div>
+        <br>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
-
-      <div class="box">
-        <h2>${p.name}</h2>
-        <p>${p.desc}</p>
-        <button class="likeBtn" onclick="alert('Liked!')">♡ Like</button>
-
-        <div class="sectionGrid">
-          <div>
-            <h3>Product Information</h3>
-            <p><b>Category:</b> ${p.category}</p>
-            <p><b>Available Options:</b> ${p.sizes}</p>
-            <p>Designed for simple everyday use.</p>
-          </div>
-
-          <div>
-            <h3>Shipping Details</h3>
-            <p>${p.shipping}</p>
-            <p class="small">Shipping settings can be edited later in Admin.</p>
-          </div>
-
-          <div>
-            <h3>Reviews</h3>
-            <p>No reviews yet.</p>
-            <p class="small">Be the first to review this product.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="box buyBox">
-        <div class="price">$${Number(p.price).toFixed(2)}</div>
-        <p><b>In stock</b></p>
-
-        <label><b>Option</b></label>
-        <select>
-          ${p.sizes.split(",").map(s=>`<option>${s.trim()}</option>`).join("")}
-        </select>
-
-        <label><b>Quantity</b></label>
-        <select>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-        </select>
-
-        <button class="add" onclick="addCart()">Add to Cart</button>
-        <button class="buy" onclick="addCart();showCart()">Buy Now</button>
-      </div>
-    </div>
-
-    <div class="box" style="margin-top:25px">
-      <h3>Similar Items</h3>
-      <div class="similarGrid">
-        ${
-          similar.length
-          ? similar.map((s)=>`
-            <div class="card">
-              ${imageHTML(s)}
-              <h4>${s.name}</h4>
-              <b>$${Number(s.price).toFixed(2)}</b>
-            </div>
-          `).join("")
-          : `<p>No similar items yet.</p>`
-        }
-      </div>
-    </div>
-  `;
-
-  showOnly("detailPage");
+    `;
+  });
 }
 
-function addCart(){
-  cart++;
-  localStorage.setItem("cartCount", cart);
-  document.getElementById("cartCount").innerText = cart;
+function clearFilters(){
+  document.getElementById("searchInput").value = "";
+  document.getElementById("categoryFilter").value = "All";
+  renderProducts();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function showCart(){
-  document.getElementById("cartText").innerText = `You have ${cart} item(s) in your cart.`;
-  showOnly("cartPage");
+function addToCart(id){
+  const product = products.find(p => p.id === id);
+
+  if(!product){
+    return;
+  }
+
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
+function renderCart(){
+  document.getElementById("cartCount").textContent = cart.length;
+
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += Number(item.price) || 0;
+
+    cartItems.innerHTML += `
+      <div class="cartItem">
+        <strong>${item.name}</strong>
+        <div class="small">$${item.price}</div>
+        <button onclick="removeFromCart(${index})">Remove</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("cartTotal").textContent = total.toFixed(2);
+}
+
+function removeFromCart(index){
+  cart.splice(index,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function toggleCart(){
+  const box = document.getElementById("cartBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  alert("Checkout coming soon!");
+}
+
+renderCategoryDropdown();
 renderProducts();
-buildCategoryDropdown();
+renderCart();
 </script>
 
 </body>
