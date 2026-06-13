@@ -2,146 +2,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Iron Vault</title>
+<title>Side Quests</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#faf7f0;
+  background:#f7efe6;
   color:#111;
 }
 
 header{
-  padding:22px 8%;
+  height:58px;
+  background:#080b10;
+  color:white;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  background:white;
+  justify-content:space-between;
+  padding:0 8%;
+  box-sizing:border-box;
   position:sticky;
   top:0;
-  z-index:10;
-  box-shadow:0 4px 18px rgba(0,0,0,.06);
+  z-index:50;
 }
 
 .logo{
+  font-size:25px;
   font-weight:900;
-  font-size:24px;
 }
 
 nav{
   display:flex;
-  gap:12px;
   align-items:center;
+  gap:16px;
   flex-wrap:wrap;
 }
 
-input,select{
-  padding:11px;
-  border:1px solid #ccc;
+nav a,
+nav button{
+  color:white;
+  background:none;
+  border:0;
+  font-weight:800;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+select,
+input{
+  padding:9px 12px;
   border-radius:10px;
+  border:1px solid #ccc;
   font-size:14px;
 }
 
-button{
-  background:#111;
-  color:white;
-  border:0;
-  border-radius:12px;
-  padding:12px 18px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-button:hover{
-  opacity:.85;
+.searchBox{
+  display:none;
+  width:210px;
 }
 
 .hero{
-  min-height:70vh;
+  min-height:calc(100vh - 58px);
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
   padding:0 8%;
-  gap:40px;
+  box-sizing:border-box;
 }
 
 h1{
-  font-size:72px;
+  font-size:58px;
   line-height:.9;
-  margin:0 0 20px;
+  margin:0 0 18px;
 }
 
 p{
-  font-size:18px;
   color:#555;
+  font-size:16px;
+  line-height:1.5;
 }
 
-.vaultBox{
+.yellowBtn{
+  background:#ffc400;
+  color:#111;
+  border:0;
+  border-radius:999px;
+  padding:14px 28px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.yellowBtn:hover{
+  opacity:.85;
+}
+
+.vaultWrap{
+  display:flex;
+  justify-content:center;
+}
+
+.vault{
+  width:330px;
+  height:330px;
+  background:linear-gradient(145deg,#9ca3aa,#343a40);
+  border-radius:28px;
   display:grid;
   place-items:center;
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
 }
 
-.lock{
-  width:280px;
-  height:330px;
-  border-radius:30px;
-  background:linear-gradient(145deg,#333,#111);
+.door{
+  width:235px;
+  height:235px;
+  background:linear-gradient(145deg,#6e7884,#2c333b);
+  border-radius:18px;
+  border:18px solid #4d5660;
   position:relative;
-  box-shadow:0 30px 70px rgba(0,0,0,.35);
+  box-shadow:inset 0 0 25px rgba(0,0,0,.35);
 }
 
-.lock:before{
+.handle{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:radial-gradient(circle,#d8d2c3,#4b535b);
+  position:absolute;
+  top:78px;
+  left:78px;
+}
+
+.handle:before{
   content:"";
   position:absolute;
-  width:150px;
-  height:120px;
-  border:26px solid #222;
-  border-bottom:0;
-  border-radius:90px 90px 0 0;
-  top:-95px;
-  left:39px;
+  width:120px;
+  height:14px;
+  background:#39414a;
+  top:33px;
+  left:-20px;
+  border-radius:8px;
+  box-shadow:0 -38px 0 #39414a,0 38px 0 #39414a;
+  transform:rotate(45deg);
 }
 
-.dial{
-  width:120px;
-  height:120px;
-  background:radial-gradient(circle,#777,#222);
+.bolt{
+  width:16px;
+  height:16px;
+  background:#c9d0d5;
   border-radius:50%;
   position:absolute;
-  top:80px;
-  left:80px;
-  box-shadow:inset 0 0 20px rgba(255,255,255,.25);
+  box-shadow:inset 0 0 5px #222;
 }
 
-.dial:after{
-  content:"";
-  width:14px;
-  height:45px;
-  background:#ddd;
-  position:absolute;
-  top:18px;
-  left:53px;
-  border-radius:8px;
+.b1{top:22px;left:22px}
+.b2{top:22px;right:22px}
+.b3{bottom:22px;left:22px}
+.b4{bottom:22px;right:22px}
+.b5{top:103px;left:22px}
+.b6{top:103px;right:22px}
+
+.productsPage{
+  display:none;
+  padding:45px 8%;
 }
 
-.shop{
-  padding:40px 8%;
-}
-
-.shopTop{
+.productsTop{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:15px;
   flex-wrap:wrap;
-  margin-bottom:25px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:22px;
+  margin-top:25px;
 }
 
 .card{
@@ -164,30 +200,22 @@ p{
   background:#eee;
 }
 
-.price{
-  font-weight:900;
-  font-size:20px;
+.card h3{
+  margin-bottom:8px;
 }
 
-.tags{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin:8px 0;
+.price{
+  font-size:20px;
+  font-weight:900;
 }
 
 .tag{
-  font-size:12px;
+  display:inline-block;
   background:#eee;
-  padding:5px 8px;
   border-radius:999px;
-}
-
-.empty{
-  background:white;
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  padding:5px 9px;
+  font-size:12px;
+  margin:3px;
 }
 
 .cartBox{
@@ -198,48 +226,62 @@ p{
   border-radius:18px;
   padding:18px;
   width:300px;
+  max-height:70vh;
+  overflow:auto;
   box-shadow:0 8px 30px rgba(0,0,0,.18);
   display:none;
-  z-index:20;
+  z-index:100;
 }
 
 .cartItem{
   border-bottom:1px solid #ddd;
-  padding:8px 0;
+  padding:9px 0;
 }
 
-.small{
-  font-size:13px;
-  color:#777;
+.cartItem button{
+  margin-top:6px;
+  background:#111;
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:7px 10px;
+  cursor:pointer;
 }
 
-a{
-  color:#111;
-  font-weight:900;
-  text-decoration:none;
+.empty{
+  background:white;
+  border-radius:18px;
+  padding:25px;
 }
 
-@media(max-width:800px){
+@media(max-width:850px){
+  header{
+    height:auto;
+    padding:18px 8%;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+
   .hero{
     grid-template-columns:1fr;
     padding-top:50px;
+    gap:35px;
   }
 
   h1{
-    font-size:52px;
+    font-size:46px;
   }
 
-  header{
-    align-items:flex-start;
-    gap:15px;
-    flex-direction:column;
+  .searchBox{
+    width:100%;
   }
 
   nav{
     width:100%;
   }
 
-  nav input,nav select{
+  nav select{
     width:100%;
   }
 }
@@ -249,42 +291,49 @@ a{
 <body>
 
 <header>
-  <div class="logo">IRON VAULT</div>
+  <div class="logo">Side Quests</div>
 
   <nav>
-    <input id="searchInput" placeholder="Search products..." oninput="renderProducts()">
+    <a href="#" onclick="goHome()">Home</a>
+    <button onclick="openProducts()">Products</button>
+
+    <input class="searchBox" id="searchInput" placeholder="Search products..." oninput="renderProducts()">
 
     <select id="categoryFilter" onchange="renderProducts()">
       <option value="All">All Categories</option>
     </select>
 
-    <button onclick="clearFilters()">Home</button>
-    <button onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
-    <a href="admin.html">Admin</a>
+    <button onclick="toggleCart()">Cart: <span id="cartCount">0</span></button>
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="homePage">
   <div>
-    <h1>Unlock Gear You’ll Actually Want</h1>
+    <h1>Better. Faster.<br>Stronger. Products.</h1>
     <p>
-      Interesting, useful, almost-need-to-have products for outdoors,
-      water, games, survival, sports, and more.
+      Useful, clever, almost-need-to-have products for home, kitchen, pets,
+      car, travel, cleaning, and everyday upgrades.
     </p>
-    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
-      Shop Now
-    </button>
+    <button class="yellowBtn" onclick="openProducts()">Open Vault</button>
   </div>
 
-  <div class="vaultBox">
-    <div class="lock">
-      <div class="dial"></div>
+  <div class="vaultWrap">
+    <div class="vault">
+      <div class="door">
+        <div class="bolt b1"></div>
+        <div class="bolt b2"></div>
+        <div class="bolt b3"></div>
+        <div class="bolt b4"></div>
+        <div class="bolt b5"></div>
+        <div class="bolt b6"></div>
+        <div class="handle"></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="shop" id="shop">
-  <div class="shopTop">
+<section class="productsPage" id="productsPage">
+  <div class="productsTop">
     <h2>Products</h2>
   </div>
 
@@ -295,19 +344,27 @@ a{
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <h3>Total: $<span id="cartTotal">0.00</span></h3>
-  <button onclick="checkout()">Checkout</button>
+  <button class="yellowBtn" onclick="checkout()">Checkout</button>
 </div>
 
 <script>
 let categories = JSON.parse(localStorage.getItem("categories")) || [
-  "Camping",
-  "Water",
-  "Sports",
-  "Games",
-  "Survival",
-  "Outdoor",
+  "Home",
+  "Kitchen",
+  "Pets",
+  "Car",
+  "Travel",
   "Cleaning",
-  "Tools"
+  "Sports",
+  "Water",
+  "Games",
+  "Camping",
+  "Outdoor",
+  "Tools",
+  "Safety",
+  "Kids",
+  "Tech",
+  "Storage"
 ];
 
 let products = JSON.parse(localStorage.getItem("products")) || [
@@ -315,59 +372,516 @@ let products = JSON.parse(localStorage.getItem("products")) || [
     id:1,
     name:"Water Basketball Hoop",
     price:"39.99",
+    description:"A floating pool basketball hoop for summer games.",
     image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
-    description:"Floating basketball hoop for pool games.",
-    categories:["Water","Sports","Games","Outdoor"],
-    keywords:"pool floating basketball hoop summer toy"
+    categories:["Water","Sports","Games","Kids","Outdoor"],
+    keywords:"pool swim floating basketball ball summer toy"
   },
   {
     id:2,
-    name:"Campfire Starter Kit",
-    price:"14.99",
-    image:"https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&fit=crop&w=800&q=80",
-    description:"Compact fire starter kit for camping and emergencies.",
-    categories:["Camping","Survival","Outdoor"],
-    keywords:"fire starter camping survival emergency hiking"
+    name:"Portable Cleaning Brush Kit",
+    price:"19.99",
+    description:"A compact brush kit for cleaning shoes, tools, gear, and tight spaces.",
+    image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+    categories:["Cleaning","Home","Tools","Travel"],
+    keywords:"clean cleaning cleaner supplies product scrub brush wash"
   },
   {
     id:3,
-    name:"Portable Cleaning Brush Set",
+    name:"Magnetic Cable Clips",
+    price:"12.99",
+    description:"Small clips that keep charging cables from falling behind desks.",
+    image:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+    categories:["Tech","Home","Storage"],
+    keywords:"cord cable charger desk organize organizer"
+  },
+  {
+    id:4,
+    name:"Car Seat Gap Catcher",
+    price:"16.99",
+    description:"Stops phones, snacks, coins, and keys from falling between car seats.",
+    image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Travel","Storage"],
+    keywords:"auto vehicle seat organizer catch keys phone"
+  },
+  {
+    id:5,
+    name:"Pet Paw Cleaner Cup",
+    price:"18.99",
+    description:"A soft silicone cup that cleans muddy pet paws after walks.",
+    image:"https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80",
+    categories:["Pets","Cleaning","Home","Outdoor"],
+    keywords:"dog cat paw mud muddy wash cleaner"
+  },
+  {
+    id:6,
+    name:"Collapsible Travel Bowl",
+    price:"9.99",
+    description:"A fold-flat bowl for pets, camping, hiking, and road trips.",
+    image:"https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?auto=format&fit=crop&w=800&q=80",
+    categories:["Pets","Travel","Camping","Outdoor"],
+    keywords:"dog bowl portable collapsible hiking food water"
+  },
+  {
+    id:7,
+    name:"Clip-On Snack Tray",
+    price:"22.99",
+    description:"A small tray that clips onto chairs, strollers, or camping seats.",
+    image:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+    categories:["Home","Travel","Camping","Kids"],
+    keywords:"food snack tray chair clip portable"
+  },
+  {
+    id:8,
+    name:"Reusable Water Balloons",
+    price:"24.99",
+    description:"Fast-fill reusable water balloons for backyard games.",
+    image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    categories:["Water","Games","Kids","Outdoor"],
+    keywords:"summer splash pool toy reusable"
+  },
+  {
+    id:9,
+    name:"Foldable Car Trash Bin",
+    price:"14.99",
+    description:"Keeps wrappers, receipts, and small trash contained in the car.",
+    image:"https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Cleaning","Travel","Storage"],
+    keywords:"vehicle garbage trash clean organize"
+  },
+  {
+    id:10,
+    name:"Mini First Aid Tin",
+    price:"11.99",
+    description:"A pocket-sized first aid kit for bags, cars, and camping.",
+    image:"https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+    categories:["Safety","Camping","Travel","Car","Outdoor"],
+    keywords:"emergency medical bandage survival kit"
+  },
+  {
+    id:11,
+    name:"Sink Splash Guard",
+    price:"13.99",
+    description:"Helps stop water from splashing behind kitchen or bathroom sinks.",
+    image:"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Cleaning"],
+    keywords:"sink water splash kitchen bathroom clean"
+  },
+  {
+    id:12,
+    name:"Magnetic Measuring Spoon Set",
+    price:"17.99",
+    description:"Stackable measuring spoons that stay together in drawers.",
+    image:"https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Storage"],
+    keywords:"cook cooking baking measure spoon organize"
+  },
+  {
+    id:13,
+    name:"Backpack Rain Cover",
+    price:"15.99",
+    description:"A lightweight waterproof cover for backpacks and travel bags.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+    categories:["Travel","Camping","Outdoor","Safety"],
+    keywords:"rain waterproof hiking bag cover"
+  },
+  {
+    id:14,
+    name:"Glow Tent Stakes",
+    price:"18.99",
+    description:"Tent stakes with glow tops so they are easier to see at night.",
+    image:"https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80",
+    categories:["Camping","Outdoor","Safety","Tools"],
+    keywords:"tent stake glow light night camping"
+  },
+  {
+    id:15,
+    name:"Under-Sink Organizer Shelf",
+    price:"29.99",
+    description:"Adjustable storage shelf for cleaning supplies under sinks.",
+    image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+    categories:["Home","Cleaning","Storage","Kitchen"],
+    keywords:"cleaning supplies organize cabinet shelf product"
+  },
+  {
+    id:16,
+    name:"Dog Leash Light",
+    price:"12.99",
+    description:"A clip-on safety light for nighttime dog walks.",
+    image:"https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=800&q=80",
+    categories:["Pets","Safety","Outdoor","Tech"],
+    keywords:"dog walking night led glow light"
+  },
+  {
+    id:17,
+    name:"Cup Holder Expander",
+    price:"21.99",
+    description:"Makes small car cup holders fit large bottles and mugs.",
+    image:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Travel","Storage"],
+    keywords:"vehicle drink bottle holder adapter"
+  },
+  {
+    id:18,
+    name:"Portable Door Lock",
+    price:"13.99",
+    description:"Extra temporary lock for hotels, dorms, and travel.",
+    image:"https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
+    categories:["Travel","Safety","Home"],
+    keywords:"hotel security lock safety door"
+  },
+  {
+    id:19,
+    name:"Reusable Produce Bags",
+    price:"10.99",
+    description:"Washable mesh bags for groceries and kitchen storage.",
+    image:"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Travel","Storage"],
+    keywords:"grocery produce reusable food bag"
+  },
+  {
+    id:20,
+    name:"Camping Soap Sheets",
+    price:"8.99",
+    description:"Pocket soap sheets for camping, travel, and emergency kits.",
+    image:"https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=800&q=80",
+    categories:["Camping","Travel","Cleaning","Outdoor"],
+    keywords:"soap wash clean cleaning hygiene"
+  },
+  {
+    id:21,
+    name:"Mini Magnetic Flashlight",
+    price:"15.99",
+    description:"Small flashlight with magnetic base for cars, camping, and repairs.",
+    image:"https://images.unsplash.com/photo-1510451439818-f43f44bb2b33?auto=format&fit=crop&w=800&q=80",
+    categories:["Tools","Car","Camping","Safety","Tech"],
+    keywords:"light led flashlight emergency repair"
+  },
+  {
+    id:22,
+    name:"Fridge Can Organizer",
+    price:"18.99",
+    description:"Keeps cans stacked neatly inside the fridge.",
+    image:"https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Storage"],
+    keywords:"drink soda fridge organize"
+  },
+  {
+    id:23,
+    name:"Cord Wrap Labels",
+    price:"11.99",
+    description:"Reusable tags that label and wrap cords, hoses, and cables.",
+    image:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+    categories:["Tools","Storage","Home","Tech"],
+    keywords:"cord cable hose label organizer wrap"
+  },
+  {
+    id:24,
+    name:"Clip-On Towel Holder",
+    price:"9.99",
+    description:"Holds towels to chairs, coolers, strollers, or beach bags.",
+    image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    categories:["Water","Travel","Camping","Outdoor"],
+    keywords:"beach pool towel clip holder"
+  },
+  {
+    id:25,
+    name:"Collapsible Laundry Basket",
+    price:"24.99",
+    description:"A space-saving laundry basket for home, dorms, and travel.",
+    image:"https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=800&q=80",
+    categories:["Home","Cleaning","Storage","Travel"],
+    keywords:"laundry clothes basket foldable clean"
+  },
+  {
+    id:26,
+    name:"No-Spill Pet Water Bowl",
+    price:"20.99",
+    description:"A travel-friendly pet bowl that reduces spills in cars.",
+    image:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+    categories:["Pets","Car","Travel","Water"],
+    keywords:"dog cat bowl drink no spill"
+  },
+  {
+    id:27,
+    name:"Silicone Stove Gap Cover",
+    price:"12.99",
+    description:"Blocks crumbs and spills from falling between stove and counter.",
+    image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Cleaning","Home"],
+    keywords:"crumb spill stove counter clean"
+  },
+  {
+    id:28,
+    name:"Waterproof Phone Pouch",
+    price:"13.99",
+    description:"Protects phones at pools, lakes, beaches, and water parks.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+    categories:["Water","Travel","Outdoor","Safety"],
+    keywords:"phone waterproof beach pool lake case"
+  },
+  {
+    id:29,
+    name:"Mini Tool Roll",
+    price:"27.99",
+    description:"A compact roll-up pouch for small tools and emergency gear.",
+    image:"https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=800&q=80",
+    categories:["Tools","Car","Camping","Storage"],
+    keywords:"tool kit repair organize pouch"
+  },
+  {
+    id:30,
+    name:"Reusable Ice Pack Strips",
+    price:"16.99",
+    description:"Flexible ice strips for lunch boxes, coolers, and injuries.",
+    image:"https://images.unsplash.com/photo-1523293915678-d126868e96f1?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Travel","Camping","Safety"],
+    keywords:"cold cooler lunch ice pack"
+  },
+  {
+    id:31,
+    name:"Backseat Tablet Holder",
     price:"19.99",
-    image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
-    description:"Useful brush kit for cleaning gear, shoes, tools, and outdoor equipment.",
-    categories:["Cleaning","Tools","Outdoor"],
-    keywords:"cleaning supplies cleaner product brush scrub washing maintenance"
+    description:"Holds a tablet behind the car seat for road trips.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Travel","Kids","Tech"],
+    keywords:"ipad tablet movie road trip vehicle"
+  },
+  {
+    id:32,
+    name:"Glow Backyard Ring Toss",
+    price:"26.99",
+    description:"A glow-in-the-dark ring toss game for nights outside.",
+    image:"https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
+    categories:["Games","Outdoor","Kids","Sports"],
+    keywords:"yard game glow night family"
+  },
+  {
+    id:33,
+    name:"Kitchen Bag Holder Stand",
+    price:"15.99",
+    description:"Holds storage bags open while pouring food or leftovers.",
+    image:"https://images.unsplash.com/photo-1556911073-38141963c9e0?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Storage"],
+    keywords:"food bag holder cooking leftovers"
+  },
+  {
+    id:34,
+    name:"Shower Corner Scraper",
+    price:"9.99",
+    description:"A small scraper brush for tile corners and shower tracks.",
+    image:"https://images.unsplash.com/photo-1581579186913-45ac3e6efe93?auto=format&fit=crop&w=800&q=80",
+    categories:["Cleaning","Home","Tools"],
+    keywords:"bathroom shower clean cleaner scrub brush"
+  },
+  {
+    id:35,
+    name:"Bike Cup Holder",
+    price:"17.99",
+    description:"Attachable holder for bikes, scooters, strollers, or wagons.",
+    image:"https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80",
+    categories:["Sports","Travel","Outdoor","Kids"],
+    keywords:"bike scooter stroller drink bottle"
+  },
+  {
+    id:36,
+    name:"Travel Shoe Bags",
+    price:"12.99",
+    description:"Keeps dirty shoes away from clothes inside luggage.",
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+    categories:["Travel","Cleaning","Storage"],
+    keywords:"shoe luggage bag dirty clean"
+  },
+  {
+    id:37,
+    name:"Camping Utensil Multi-Tool",
+    price:"18.99",
+    description:"Fork, spoon, opener, and small tool in one camping piece.",
+    image:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
+    categories:["Camping","Kitchen","Tools","Travel"],
+    keywords:"fork spoon camping cooking tool"
+  },
+  {
+    id:38,
+    name:"Pool Toy Storage Net",
+    price:"23.99",
+    description:"Mesh storage net for pool toys, balls, and floats.",
+    image:"https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80",
+    categories:["Water","Storage","Kids","Outdoor"],
+    keywords:"pool toy float ball organize net"
+  },
+  {
+    id:39,
+    name:"Emergency Car Escape Tool",
+    price:"14.99",
+    description:"Window breaker and seatbelt cutter for car safety kits.",
+    image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Safety","Tools","Travel"],
+    keywords:"vehicle emergency escape window seatbelt"
+  },
+  {
+    id:40,
+    name:"Pantry Label Clips",
+    price:"10.99",
+    description:"Reusable clips for labeling bags, snacks, bins, and pantry items.",
+    image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Home","Storage"],
+    keywords:"label pantry snack bag organize"
+  },
+  {
+    id:41,
+    name:"Portable Camp Lantern",
+    price:"21.99",
+    description:"Compact lantern for tents, cars, patios, and emergencies.",
+    image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80",
+    categories:["Camping","Outdoor","Safety","Tech"],
+    keywords:"light lantern led emergency tent"
+  },
+  {
+    id:42,
+    name:"Reusable Grill Mat",
+    price:"13.99",
+    description:"Nonstick mat for grills, camping meals, and backyard cooking.",
+    image:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Camping","Outdoor"],
+    keywords:"grill cooking food bbq mat"
+  },
+  {
+    id:43,
+    name:"Kids Snack Spinner",
+    price:"17.99",
+    description:"A divided snack container that rotates between treat sections.",
+    image:"https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80",
+    categories:["Kids","Kitchen","Travel"],
+    keywords:"snack food child container"
+  },
+  {
+    id:44,
+    name:"Car Vent Dust Brush",
+    price:"8.99",
+    description:"A tiny brush for cleaning vents, dashboards, keyboards, and cracks.",
+    image:"https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=800&q=80",
+    categories:["Car","Cleaning","Tools","Tech"],
+    keywords:"dust clean cleaner brush vent keyboard"
+  },
+  {
+    id:45,
+    name:"Floating Drink Caddy",
+    price:"20.99",
+    description:"Floating tray for pool drinks, snacks, and small items.",
+    image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    categories:["Water","Outdoor","Games","Travel"],
+    keywords:"pool float floating drink snack"
+  },
+  {
+    id:46,
+    name:"Closet Shelf Dividers",
+    price:"18.99",
+    description:"Dividers that keep folded clothes and towels stacked neatly.",
+    image:"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+    categories:["Home","Storage","Cleaning"],
+    keywords:"closet clothes organize shelf towel"
+  },
+  {
+    id:47,
+    name:"Pocket Picnic Blanket",
+    price:"24.99",
+    description:"A foldable blanket that packs small for parks, beaches, and games.",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+    categories:["Outdoor","Travel","Camping","Water"],
+    keywords:"blanket beach park picnic portable"
+  },
+  {
+    id:48,
+    name:"Fridge Odor Pods",
+    price:"9.99",
+    description:"Small reusable odor-control pods for fridges, shoes, and gym bags.",
+    image:"https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?auto=format&fit=crop&w=800&q=80",
+    categories:["Kitchen","Cleaning","Home"],
+    keywords:"odor smell fridge clean fresh"
+  },
+  {
+    id:49,
+    name:"Sports Ball Pump Kit",
+    price:"11.99",
+    description:"Small pump kit for basketballs, soccer balls, footballs, and pool toys.",
+    image:"https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
+    categories:["Sports","Games","Kids","Water"],
+    keywords:"ball pump inflate basketball soccer football"
+  },
+  {
+    id:50,
+    name:"Universal Gear Strap",
+    price:"13.99",
+    description:"Adjustable strap for hoses, cords, camping gear, tools, and sports items.",
+    image:"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80",
+    categories:["Tools","Camping","Sports","Storage","Outdoor"],
+    keywords:"strap tie wrap cord hose gear organize"
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const synonymGroups = [
-  ["clean","cleaning","cleaner","supplies","supply","product","products","soap","wash","washing","scrub","brush","sanitize","sanitizer"],
-  ["water","pool","swim","swimming","lake","beach","floating","float","splash"],
-  ["camp","camping","tent","outdoor","outside","hiking","trail"],
-  ["sport","sports","game","games","ball","basketball","football","soccer"],
-  ["survival","emergency","prep","preparedness","safety"],
-  ["tool","tools","gear","equipment","kit"],
-  ["toy","toys","fun","kids","family"],
-  ["light","lights","glow","led","bright"],
-  ["food","cooking","cook","grill","kitchen","snack"],
-  ["travel","portable","compact","carry"]
+const synonyms = [
+  ["cleaning","clean","cleaner","supplies","supply","product","products","scrub","wash","washing","brush","soap","sanitize","sanitizer","dust","odor","fresh"],
+  ["water","pool","swim","swimming","floating","float","lake","beach","splash"],
+  ["sports","sport","game","games","ball","basketball","football","soccer","yard"],
+  ["travel","portable","trip","roadtrip","road","car","vehicle","auto"],
+  ["home","house","everyday","room","closet","pantry"],
+  ["kitchen","food","cook","cooking","grill","snack","fridge","pantry"],
+  ["pet","pets","dog","cat","paw","leash"],
+  ["camp","camping","tent","hiking","outdoor","outside","trail"],
+  ["safety","safe","emergency","survival","firstaid","medical","security"],
+  ["tool","tools","gear","equipment","kit","repair"],
+  ["storage","organize","organizer","holder","shelf","bin","bag","wrap","label"],
+  ["tech","charger","cable","cord","phone","tablet","light","led"]
 ];
+
+function goHome(){
+  window.history.pushState(null,"","index.html");
+  showHomePage();
+}
+
+function openProducts(){
+  window.history.pushState(null,"","index.html?page=products");
+  showProductsPage();
+}
+
+function showProductsPage(){
+  document.getElementById("homePage").style.display="grid";
+  document.getElementById("homePage").style.display="none";
+  document.getElementById("productsPage").style.display="block";
+  document.getElementById("searchInput").style.display="inline-block";
+  renderProducts();
+}
+
+function showHomePage(){
+  document.getElementById("homePage").style.display="grid";
+  document.getElementById("productsPage").style.display="none";
+  document.getElementById("searchInput").style.display="none";
+}
+
+function renderCategories(){
+  let dropdown = document.getElementById("categoryFilter");
+  dropdown.innerHTML = '<option value="All">All Categories</option>';
+
+  categories.forEach(cat=>{
+    dropdown.innerHTML += `<option value="${cat}">${cat}</option>`;
+  });
+}
 
 function normalizeText(text){
   return String(text || "").toLowerCase().replace(/[^a-z0-9 ]/g," ");
 }
 
-function getSearchWords(query){
-  query = normalizeText(query);
-  let words = query.split(/\s+/).filter(Boolean);
+function expandSearch(query){
+  let words = normalizeText(query).split(/\s+/).filter(Boolean);
   let expanded = new Set(words);
 
-  words.forEach(word => {
-    synonymGroups.forEach(group => {
+  words.forEach(word=>{
+    synonyms.forEach(group=>{
       if(group.includes(word)){
-        group.forEach(similar => expanded.add(similar));
+        group.forEach(similarWord=>expanded.add(similarWord));
       }
     });
   });
@@ -387,13 +901,21 @@ function getProductCategories(product){
   return [];
 }
 
-function productSearchText(product){
+function productText(product){
   return normalizeText([
     product.name,
     product.description,
     product.keywords,
-    ...getProductCategories(product)
+    getProductCategories(product).join(" ")
   ].join(" "));
+}
+
+function matchesCategory(product, selectedCategory){
+  if(selectedCategory === "All"){
+    return true;
+  }
+
+  return getProductCategories(product).includes(selectedCategory);
 }
 
 function matchesSearch(product, query){
@@ -401,105 +923,101 @@ function matchesSearch(product, query){
     return true;
   }
 
-  const searchWords = getSearchWords(query);
-  const text = productSearchText(product);
+  let expandedWords = expandSearch(query);
+  let text = productText(product);
 
-  return searchWords.some(word => text.includes(word));
-}
-
-function matchesCategory(product, category){
-  if(category === "All"){
-    return true;
-  }
-
-  return getProductCategories(product).includes(category);
-}
-
-function renderCategoryDropdown(){
-  const dropdown = document.getElementById("categoryFilter");
-  dropdown.innerHTML = `<option value="All">All Categories</option>`;
-
-  categories.forEach(cat => {
-    dropdown.innerHTML += `<option value="${cat}">${cat}</option>`;
-  });
+  return expandedWords.some(word=>text.includes(word));
 }
 
 function renderProducts(){
-  const grid = document.getElementById("productGrid");
-  const selectedCategory = document.getElementById("categoryFilter").value || "All";
-  const searchQuery = document.getElementById("searchInput").value || "";
+  let grid = document.getElementById("productGrid");
+  let selectedCategory = document.getElementById("categoryFilter").value || "All";
+  let searchQuery = document.getElementById("searchInput").value || "";
 
-  const filteredProducts = products.filter(product => {
-    return matchesCategory(product, selectedCategory) && matchesSearch(product, searchQuery);
+  let filtered = products.filter(product=>{
+    return matchesCategory(product,selectedCategory) && matchesSearch(product,searchQuery);
   });
 
   grid.innerHTML = "";
 
-  if(filteredProducts.length === 0){
+  if(filtered.length === 0){
     grid.innerHTML = `
       <div class="empty">
         <h3>No products found</h3>
-        <p>Try searching a different word or choose another category.</p>
+        <p>Try a different search word or category.</p>
       </div>
     `;
     return;
   }
 
-  filteredProducts.forEach(product => {
-    const productCategories = getProductCategories(product);
+  filtered.forEach(product=>{
+    let productCategories = getProductCategories(product);
 
     grid.innerHTML += `
       <div class="card">
         <img src="${product.image || ''}" onerror="this.style.display='none'">
         <h3>${product.name}</h3>
 
-        <div class="tags">
-          ${productCategories.map(cat => `<span class="tag">${cat}</span>`).join("")}
+        <div>
+          ${productCategories.map(cat=>`<span class="tag">${cat}</span>`).join("")}
         </div>
 
         <p>${product.description || ""}</p>
         <div class="price">$${product.price}</div>
         <br>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
+        <button class="yellowBtn" onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
     `;
   });
 }
 
-function clearFilters(){
-  document.getElementById("searchInput").value = "";
-  document.getElementById("categoryFilter").value = "All";
-  renderProducts();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
 function addToCart(id){
-  const product = products.find(p => p.id === id);
+  let product = products.find(item=>item.id === id);
 
   if(!product){
     return;
   }
 
-  cart.push(product);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  let existingItem = cart.find(item=>item.id === id);
+
+  if(existingItem){
+    existingItem.quantity += 1;
+  }else{
+    cart.push({
+      id:product.id,
+      name:product.name,
+      price:product.price,
+      quantity:1
+    });
+  }
+
+  localStorage.setItem("cart",JSON.stringify(cart));
   renderCart();
 }
 
 function renderCart(){
-  document.getElementById("cartCount").textContent = cart.length;
+  document.getElementById("cartCount").textContent = cart.reduce((sum,item)=>sum + item.quantity,0);
 
-  const cartItems = document.getElementById("cartItems");
-  cartItems.innerHTML = "";
-
+  let cartItems = document.getElementById("cartItems");
   let total = 0;
 
-  cart.forEach((item, index) => {
-    total += Number(item.price) || 0;
+  cartItems.innerHTML = "";
+
+  if(cart.length === 0){
+    cartItems.innerHTML = "<p>Your cart is empty.</p>";
+  }
+
+  cart.forEach((item,index)=>{
+    let itemTotal = Number(item.price) * item.quantity;
+    total += itemTotal;
 
     cartItems.innerHTML += `
       <div class="cartItem">
         <strong>${item.name}</strong>
-        <div class="small">$${item.price}</div>
+        <p>Qty: ${item.quantity}</p>
+        <p>$${item.price} each</p>
+        <button onclick="changeQty(${index},1)">+</button>
+        <button onclick="changeQty(${index},-1)">-</button>
         <button onclick="removeFromCart(${index})">Remove</button>
       </div>
     `;
@@ -508,15 +1026,26 @@ function renderCart(){
   document.getElementById("cartTotal").textContent = total.toFixed(2);
 }
 
+function changeQty(index,amount){
+  cart[index].quantity += amount;
+
+  if(cart[index].quantity <= 0){
+    cart.splice(index,1);
+  }
+
+  localStorage.setItem("cart",JSON.stringify(cart));
+  renderCart();
+}
+
 function removeFromCart(index){
   cart.splice(index,1);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart",JSON.stringify(cart));
   renderCart();
 }
 
 function toggleCart(){
-  const box = document.getElementById("cartBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
+  let cartBox = document.getElementById("cartBox");
+  cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
 }
 
 function checkout(){
@@ -528,9 +1057,14 @@ function checkout(){
   alert("Checkout coming soon!");
 }
 
-renderCategoryDropdown();
-renderProducts();
+renderCategories();
 renderCart();
+
+if(window.location.href.includes("page=products")){
+  showProductsPage();
+}else{
+  showHomePage();
+}
 </script>
 
 </body>
