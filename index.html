@@ -1,84 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Side Quests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
-header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
-.logo{font-size:30px;font-weight:900}
-nav button{background:none;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
-.cart{font-weight:900}
+body{margin:0;font-family:Arial;background:#f3f4f6;color:#111}
+header{height:70px;background:#111827;color:white;display:flex;justify-content:space-between;align-items:center;padding:0 6%;position:sticky;top:0}
+.logo{font-size:28px;font-weight:900}
 button{cursor:pointer;border:0;font-weight:900}
-.page{display:none;padding:34px 5%}
-.page.show{display:block}
-
-/* HOME */
-.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
-h1{font-size:76px;line-height:.9;margin:0 0 20px;letter-spacing:-4px}
-.hero p{font-size:20px;color:#444;line-height:1.5}
-.openBtn{background:#f5c542;border-radius:999px;padding:16px 30px;font-size:16px}
-
-/* NEW VAULT */
-.vaultScene{height:540px;display:flex;align-items:center;justify-content:center;perspective:1600px}
-.wall{width:560px;height:540px;border-radius:34px;background:linear-gradient(135deg,#aab2bb,#4b5563);box-shadow:inset 0 0 55px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);position:absolute}
-.opening{width:400px;height:440px;background:#111827;border-radius:20px;position:absolute;box-shadow:inset 0 0 55px #000}
-.door{width:425px;height:465px;border-radius:26px;background:linear-gradient(135deg,#e5e7eb,#9ca3af 25%,#64748b 55%,#303741);border:16px solid #6b7280;position:absolute;box-shadow:inset 0 0 45px #111,0 25px 55px rgba(0,0,0,.45);transform-origin:left center;transition:1.25s}
-.vaultScene.open .door{transform:rotateY(-105deg) translateX(-18px)}
-.panel{position:absolute;inset:38px;border:10px solid #aab2bb;border-radius:18px}
-.wheel{position:absolute;width:155px;height:155px;border-radius:50%;border:18px solid #d1d5db;top:145px;left:135px}
-.wheel span{position:absolute;width:138px;height:16px;background:linear-gradient(90deg,#374151,#fff,#374151);top:51px;left:-10px;border-radius:999px}
-.wheel span:nth-child(2){transform:rotate(60deg)}
-.wheel span:nth-child(3){transform:rotate(-60deg)}
-.wheel:after{content:"";position:absolute;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,#fff,#555);top:31px;left:31px;border:5px solid #374151}
-.bolt{position:absolute;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3af,#374151);border:3px solid #374151}
-.b1{top:30px;left:44px}.b2{top:30px;right:44px}.b3{bottom:30px;left:44px}.b4{bottom:30px;right:44px}
-.b5{top:105px;left:28px}.b6{top:105px;right:28px}.b7{bottom:105px;left:28px}.b8{bottom:105px;right:28px}
-
-/* PRODUCTS */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:22px;margin-top:25px}
-.card{background:white;border-radius:12px;border:1px solid #ddd;padding:14px;cursor:pointer;transition:.2s}
-.card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
-.photo{height:190px;border-radius:9px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
-.card h3{font-size:17px;margin:12px 0 6px}
-.desc{font-size:14px;min-height:58px;color:#555}
+nav button{background:transparent;color:white;margin-left:18px}
+.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:50px 6%;gap:40px;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
+h1{font-size:70px;line-height:.9;margin:0 0 20px}
+.openBtn{background:#f5c542;padding:16px 28px;border-radius:999px}
+.vault{height:430px;background:linear-gradient(135deg,#9ca3af,#374151);border-radius:35px;display:grid;place-items:center;box-shadow:inset 0 0 50px #111,0 30px 60px #999}
+.vaultDoor{width:300px;height:340px;background:linear-gradient(135deg,#e5e7eb,#64748b,#1f2937);border:16px solid #6b7280;border-radius:22px;display:grid;place-items:center;transition:1s}
+.vault.open .vaultDoor{transform:rotateY(-75deg)}
+.wheel{width:140px;height:140px;border-radius:50%;border:18px solid #d1d5db}
+.page{display:none;padding:35px 5%}
+.show{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px;cursor:pointer}
+.card img,.placeholder{width:100%;height:190px;border-radius:10px;object-fit:cover;background:#dbe1e8;display:grid;place-items:center;text-align:center;font-weight:900;color:#475569}
 .price{font-size:24px;font-weight:900;margin:10px 0}
-.tap{font-size:13px;font-weight:900;color:#2563eb}
-
-/* PRODUCT DETAIL PAGE */
-.detailWrap{display:grid;grid-template-columns:1.05fr 1fr 310px;gap:28px;align-items:start}
-.gallery{background:white;border:1px solid #ddd;border-radius:14px;padding:16px}
-.mainPhoto{height:430px;border-radius:12px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-size:22px;font-weight:900;color:#475569;padding:25px}
-.thumbs{display:flex;gap:10px;margin-top:12px}
-.thumb{width:78px;height:78px;border-radius:10px;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569;cursor:pointer}
-.info,.buyBox,.sectionBox{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
-.info h2{font-size:34px;margin:0 0 10px}
-.likeBtn{background:#eef2ff;color:#1d4ed8;border-radius:999px;padding:10px 16px;margin:10px 0}
-.optionRow{margin:18px 0}
-.optionRow label{display:block;font-weight:900;margin-bottom:8px}
-select,.qty{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px}
-.buyBox{position:sticky;top:92px}
-.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:14px}
-.buyNow{width:100%;padding:15px;background:#f5a623;border-radius:999px;margin-top:10px}
-.small{font-size:13px;color:#555}
-.detailsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:24px}
-.sectionBox h3{margin-top:0}
-.review{border-top:1px solid #eee;padding-top:14px;margin-top:14px}
-.similarGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:16px}
-.similar{background:white;border:1px solid #ddd;border-radius:12px;padding:12px;cursor:pointer}
-.similar .photo{height:120px}
-
-@media(max-width:1000px){
-.hero{grid-template-columns:1fr;text-align:center}
-h1{font-size:54px}
-.detailWrap{grid-template-columns:1fr}
-.buyBox{position:static}
-}
+.detail{display:grid;grid-template-columns:1fr 1fr 300px;gap:25px}
+.box{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
+.mainImg{width:100%;height:420px;object-fit:cover;border-radius:12px;background:#ddd}
+.thumbs{display:flex;gap:10px;margin-top:10px}
+.thumbs img{width:75px;height:75px;object-fit:cover;border-radius:8px;cursor:pointer}
+.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:15px}
+.buy{width:100%;padding:15px;background:#f5a623;border-radius:999px;margin-top:10px}
+.similarGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.small{color:#555;font-size:14px}
+@media(max-width:900px){.hero,.detail{grid-template-columns:1fr}h1{font-size:52px}}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -87,262 +42,167 @@ h1{font-size:54px}
     <button onclick="showHome()">Home</button>
     <button onclick="showProducts()">Products</button>
   </nav>
-  <div class="cart">Cart: <span id="cartCount">0</span></div>
+  <div>Cart: <span id="cartCount">0</span></div>
 </header>
 
-<section class="hero" id="homePage">
+<section class="hero" id="home">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
-    <p>Trending-style products for kitchens, pets, cars, cleaning, storage, travel, and everyday problems.</p>
+    <p>Useful trending-style products for home, kitchen, pets, car, travel, and everyday upgrades.</p>
     <button class="openBtn" onclick="openVault()">Open Vault</button>
   </div>
-  <div class="vaultScene" id="vaultScene" onclick="openVault()">
-    <div class="wall"></div>
-    <div class="opening"></div>
-    <div class="door">
-      <div class="panel"></div>
-      <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
-      <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
-      <div class="wheel"><span></span><span></span><span></span></div>
-    </div>
+  <div class="vault" id="vault" onclick="openVault()">
+    <div class="vaultDoor"><div class="wheel"></div></div>
   </div>
 </section>
 
 <main class="page" id="productsPage">
-  <h2>Side Quests Products</h2>
-  <p>Click a product to view the full product page.</p>
-  <div class="grid" id="grid"></div>
+  <h2>Products</h2>
+  <div class="grid" id="productGrid"></div>
 </main>
 
 <main class="page" id="detailPage"></main>
 
 <main class="page" id="cartPage">
-  <h2>Your Cart</h2>
-  <div class="sectionBox">
-    <p id="cartMessage">Your cart is empty.</p>
+  <div class="box">
+    <h2>Your Cart</h2>
+    <p id="cartText">Your cart is empty.</p>
   </div>
 </main>
 
 <script>
-let cart = 0;
-let likes = {};
-let currentProduct = null;
+let cart = Number(localStorage.getItem("cartCount") || 0);
+document.getElementById("cartCount").innerText = cart;
 
-const products = [
-["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99,"Kitchen","Small, Medium, Large"],
-["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99,"Kitchen","Standard"],
-["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99,"Cleaning","Small, Medium, Large"],
-["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99,"Kitchen","2-Pack, 4-Pack"],
-["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99,"Kitchen","250ml, 500ml"],
-["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99,"Pets","Standard"],
-["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99,"Pets","Small, Large"],
-["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99,"Car","Driver Side, Passenger Side"],
-["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99,"Car","Standard"],
-["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99,"Car","Medium, Large"],
-["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99,"Home","1-Tier, 2-Tier"],
-["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99,"Home","Black, Silver"],
-["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99,"Home","4-Pack, 8-Pack"],
-["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99,"Office","Small, Large"],
-["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99,"Home","Standard"],
-["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99,"Cleaning","Standard"],
-["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99,"Office","Standard"],
-["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99,"Cleaning","4-Piece, 8-Piece"],
-["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99,"Cleaning","Standard"],
-["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99,"Cleaning","Standard"],
-["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99,"Home","1-Pack, 3-Pack"],
-["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99,"Room","Standard"],
-["Digital Alarm Clock","Minimal bedside clock with large display.",17.99,"Room","White, Black"],
-["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99,"Room","White, Black"],
-["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99,"Home","1-Pack, 2-Pack"],
-["Resistance Bands","Portable exercise bands for home workouts.",14.99,"Fitness","Light, Medium, Heavy"],
-["Posture Corrector","Adjustable posture support for work and home.",19.99,"Fitness","Small, Medium, Large"],
-["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99,"Fitness","Standard"],
-["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99,"Travel","White, Black"],
-["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99,"Travel","Small, Large"],
-["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99,"Travel","Standard"],
-["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99,"Travel","6-Pack, 8-Pack"],
-["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99,"Travel","Black, Brown"],
-["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99,"Travel","Standard"],
-["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99,"Travel","Small, Large"],
-["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99,"Kitchen","Standard"],
-["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99,"Kitchen","Black, Silver"],
-["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99,"Kitchen","Standard"],
-["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99,"Home","Single Door, Sliding Door"],
-["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99,"Outdoor","4-Pack, 8-Pack"],
-["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99,"Kitchen","6-Pack, 12-Pack"],
-["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99,"Kitchen","1 Quart, 2 Quart"],
-["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99,"Kitchen","5-Pack, 10-Pack"],
-["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99,"Kitchen","2-Pack, 4-Pack"],
-["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99,"Pets","Standard"],
-["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99,"Pets","Small, Large"],
-["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99,"Pets","Left Hand, Right Hand"],
-["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99,"Car","Standard"],
-["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99,"Car","Standard"],
-["Bamboo Cutting Board Set","Cutting board set for everyday meal prep.",29.99,"Kitchen","3-Piece Set"]
+const starterProducts = [
+ {name:"Vegetable Chopper", price:24.99, category:"Kitchen", sizes:"Small, Medium, Large", desc:"Fast chop container for onions, peppers, fruit, and meal prep.", shipping:"Estimated delivery: 5–10 business days."},
+ {name:"Mini Bag Sealer", price:9.99, category:"Kitchen", sizes:"Standard", desc:"Portable heat sealer for snack bags, chips, and pantry storage.", shipping:"Estimated delivery: 5–10 business days."},
+ {name:"Pet Hair Remover Roller", price:16.99, category:"Pets", sizes:"Standard", desc:"Reusable roller that removes pet hair from couches and clothes.", shipping:"Estimated delivery: 5–10 business days."},
+ {name:"Car Gap Organizer", price:19.99, category:"Car", sizes:"Driver Side, Passenger Side", desc:"Organizer that fills the seat gap and holds phone, wallet, and keys.", shipping:"Estimated delivery: 5–10 business days."},
+ {name:"Under Sink Organizer", price:25.99, category:"Home", sizes:"1-Tier, 2-Tier", desc:"Sliding shelf organizer for cleaning supplies.", shipping:"Estimated delivery: 5–10 business days."}
 ];
 
-function placeholder(name){
-  return `<div class="photo">${name}<br><span class="small">Product image goes here</span></div>`;
+function getProducts(){
+  let saved = localStorage.getItem("sqProducts");
+  if(!saved){
+    localStorage.setItem("sqProducts", JSON.stringify(starterProducts));
+    return starterProducts;
+  }
+  return JSON.parse(saved);
+}
+
+function imgHTML(p){
+  if(p.images && p.images[0]) return `<img src="${p.images[0]}">`;
+  return `<div class="placeholder">Image coming soon</div>`;
 }
 
 function showOnly(id){
-  ["homePage","productsPage","detailPage","cartPage"].forEach(x=>{
-    document.getElementById(x).classList.remove("show");
-    if(x==="homePage") document.getElementById(x).style.display="none";
-  });
-  const el=document.getElementById(id);
-  if(id==="homePage") el.style.display="grid";
-  else el.classList.add("show");
+  document.getElementById("home").style.display="none";
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
+  if(id==="home") document.getElementById("home").style.display="grid";
+  else document.getElementById(id).classList.add("show");
   window.scrollTo(0,0);
 }
 
-function showHome(){
-  showOnly("homePage");
-  document.getElementById("vaultScene").classList.remove("open");
-}
-
-function showProducts(){
-  showOnly("productsPage");
-}
+function showHome(){showOnly("home")}
+function showProducts(){renderProducts();showOnly("productsPage")}
 
 function openVault(){
-  document.getElementById("vaultScene").classList.add("open");
-  setTimeout(()=>showProducts(),1200);
+  document.getElementById("vault").classList.add("open");
+  setTimeout(showProducts,1000);
 }
 
 function renderProducts(){
-  const grid=document.getElementById("grid");
-  grid.innerHTML="";
-  products.forEach((p,i)=>{
-    grid.innerHTML+=`
-      <div class="card" onclick="openProductPage(${i})">
-        ${placeholder(p[0])}
-        <h3>${p[0]}</h3>
-        <p class="desc">${p[1]}</p>
-        <div class="price">$${p[2]}</div>
-        <div class="tap">View product details</div>
-      </div>
-    `;
-  });
+  const products = getProducts();
+  document.getElementById("productGrid").innerHTML = products.map((p,i)=>`
+    <div class="card" onclick="openProduct(${i})">
+      ${imgHTML(p)}
+      <h3>${p.name}</h3>
+      <p class="small">${p.desc}</p>
+      <div class="price">$${Number(p.price).toFixed(2)}</div>
+      <b>View product details</b>
+    </div>
+  `).join("");
 }
 
-function openProductPage(i){
-  currentProduct=i;
-  const p=products[i];
-  const options=p[4].split(",");
-  const similar=products
-    .map((x,idx)=>({x,idx}))
-    .filter(o=>o.idx!==i && o.x[3]===p[3])
-    .slice(0,4);
+function openProduct(i){
+  const products = getProducts();
+  const p = products[i];
+  const imgs = p.images || [];
+  const similar = products.filter((x,idx)=>idx!==i && x.category===p.category).slice(0,4);
 
-  document.getElementById("detailPage").innerHTML=`
-    <button onclick="showProducts()" style="margin-bottom:18px;padding:10px 16px;border-radius:10px">← Back to products</button>
+  document.getElementById("detailPage").innerHTML = `
+    <button onclick="showProducts()">← Back to Products</button>
+    <br><br>
 
-    <div class="detailWrap">
-      <div class="gallery">
-        <div class="mainPhoto" id="mainPhoto">${p[0]}<br><span class="small">Main product image</span></div>
+    <div class="detail">
+      <div class="box">
+        ${imgs[0] ? `<img class="mainImg" id="mainImg" src="${imgs[0]}">` : `<div class="mainImg placeholder">Image coming soon</div>`}
         <div class="thumbs">
-          <div class="thumb" onclick="changeView('Front view')">Front</div>
-          <div class="thumb" onclick="changeView('Side view')">Side</div>
-          <div class="thumb" onclick="changeView('In use')">In Use</div>
-          <div class="thumb" onclick="changeView('Packaging')">Box</div>
+          ${imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'">`).join("")}
         </div>
       </div>
 
-      <div class="info">
-        <h2>${p[0]}</h2>
-        <p>${p[1]}</p>
-        <button class="likeBtn" onclick="likeProduct(${i})">♡ Like <span id="likeCount">${likes[i]||0}</span></button>
+      <div class="box">
+        <h2>${p.name}</h2>
+        <p>${p.desc}</p>
+        <button onclick="likeProduct()">♡ Like</button>
 
-        <div class="detailsGrid">
-          <div class="sectionBox">
-            <h3>Product Information</h3>
-            <p>Designed for everyday use, easy storage, and simple problem-solving.</p>
-            <p><b>Category:</b> ${p[3]}</p>
-            <p><b>Condition:</b> New</p>
-          </div>
+        <h3>Product Information</h3>
+        <p><b>Category:</b> ${p.category}</p>
+        <p><b>Available Options:</b> ${p.sizes}</p>
 
-          <div class="sectionBox">
-            <h3>What’s Included</h3>
-            <p>1 × ${p[0]}</p>
-            <p>Basic packaging</p>
-            <p>Simple use instructions</p>
-          </div>
+        <h3>Shipping Details</h3>
+        <p>${p.shipping}</p>
 
-          <div class="sectionBox">
-            <h3>Shipping Details</h3>
-            <p>Estimated delivery: 5–10 business days.</p>
-            <p>Tracking provided after shipment.</p>
-            <p class="small">Final shipping details can be changed later.</p>
-          </div>
-
-          <div class="sectionBox">
-            <h3>Reviews</h3>
-            <p>No reviews yet.</p>
-            <div class="review">Be the first customer to review this product.</div>
-          </div>
-        </div>
+        <h3>Reviews</h3>
+        <p>No reviews yet. Be the first to review this product.</p>
       </div>
 
-      <aside class="buyBox">
-        <div class="price">$${p[2]}</div>
-        <p class="small">In stock</p>
-
-        <div class="optionRow">
-          <label>Size / Option</label>
-          <select>
-            ${options.map(o=>`<option>${o.trim()}</option>`).join("")}
-          </select>
-        </div>
-
-        <div class="optionRow">
-          <label>Quantity</label>
-          <select class="qty">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-
+      <div class="box">
+        <div class="price">$${Number(p.price).toFixed(2)}</div>
+        <label><b>Option</b></label>
+        <select style="width:100%;padding:12px;margin:10px 0">
+          ${p.sizes.split(",").map(s=>`<option>${s.trim()}</option>`).join("")}
+        </select>
+        <label><b>Quantity</b></label>
+        <select style="width:100%;padding:12px;margin:10px 0">
+          <option>1</option><option>2</option><option>3</option>
+        </select>
         <button class="add" onclick="addCart()">Add to Cart</button>
-        <button class="buyNow" onclick="addCart();showCart()">Buy Now</button>
-        <p class="small">Secure checkout placeholder. Payment setup can be added later.</p>
-      </aside>
+        <button class="buy" onclick="addCart();showCart()">Buy Now</button>
+      </div>
     </div>
 
-    <div class="sectionBox" style="margin-top:28px">
+    <div class="box" style="margin-top:25px">
       <h3>Similar Items</h3>
       <div class="similarGrid">
-        ${similar.map(o=>`
-          <div class="similar" onclick="openProductPage(${o.idx})">
-            ${placeholder(o.x[0])}
-            <h4>${o.x[0]}</h4>
-            <b>$${o.x[2]}</b>
+        ${similar.map(s=>`
+          <div class="card">
+            ${imgHTML(s)}
+            <h4>${s.name}</h4>
+            <b>$${Number(s.price).toFixed(2)}</b>
           </div>
-        `).join("")}
+        `).join("") || "<p>No similar items yet.</p>"}
       </div>
     </div>
   `;
-
   showOnly("detailPage");
-}
-
-function changeView(label){
-  const p=products[currentProduct];
-  document.getElementById("mainPhoto").innerHTML=`${p[0]}<br><span class="small">${label} image goes here</span>`;
-}
-
-function likeProduct(i){
-  likes[i]=(likes[i]||0)+1;
-  document.getElementById("likeCount").innerText=likes[i];
 }
 
 function addCart(){
   cart++;
-  document.getElementById("cartCount").innerText=cart;
+  localStorage.setItem("cartCount", cart);
+  document.getElementById("cartCount").innerText = cart;
 }
 
 function showCart(){
+  document.getElementById("cartText").innerText = `You have ${cart} item(s) in your cart.`;
   showOnly("cartPage");
-  document.getElementById("cartMessage").innerText=`You have ${cart} item(s) in your cart.`;
+}
+
+function likeProduct(){
+  alert("Liked!");
 }
 
 renderProducts();
