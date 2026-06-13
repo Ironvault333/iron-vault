@@ -7,306 +7,67 @@
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f3f3f3;
-  color:#111;
-}
-header{
-  height:72px;
-  padding:0 7%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#131921;
-  color:white;
-}
-.logo{
-  font-size:28px;
-  font-weight:900;
-}
-.cart{
-  font-weight:900;
-}
-button{
-  cursor:pointer;
-  border:0;
-  font-weight:900;
-}
-.hero{
-  min-height:calc(100vh - 72px);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  gap:40px;
-  padding:50px 7%;
-  background:linear-gradient(135deg,#f7f2e9,#e6e6e6);
-  transition:opacity .8s ease;
-}
-.hero.fade{
-  opacity:0;
-}
-h1{
-  font-size:72px;
-  line-height:.9;
-  margin:0 0 20px;
-  letter-spacing:-4px;
-}
-.hero p{
-  font-size:20px;
-  color:#444;
-  line-height:1.5;
-}
-.hero button{
-  background:#ffcc33;
-  padding:16px 28px;
-  border-radius:999px;
-  color:#111;
-  font-size:16px;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f3f3;color:#111}
+header{height:72px;background:#16202a;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:20}
+.logo{font-size:30px;font-weight:900}
+.cart{font-weight:900}
+button{border:0;cursor:pointer;font-weight:900}
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;padding:50px 7%;background:linear-gradient(135deg,#f8f4ec,#ddd);transition:.8s}
+.hero.fade{opacity:0;transform:scale(1.02)}
+h1{font-size:74px;line-height:.9;margin:0 0 22px;letter-spacing:-4px}
+.hero p{font-size:20px;color:#444;line-height:1.5}
+.openBtn{background:#f6c344;padding:16px 30px;border-radius:999px;font-size:16px}
 
-/* REALISTIC VAULT */
-.vault-area{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  perspective:1400px;
-}
-.vault-frame{
-  width:470px;
-  height:470px;
-  border-radius:50%;
-  position:relative;
-  background:
-    radial-gradient(circle at 50% 50%,#111 0 48%,#080808 49% 100%);
-  box-shadow:
-    inset 0 0 35px #000,
-    0 30px 70px rgba(0,0,0,.45);
-}
-.vault-products{
-  position:absolute;
-  inset:58px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at center,#fff2a8 0 25%,#c28c24 55%,#1b1204 100%);
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  place-items:center;
-  padding:55px;
-  overflow:hidden;
-  color:white;
-  text-shadow:0 2px 8px #000;
-}
-.mini-product{
-  width:58px;
-  height:58px;
-  border-radius:16px;
-  background:white;
-  display:grid;
-  place-items:center;
-  font-size:30px;
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
-}
-.vault-door{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  transform-origin:left center;
-  transition:1.25s cubic-bezier(.2,.8,.2,1);
-  z-index:4;
-  background:
-    radial-gradient(circle at 35% 28%,#d6d6d6 0,#777 22%,#333 48%,#0b0b0b 78%);
-  border:22px solid #111;
-  box-shadow:
-    inset 0 0 25px #000,
-    inset 0 0 80px rgba(255,255,255,.12),
-    0 25px 55px rgba(0,0,0,.5);
-}
-.vault-frame.open .vault-door{
-  transform:rotateY(-118deg);
-}
-.inner-ring{
-  position:absolute;
-  inset:44px;
-  border-radius:50%;
-  border:18px solid #3b3b3b;
-  box-shadow:inset 0 0 35px #000;
-}
-.handle{
-  position:absolute;
-  width:190px;
-  height:190px;
-  border-radius:50%;
-  border:18px solid #8d8d8d;
-  top:140px;
-  left:140px;
-  box-shadow:inset 0 0 12px #000,0 0 12px #000;
-}
-.handle div{
-  position:absolute;
-  width:165px;
-  height:18px;
-  background:linear-gradient(90deg,#111,#bbb,#111);
-  top:68px;
-  left:-6px;
-  border-radius:20px;
-}
-.handle div:nth-child(2){transform:rotate(60deg)}
-.handle div:nth-child(3){transform:rotate(-60deg)}
-.handle:after{
-  content:"";
-  position:absolute;
-  width:68px;
-  height:68px;
-  border-radius:50%;
-  top:43px;
-  left:43px;
-  background:radial-gradient(circle,#ddd,#222);
-  border:5px solid #111;
-}
-.bolt{
-  position:absolute;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:radial-gradient(circle,#ddd,#333);
-  border:3px solid #070707;
-}
-.b1{top:35px;left:218px}.b2{bottom:35px;left:218px}
-.b3{left:35px;top:218px}.b4{right:35px;top:218px}
-.b5{top:92px;left:92px}.b6{top:92px;right:92px}
-.b7{bottom:92px;left:92px}.b8{bottom:92px;right:92px}
+/* REAL GRAY BANK VAULT */
+.vault-wrap{display:flex;justify-content:center;perspective:1700px}
+.vault{width:520px;height:520px;border-radius:50%;position:relative;background:#565f68;box-shadow:0 45px 85px rgba(0,0,0,.45),inset 0 0 45px #222;cursor:pointer}
+.inside{position:absolute;inset:70px;border-radius:50%;background:#f4f4f4;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:60px;overflow:hidden;box-shadow:inset 0 0 65px #111}
+.inside img{width:100%;height:85px;object-fit:cover;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,.32)}
+.door{position:absolute;inset:0;border-radius:50%;transform-origin:left center;transition:1.35s cubic-bezier(.2,.8,.2,1);z-index:5;background:radial-gradient(circle at 35% 25%,#f0f0f0 0,#b8bec3 18%,#7b858e 40%,#4d555d 65%,#252b30 100%);border:26px solid #68717a;box-shadow:inset 0 0 55px #1d2226,0 28px 65px rgba(0,0,0,.45)}
+.vault.open .door{transform:rotateY(-121deg)}
+.ring{position:absolute;inset:45px;border-radius:50%;border:18px solid #8b949d;box-shadow:inset 0 0 30px #222}
+.ring2{position:absolute;inset:100px;border-radius:50%;border:11px solid #3c444b}
+.bolt{position:absolute;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3aa 50%,#333);border:3px solid #30363b}
+.b1{top:28px;left:240px}.b2{bottom:28px;left:240px}.b3{left:28px;top:240px}.b4{right:28px;top:240px}
+.b5{top:86px;left:86px}.b6{top:86px;right:86px}.b7{bottom:86px;left:86px}.b8{bottom:86px;right:86px}
+.b9{top:175px;left:43px}.b10{top:175px;right:43px}.b11{bottom:175px;left:43px}.b12{bottom:175px;right:43px}
+.handle{position:absolute;width:200px;height:200px;top:160px;left:160px;border-radius:50%;border:19px solid #a3abb2;box-shadow:inset 0 0 12px #111}
+.handle span{position:absolute;width:172px;height:19px;background:linear-gradient(90deg,#353b40,#f5f5f5,#353b40);top:72px;left:-5px;border-radius:99px}
+.handle span:nth-child(2){transform:rotate(60deg)}
+.handle span:nth-child(3){transform:rotate(-60deg)}
+.handle:after{content:"";position:absolute;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle,#fff,#666);top:44px;left:44px;border:5px solid #30363b}
 
-/* PRODUCTS */
-.products-page{
-  display:none;
-  padding:35px 5%;
-}
-.products-page.show{
-  display:block;
-}
-.page-title{
-  font-size:38px;
-  margin:18px 0 8px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:22px;
-  margin-top:25px;
-}
-.card{
-  background:white;
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:14px;
-  transition:.2s;
-}
-.card:hover{
-  box-shadow:0 8px 24px rgba(0,0,0,.16);
-  transform:translateY(-3px);
-}
-.image{
-  height:180px;
-  border-radius:8px;
-  background:#f4f4f4;
-  display:grid;
-  place-items:center;
-  font-size:70px;
-  margin-bottom:12px;
-}
-.card h3{
-  font-size:17px;
-  margin:0 0 8px;
-}
-.desc{
-  color:#555;
-  font-size:14px;
-  min-height:58px;
-}
-.price{
-  font-size:23px;
-  font-weight:900;
-  margin:10px 0;
-}
-.stars{
-  color:#e69500;
-  font-weight:900;
-  margin-bottom:10px;
-}
-.card button{
-  width:100%;
-  padding:12px;
-  background:#ffd814;
-  border-radius:999px;
-}
+/* STORE */
+.products{display:none;padding:34px 5%}
+.products.show{display:block}
+.topTitle{font-size:38px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:22px;margin-top:25px}
+.card{background:white;border-radius:10px;border:1px solid #ddd;padding:14px;transition:.2s;cursor:pointer}
+.card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
+.card img{width:100%;height:190px;object-fit:cover;border-radius:8px;background:#eee}
+.card h3{font-size:17px;margin:12px 0 6px}
+.desc{font-size:14px;min-height:58px;color:#555}
+.price{font-size:24px;font-weight:900;margin:10px 0}
+.tap{font-size:13px;font-weight:900;color:#0066c0}
 
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:20;
-}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50}
 .modal.show{display:flex}
-.modal-box{
-  width:min(900px,92vw);
-  background:white;
-  border-radius:16px;
-  padding:24px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-}
-.big-img{
-  height:340px;
-  background:#f5f5f5;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  font-size:130px;
-}
-.views{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
-.views div{
-  width:70px;
-  height:70px;
-  background:#eee;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  font-size:32px;
-}
-.close{
-  background:#111;
-  color:white;
-  border-radius:10px;
-  padding:11px 16px;
-  margin-top:12px;
-}
-.add{
-  background:#ffd814;
-  border-radius:999px;
-  padding:14px 24px;
-  width:100%;
-  margin-top:18px;
-}
+.modalBox{width:min(950px,94vw);background:white;border-radius:16px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.bigImg{width:100%;height:360px;object-fit:cover;border-radius:14px;background:#eee}
+.views{display:flex;gap:10px;margin-top:12px}
+.views img{width:75px;height:75px;object-fit:cover;border-radius:10px;border:1px solid #ddd}
+.add{width:100%;padding:14px;background:#ffd814;border-radius:999px;margin-top:18px}
+.close{background:#111;color:white;border-radius:10px;padding:12px 18px;margin-top:12px}
 
-@media(max-width:850px){
-  .hero{grid-template-columns:1fr;text-align:center}
-  h1{font-size:54px}
-  .vault-frame{width:330px;height:330px}
-  .handle{width:130px;height:130px;top:100px;left:100px}
-  .handle div{width:115px;top:45px}
-  .modal-box{grid-template-columns:1fr}
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;text-align:center}
+h1{font-size:54px}
+.vault{width:345px;height:345px}
+.inside{inset:47px;padding:42px}
+.door{border-width:18px}
+.handle{width:132px;height:132px;top:106px;left:106px}
+.handle span{width:116px;top:46px}
+.modalBox{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -321,51 +82,38 @@ h1{
 <section class="hero" id="hero">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
-    <p>
-      Clever everyday inventions, fun gadgets, and simple “I need that” products
-      made for real life.
-    </p>
-    <button onclick="openVault()">Open Vault</button>
+    <p>Trending-style products people already understand: kitchen tools, pet items, car accessories, organizers, cleaning gadgets, travel gear, and simple everyday problem solvers.</p>
+    <button class="openBtn" onclick="openVault()">Open Vault</button>
   </div>
 
-  <div class="vault-area">
-    <div class="vault-frame" id="vault" onclick="openVault()">
-      <div class="vault-products">
-        <div class="mini-product">🧽</div>
-        <div class="mini-product">🔌</div>
-        <div class="mini-product">🥣</div>
-        <div class="mini-product">🧊</div>
-        <div class="mini-product">🧼</div>
-        <div class="mini-product">🧰</div>
-      </div>
-
-      <div class="vault-door">
-        <div class="inner-ring"></div>
-        <div class="bolt b1"></div><div class="bolt b2"></div>
-        <div class="bolt b3"></div><div class="bolt b4"></div>
-        <div class="bolt b5"></div><div class="bolt b6"></div>
-        <div class="bolt b7"></div><div class="bolt b8"></div>
-        <div class="handle"><div></div><div></div><div></div></div>
+  <div class="vault-wrap">
+    <div class="vault" id="vault" onclick="openVault()">
+      <div class="inside" id="insidePreview"></div>
+      <div class="door">
+        <div class="ring"></div><div class="ring2"></div>
+        <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
+        <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
+        <div class="bolt b9"></div><div class="bolt b10"></div><div class="bolt b11"></div><div class="bolt b12"></div>
+        <div class="handle"><span></span><span></span><span></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<main class="products-page" id="productsPage">
-  <h2 class="page-title">Side Quests Products</h2>
-  <p>Click a product to see more views and add it to your cart.</p>
+<main class="products" id="productsPage">
+  <h2 class="topTitle">Side Quests Products</h2>
+  <p>Click any product to view images, details, and add it to cart.</p>
   <div class="grid" id="grid"></div>
 </main>
 
 <div class="modal" id="modal">
-  <div class="modal-box">
+  <div class="modalBox">
     <div>
-      <div class="big-img" id="modalIcon"></div>
+      <img class="bigImg" id="modalImg">
       <div class="views" id="views"></div>
     </div>
     <div>
       <h2 id="modalTitle"></h2>
-      <div class="stars">★★★★★ 4.8</div>
       <div class="price" id="modalPrice"></div>
       <p id="modalDesc"></p>
       <button class="add" onclick="addCart()">Add to Cart</button>
@@ -378,60 +126,64 @@ h1{
 let cart = 0;
 
 const products = [
-["CrumbGuard Plate","A plate rim that catches crumbs before they hit your lap, couch, or car seat.",14.99,"🍽️"],
-["Snack Seat Catcher","A soft car-seat gap tray that catches snacks, toys, fries, and crumbs.",19.99,"🚗"],
-["Trash Bag Lock Ring","Locks trash bags to the can so the bag never falls inside.",12.99,"🗑️"],
-["SoapGlow Bar","A soap bar that glows when wet so kids actually wash their hands.",9.99,"🧼"],
-["Cord Snap Label","Reusable cord wrap with a large built-in label for hoses and cords.",16.99,"🔌"],
-["Sink Splash Shield","A folding clear shield that blocks water from splashing behind sinks.",18.99,"🚰"],
-["Pet Hair Swipe Glove","A rubber cleaning glove that pulls pet hair off fabric fast.",13.99,"🐶"],
-["Milk Pour Clip","Snap-on spout that helps kids pour milk without spilling.",8.99,"🥛"],
-["Lost Sock Cage","Washer-safe cage that keeps baby socks and small items together.",11.99,"🧦"],
-["Remote Finder Dock","Weighted dock that keeps remotes upright and easy to find.",17.99,"📺"],
+["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99,"https://source.unsplash.com/800x600/?vegetable,chopper,kitchen"],
+["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99,"https://source.unsplash.com/800x600/?bag,sealer,kitchen"],
+["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99,"https://source.unsplash.com/800x600/?silicone,cleaning,gloves"],
+["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99,"https://source.unsplash.com/800x600/?spice,rack,kitchen"],
+["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99,"https://source.unsplash.com/800x600/?oil,spray,bottle"],
+["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99,"https://source.unsplash.com/800x600/?produce,bags"],
+["Bamboo Cutting Board Set","Clean-looking cutting board set for everyday meal prep.",29.99,"https://source.unsplash.com/800x600/?bamboo,cutting,board"],
+["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99,"https://source.unsplash.com/800x600/?cold,brew,pitcher"],
+["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99,"https://source.unsplash.com/800x600/?glass,food,containers"],
+["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99,"https://source.unsplash.com/800x600/?silicone,ice,tray"],
 
-["Tape End Finder","Tiny reusable clip that marks the end of tape rolls forever.",6.99,"📦"],
-["Plug Pull Tabs","Add-on tabs for plugs stuck behind couches, beds, and desks.",7.99,"🔋"],
-["Freezer Flat Pack","Freezes leftovers into thin stackable bricks.",21.99,"🧊"],
-["Counter Peel Catcher","Collapsible counter bin for peels, shells, and scraps.",15.99,"🥕"],
-["Lunchbox Cold Wall","Thin freezer panel that clips inside a lunchbox.",13.99,"🥪"],
-["Pan Handle Cool Clip","Silicone grip that clips onto hot pan handles.",10.99,"🍳"],
-["Shoe Mud Edge Mat","Mat with side bristles to clean shoe edges.",24.99,"👟"],
-["Door Ding Bumper","Soft garage wall bumper that protects car doors.",18.99,"🚙"],
-["Furniture Slider Socks","Padded socks for chair legs that slide quietly.",12.99,"🪑"],
-["Cable Drop Net","Under-desk net that catches falling chargers.",14.99,"💻"],
+["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99,"https://source.unsplash.com/800x600/?pet,hair,roller"],
+["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99,"https://source.unsplash.com/800x600/?dog,water,bottle"],
+["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99,"https://source.unsplash.com/800x600/?cat,window,hammock"],
+["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99,"https://source.unsplash.com/800x600/?slow,feeder,dog,bowl"],
+["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99,"https://source.unsplash.com/800x600/?pet,grooming,glove"],
 
-["Beach Sand Pocket Blanket","Beach blanket with fillable sand pockets instead of stakes.",29.99,"🏖️"],
-["Floating Phone Pillow","Soft floating waterproof phone holder for pools.",18.99,"📱"],
-["Cooler Divider Pro","Adjustable cooler dividers for food, drinks, and ice.",22.99,"🧊"],
-["Pop-Up Shade Cup","Drink cup with a tiny folding shade to keep drinks cool.",14.99,"🥤"],
-["Glow Path Pebbles","Solar garden stones that glow at night.",26.99,"💡"],
-["Table Edge Cup Rail","Clip-on cup rail for folding tables and parties.",19.99,"🎉"],
-["Magnetic Snack Stadium","Magnetic snack bowls that lock together for movie night.",27.99,"🍿"],
-["Backyard Score Tower","Portable scorekeeper for yard games.",24.99,"🏆"],
-["Campfire Color Rocks","Reusable fire-safe rocks that create colorful flames.",34.99,"🔥"],
-["Cam Jam Toss","Backyard toss game with soft discs and target nets.",39.99,"🥏"],
+["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99,"https://source.unsplash.com/800x600/?car,seat,organizer"],
+["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99,"https://source.unsplash.com/800x600/?car,trash,can"],
+["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99,"https://source.unsplash.com/800x600/?trunk,organizer"],
+["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99,"https://source.unsplash.com/800x600/?car,phone,mount"],
+["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99,"https://source.unsplash.com/800x600/?portable,tire,inflator"],
 
-["Hose Kink Blocker","Flexible sleeve that stops hoses from folding at the faucet.",9.99,"🪴"],
-["Paint Pour Guard","Snap-on paint rim that stops drips down the can.",8.99,"🎨"],
-["Screw Starter Pad","Sticky reusable pad that holds screws upright while drilling.",7.99,"🔩"],
-["Tool Shadow Stickers","Tool outlines that show exactly where each tool belongs.",14.99,"🧰"],
-["Ladder Foot Grips","Clip-on rubber ladder feet for better grip.",19.99,"🪜"],
-["Pantry Expire Tags","Color tags that show what pantry food should be used first.",9.99,"🥫"],
-["Bagel Butter Wheel","Rolling butter tool for bagels and toast grooves.",11.99,"🥯"],
-["Microwave Steam Guard","Reusable cover that vents steam without dripping.",16.99,"🍲"],
-["Drawer No-Jam Divider","Flexible drawer dividers for weird-shaped tools.",18.99,"🍴"],
-["Snack Lock Box","Timer snack container for simple portion control.",24.99,"🍫"],
+["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99,"https://source.unsplash.com/800x600/?under,sink,organizer"],
+["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99,"https://source.unsplash.com/800x600/?shower,shelf"],
+["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99,"https://source.unsplash.com/800x600/?drawer,organizer"],
+["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99,"https://source.unsplash.com/800x600/?cable,management,box"],
+["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99,"https://source.unsplash.com/800x600/?laundry,bag"],
 
-["Toothpaste Flat Roller","Clip roller that squeezes toothpaste perfectly flat.",8.99,"🪥"],
-["Shower Steam Shelf","Shower shelf that gently warms shaving cream.",17.99,"🚿"],
-["Pillow Cool Strip","Reusable cooling strip that slides into a pillowcase.",21.99,"🛏️"],
-["Backseat Trash Dock","Mini trash bin that locks to car floor mats.",15.99,"🚘"],
-["Grocery Grip Clip","Padded handle that combines grocery bags.",9.99,"🛍️"],
-["No-Spill Cereal Bowl","Raised-wall bowl that stops cereal milk spills.",12.99,"🥣"],
-["Fridge Fresh Clip","Food-container clip that shows how old leftovers are.",10.99,"🧊"],
-["Corner Dust Magnet","Bendable cleaning pad for baseboard corners.",13.99,"🧹"],
-["Garage Parking Mat","Tire-stop mat for perfect garage parking.",29.99,"🅿️"],
-["Measuring Cup Funnel Lid","Turns any measuring cup into a funnel.",8.99,"🥄"]
+["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99,"https://source.unsplash.com/800x600/?fabric,shaver"],
+["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99,"https://source.unsplash.com/800x600/?mini,vacuum,desk"],
+["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99,"https://source.unsplash.com/800x600/?drill,brush,cleaning"],
+["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99,"https://source.unsplash.com/800x600/?baseboard,cleaning"],
+["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99,"https://source.unsplash.com/800x600/?blind,cleaning,brush"],
+
+["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99,"https://source.unsplash.com/800x600/?led,closet,light"],
+["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99,"https://source.unsplash.com/800x600/?sunset,lamp"],
+["Digital Alarm Clock","Minimal bedside clock with large display.",17.99,"https://source.unsplash.com/800x600/?digital,alarm,clock"],
+["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99,"https://source.unsplash.com/800x600/?mini,humidifier"],
+["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99,"https://source.unsplash.com/800x600/?smart,plug"],
+
+["Resistance Bands","Portable exercise bands for home workouts.",14.99,"https://source.unsplash.com/800x600/?resistance,bands"],
+["Posture Corrector","Adjustable posture support for work and home.",19.99,"https://source.unsplash.com/800x600/?posture,corrector"],
+["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99,"https://source.unsplash.com/800x600/?massage,roller"],
+["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99,"https://source.unsplash.com/800x600/?neck,fan"],
+["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99,"https://source.unsplash.com/800x600/?water,bottle,sleeve"],
+
+["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99,"https://source.unsplash.com/800x600/?travel,toiletry,bag"],
+["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99,"https://source.unsplash.com/800x600/?packing,cubes"],
+["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99,"https://source.unsplash.com/800x600/?slim,wallet"],
+["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99,"https://source.unsplash.com/800x600/?luggage,cup,holder"],
+["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99,"https://source.unsplash.com/800x600/?cable,organizer,travel"],
+
+["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99,"https://source.unsplash.com/800x600/?mini,waffle,maker"],
+["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99,"https://source.unsplash.com/800x600/?milk,frother"],
+["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99,"https://source.unsplash.com/800x600/?digital,kitchen,scale"],
+["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99,"https://source.unsplash.com/800x600/?magnetic,screen,door"],
+["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99,"https://source.unsplash.com/800x600/?solar,outdoor,lights"]
 ];
 
 const grid = document.getElementById("grid");
@@ -439,42 +191,42 @@ const grid = document.getElementById("grid");
 products.forEach((p,i)=>{
   grid.innerHTML += `
     <div class="card" onclick="openProduct(${i})">
-      <div class="image">${p[3]}</div>
+      <img src="${p[3]}" alt="${p[0]}">
       <h3>${p[0]}</h3>
-      <div class="stars">★★★★★</div>
       <p class="desc">${p[1]}</p>
       <div class="price">$${p[2]}</div>
-      <button onclick="event.stopPropagation();addCart()">Add to Cart</button>
+      <div class="tap">Click for details</div>
     </div>
   `;
 });
 
+const preview = document.getElementById("insidePreview");
+products.slice(0,6).forEach(p=>{
+  preview.innerHTML += `<img src="${p[3]}" alt="${p[0]}">`;
+});
+
 function openVault(){
   document.getElementById("vault").classList.add("open");
-  setTimeout(()=>{
-    document.getElementById("hero").classList.add("fade");
-  },700);
+  setTimeout(()=>document.getElementById("hero").classList.add("fade"),700);
   setTimeout(()=>{
     document.getElementById("hero").style.display="none";
     document.getElementById("productsPage").classList.add("show");
     window.scrollTo(0,0);
-  },1400);
+  },1450);
 }
 
 function openProduct(i){
   const p = products[i];
   document.getElementById("modalTitle").innerText = p[0];
   document.getElementById("modalPrice").innerText = "$" + p[2];
-  document.getElementById("modalDesc").innerText = p[1] + " Designed to be simple, useful, and easy to understand at a glance.";
-  document.getElementById("modalIcon").innerText = p[3];
-
+  document.getElementById("modalDesc").innerText = p[1] + " This is a practical, trending-style product selected for everyday usefulness and easy online selling.";
+  document.getElementById("modalImg").src = p[3];
   document.getElementById("views").innerHTML = `
-    <div>${p[3]}</div>
-    <div>📦</div>
-    <div>🔍</div>
-    <div>✅</div>
+    <img src="${p[3]}">
+    <img src="${p[3]}&sig=2">
+    <img src="${p[3]}&sig=3">
+    <img src="${p[3]}&sig=4">
   `;
-
   document.getElementById("modal").classList.add("show");
 }
 
@@ -485,6 +237,7 @@ function closeModal(){
 function addCart(){
   cart++;
   document.getElementById("cartCount").innerText = cart;
+  closeModal();
 }
 </script>
 
