@@ -1,206 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Side Quest</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Side Quests</title>
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#f7f1e8;
+  background:#f3f3f3;
   color:#111;
 }
 header{
-  padding:24px 8%;
+  height:72px;
+  padding:0 7%;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
+  background:#131921;
+  color:white;
 }
 .logo{
-  font-size:30px;
+  font-size:28px;
   font-weight:900;
 }
-nav a{
-  margin-left:22px;
-  text-decoration:none;
-  color:#333;
-  font-weight:800;
-}
-.hero{
-  min-height:86vh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px;
-  align-items:center;
-  padding:20px 8% 60px;
-}
-h1{
-  font-size:78px;
-  line-height:.9;
-  margin:0 0 22px;
-  letter-spacing:-4px;
-}
-p{
-  font-size:19px;
-  color:#555;
-  line-height:1.55;
+.cart{
+  font-weight:900;
 }
 button{
-  background:#111;
-  color:white;
-  border:0;
-  border-radius:14px;
-  padding:16px 26px;
-  font-weight:900;
   cursor:pointer;
+  border:0;
+  font-weight:900;
+}
+.hero{
+  min-height:calc(100vh - 72px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:40px;
+  padding:50px 7%;
+  background:linear-gradient(135deg,#f7f2e9,#e6e6e6);
+  transition:opacity .8s ease;
+}
+.hero.fade{
+  opacity:0;
+}
+h1{
+  font-size:72px;
+  line-height:.9;
+  margin:0 0 20px;
+  letter-spacing:-4px;
+}
+.hero p{
+  font-size:20px;
+  color:#444;
+  line-height:1.5;
+}
+.hero button{
+  background:#ffcc33;
+  padding:16px 28px;
+  border-radius:999px;
+  color:#111;
   font-size:16px;
-  margin-top:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
 }
 
-/* VAULT */
-.vault-wrap{
-  perspective:1000px;
+/* REALISTIC VAULT */
+.vault-area{
   display:flex;
   justify-content:center;
+  align-items:center;
+  perspective:1400px;
 }
-.vault-box{
+.vault-frame{
+  width:470px;
+  height:470px;
+  border-radius:50%;
   position:relative;
-  width:450px;
-  height:450px;
-  cursor:pointer;
+  background:
+    radial-gradient(circle at 50% 50%,#111 0 48%,#080808 49% 100%);
+  box-shadow:
+    inset 0 0 35px #000,
+    0 30px 70px rgba(0,0,0,.45);
+}
+.vault-products{
+  position:absolute;
+  inset:58px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center,#fff2a8 0 25%,#c28c24 55%,#1b1204 100%);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  place-items:center;
+  padding:55px;
+  overflow:hidden;
+  color:white;
+  text-shadow:0 2px 8px #000;
+}
+.mini-product{
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  background:white;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
 }
 .vault-door{
   position:absolute;
   inset:0;
   border-radius:50%;
-  background:radial-gradient(circle at 35% 25%,#8b8b8b,#242424 45%,#050505 80%);
-  border:18px solid #151515;
-  box-shadow:inset 0 0 45px #000,0 30px 70px rgba(0,0,0,.35);
   transform-origin:left center;
-  transition:1.2s ease;
-  z-index:5;
+  transition:1.25s cubic-bezier(.2,.8,.2,1);
+  z-index:4;
+  background:
+    radial-gradient(circle at 35% 28%,#d6d6d6 0,#777 22%,#333 48%,#0b0b0b 78%);
+  border:22px solid #111;
+  box-shadow:
+    inset 0 0 25px #000,
+    inset 0 0 80px rgba(255,255,255,.12),
+    0 25px 55px rgba(0,0,0,.5);
 }
-.vault-box.open .vault-door{
-  transform:rotateY(-115deg);
+.vault-frame.open .vault-door{
+  transform:rotateY(-118deg);
 }
-.vault-inside{
+.inner-ring{
   position:absolute;
-  inset:25px;
+  inset:44px;
   border-radius:50%;
-  background:radial-gradient(circle,#ffd45a,#8b5d00 45%,#1d1200 75%);
-  box-shadow:inset 0 0 70px #000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:34px;
-  font-weight:900;
-  color:white;
-  text-shadow:0 3px 12px #000;
+  border:18px solid #3b3b3b;
+  box-shadow:inset 0 0 35px #000;
 }
-.vault-door:before{
+.handle{
+  position:absolute;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  border:18px solid #8d8d8d;
+  top:140px;
+  left:140px;
+  box-shadow:inset 0 0 12px #000,0 0 12px #000;
+}
+.handle div{
+  position:absolute;
+  width:165px;
+  height:18px;
+  background:linear-gradient(90deg,#111,#bbb,#111);
+  top:68px;
+  left:-6px;
+  border-radius:20px;
+}
+.handle div:nth-child(2){transform:rotate(60deg)}
+.handle div:nth-child(3){transform:rotate(-60deg)}
+.handle:after{
   content:"";
   position:absolute;
-  inset:34px;
+  width:68px;
+  height:68px;
   border-radius:50%;
-  border:12px solid #4b4b4b;
+  top:43px;
+  left:43px;
+  background:radial-gradient(circle,#ddd,#222);
+  border:5px solid #111;
 }
 .bolt{
   position:absolute;
   width:34px;
   height:34px;
-  background:linear-gradient(#aaa,#222);
   border-radius:50%;
-  border:3px solid #111;
+  background:radial-gradient(circle,#ddd,#333);
+  border:3px solid #070707;
 }
-.b1{top:35px;left:205px}.b2{bottom:35px;left:205px}
-.b3{left:35px;top:205px}.b4{right:35px;top:205px}
-.b5{top:90px;left:90px}.b6{top:90px;right:90px}
-.b7{bottom:90px;left:90px}.b8{bottom:90px;right:90px}
-.handle{
-  position:absolute;
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  border:15px solid #777;
-  top:135px;
-  left:135px;
-}
-.handle span{
-  position:absolute;
-  width:160px;
-  height:17px;
-  background:linear-gradient(90deg,#222,#aaa,#222);
-  top:66px;
-  left:-5px;
-  border-radius:20px;
-}
-.handle span:nth-child(2){transform:rotate(60deg)}
-.handle span:nth-child(3){transform:rotate(-60deg)}
-.center{
-  position:absolute;
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  background:radial-gradient(circle,#bbb,#222);
-  top:55px;
-  left:55px;
-  border:5px solid #111;
-}
+.b1{top:35px;left:218px}.b2{bottom:35px;left:218px}
+.b3{left:35px;top:218px}.b4{right:35px;top:218px}
+.b5{top:92px;left:92px}.b6{top:92px;right:92px}
+.b7{bottom:92px;left:92px}.b8{bottom:92px;right:92px}
 
-/* PRODUCT PAGE */
-section{
-  padding:60px 8%;
+/* PRODUCTS */
+.products-page{
+  display:none;
+  padding:35px 5%;
 }
-.section-title{
-  font-size:48px;
-  margin:0 0 10px;
+.products-page.show{
+  display:block;
+}
+.page-title{
+  font-size:38px;
+  margin:18px 0 8px;
 }
 .grid{
-  margin-top:35px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
   gap:22px;
+  margin-top:25px;
 }
 .card{
   background:white;
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 18px 38px rgba(0,0,0,.08);
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:14px;
+  transition:.2s;
 }
-.num{
-  background:#111;
-  color:white;
-  width:38px;
-  height:38px;
+.card:hover{
+  box-shadow:0 8px 24px rgba(0,0,0,.16);
+  transform:translateY(-3px);
+}
+.image{
+  height:180px;
+  border-radius:8px;
+  background:#f4f4f4;
   display:grid;
   place-items:center;
-  border-radius:50%;
-  font-weight:900;
-  margin-bottom:14px;
+  font-size:70px;
+  margin-bottom:12px;
 }
-.card h3{margin:0 0 8px}
-.card p{font-size:15px;margin:0}
-.tag{
-  display:inline-block;
-  margin-top:14px;
-  padding:7px 11px;
-  background:#f0eadf;
+.card h3{
+  font-size:17px;
+  margin:0 0 8px;
+}
+.desc{
+  color:#555;
+  font-size:14px;
+  min-height:58px;
+}
+.price{
+  font-size:23px;
+  font-weight:900;
+  margin:10px 0;
+}
+.stars{
+  color:#e69500;
+  font-weight:900;
+  margin-bottom:10px;
+}
+.card button{
+  width:100%;
+  padding:12px;
+  background:#ffd814;
   border-radius:999px;
-  font-size:12px;
-  font-weight:900;
 }
-.hidden{display:none}
 
-@media(max-width:900px){
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(900px,92vw);
+  background:white;
+  border-radius:16px;
+  padding:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.big-img{
+  height:340px;
+  background:#f5f5f5;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-size:130px;
+}
+.views{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+.views div{
+  width:70px;
+  height:70px;
+  background:#eee;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  font-size:32px;
+}
+.close{
+  background:#111;
+  color:white;
+  border-radius:10px;
+  padding:11px 16px;
+  margin-top:12px;
+}
+.add{
+  background:#ffd814;
+  border-radius:999px;
+  padding:14px 24px;
+  width:100%;
+  margin-top:18px;
+}
+
+@media(max-width:850px){
   .hero{grid-template-columns:1fr;text-align:center}
-  h1{font-size:56px}
-  .vault-box{width:330px;height:330px}
-  .handle{width:135px;height:135px;top:97px;left:97px}
-  .handle span{width:120px;top:48px}
-  .center{width:50px;height:50px;top:38px;left:38px}
+  h1{font-size:54px}
+  .vault-frame{width:330px;height:330px}
+  .handle{width:130px;height:130px;top:100px;left:100px}
+  .handle div{width:115px;top:45px}
+  .modal-box{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -208,133 +314,177 @@ section{
 <body>
 
 <header>
-  <div class="logo">Side Quest</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="index.html?page=ideas">Ideas</a>
-  </nav>
+  <div class="logo">Side Quests</div>
+  <div class="cart">Cart: <span id="cartCount">0</span></div>
 </header>
 
-<main id="homePage">
-  <div class="hero">
-    <div>
-      <h1>Find Your Next Big Idea.</h1>
-      <p>
-        Side Quest is a vault of clever product ideas — useful, fun, simple,
-        and made to feel like something people would actually buy.
-      </p>
-      <button onclick="goToIdeas()">Open Vault</button>
-    </div>
+<section class="hero" id="hero">
+  <div>
+    <h1>Better. Faster. Stronger. Products.</h1>
+    <p>
+      Clever everyday inventions, fun gadgets, and simple “I need that” products
+      made for real life.
+    </p>
+    <button onclick="openVault()">Open Vault</button>
+  </div>
 
-    <div class="vault-wrap">
-      <div class="vault-box" onclick="openVault()">
-        <div class="vault-inside">SIDE QUEST</div>
-        <div class="vault-door">
-          <div class="bolt b1"></div><div class="bolt b2"></div>
-          <div class="bolt b3"></div><div class="bolt b4"></div>
-          <div class="bolt b5"></div><div class="bolt b6"></div>
-          <div class="bolt b7"></div><div class="bolt b8"></div>
-          <div class="handle">
-            <span></span><span></span><span></span>
-            <div class="center"></div>
-          </div>
-        </div>
+  <div class="vault-area">
+    <div class="vault-frame" id="vault" onclick="openVault()">
+      <div class="vault-products">
+        <div class="mini-product">🧽</div>
+        <div class="mini-product">🔌</div>
+        <div class="mini-product">🥣</div>
+        <div class="mini-product">🧊</div>
+        <div class="mini-product">🧼</div>
+        <div class="mini-product">🧰</div>
+      </div>
+
+      <div class="vault-door">
+        <div class="inner-ring"></div>
+        <div class="bolt b1"></div><div class="bolt b2"></div>
+        <div class="bolt b3"></div><div class="bolt b4"></div>
+        <div class="bolt b5"></div><div class="bolt b6"></div>
+        <div class="bolt b7"></div><div class="bolt b8"></div>
+        <div class="handle"><div></div><div></div><div></div></div>
       </div>
     </div>
   </div>
+</section>
+
+<main class="products-page" id="productsPage">
+  <h2 class="page-title">Side Quests Products</h2>
+  <p>Click a product to see more views and add it to your cart.</p>
+  <div class="grid" id="grid"></div>
 </main>
 
-<main id="ideasPage" class="hidden">
-  <section>
-    <h2 class="section-title">50 Side Quest Product Ideas</h2>
-    <p>Simple products that feel useful, cool, and easy to understand.</p>
-    <div class="grid" id="productGrid"></div>
-  </section>
-</main>
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div>
+      <div class="big-img" id="modalIcon"></div>
+      <div class="views" id="views"></div>
+    </div>
+    <div>
+      <h2 id="modalTitle"></h2>
+      <div class="stars">★★★★★ 4.8</div>
+      <div class="price" id="modalPrice"></div>
+      <p id="modalDesc"></p>
+      <button class="add" onclick="addCart()">Add to Cart</button>
+      <button class="close" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
 
 <script>
-function openVault(){
-  document.querySelector(".vault-box").classList.add("open");
-  setTimeout(()=>goToIdeas(),1200);
-}
-
-function goToIdeas(){
-  window.location.href = "index.html?page=ideas";
-}
+let cart = 0;
 
 const products = [
-["CrumbGuard Plate","A plate rim that catches crumbs before they fall on couches, laps, or car seats.","Essential"],
-["Snack Seat Catcher","A soft tray that fills the car-seat gap so snacks and toys don’t disappear.","Parent Hack"],
-["Trash Bag Lock Ring","A ring that locks trash bags to the can so they never slide inside.","Home"],
-["SoapGlow Bar","A soap bar that softly glows when wet to make kids want to wash their hands.","Fun"],
-["Cord Snap Label","A cord wrap with a built-in label for hoses, chargers, and extension cords.","Garage"],
-["Sink Splash Shield","A folding clear shield that blocks water from splashing behind sinks.","Home"],
-["Pet Hair Swipe Glove","A rubber glove that pulls pet hair from couches and car seats fast.","Pets"],
-["Milk Pour Clip","A snap-on spout that helps kids pour milk without spilling.","Kitchen"],
-["Lost Sock Cage","A washer-safe mesh cage that keeps tiny socks together.","Laundry"],
-["Remote Finder Dock","A weighted dock that keeps remotes standing upright and easy to find.","Living Room"],
+["CrumbGuard Plate","A plate rim that catches crumbs before they hit your lap, couch, or car seat.",14.99,"🍽️"],
+["Snack Seat Catcher","A soft car-seat gap tray that catches snacks, toys, fries, and crumbs.",19.99,"🚗"],
+["Trash Bag Lock Ring","Locks trash bags to the can so the bag never falls inside.",12.99,"🗑️"],
+["SoapGlow Bar","A soap bar that glows when wet so kids actually wash their hands.",9.99,"🧼"],
+["Cord Snap Label","Reusable cord wrap with a large built-in label for hoses and cords.",16.99,"🔌"],
+["Sink Splash Shield","A folding clear shield that blocks water from splashing behind sinks.",18.99,"🚰"],
+["Pet Hair Swipe Glove","A rubber cleaning glove that pulls pet hair off fabric fast.",13.99,"🐶"],
+["Milk Pour Clip","Snap-on spout that helps kids pour milk without spilling.",8.99,"🥛"],
+["Lost Sock Cage","Washer-safe cage that keeps baby socks and small items together.",11.99,"🧦"],
+["Remote Finder Dock","Weighted dock that keeps remotes upright and easy to find.",17.99,"📺"],
 
-["Tape End Finder","A tiny reusable clip that marks the end of tape rolls forever.","Essential"],
-["Plug Pull Tabs","Add-on pull tabs for plugs stuck behind couches, beds, and desks.","Essential"],
-["Freezer Flat Pack","A tray that freezes soup and leftovers into thin stackable bricks.","Kitchen"],
-["Counter Peel Catcher","A collapsible counter bin for peels, shells, and food scraps.","Kitchen"],
-["Lunchbox Cold Wall","A freezer panel that clips inside lunchboxes without taking up much space.","School"],
-["Pan Handle Cool Clip","A silicone grip that snaps onto hot pan handles while cooking.","Kitchen"],
-["Shoe Mud Edge Mat","A mat with side bristles that cleans shoe edges, not just bottoms.","Outdoor"],
-["Door Ding Bumper","A soft wall strip that protects car doors inside tight garages.","Garage"],
-["Furniture Slider Socks","Stretchy padded socks for chair legs that slide quietly and stay on.","Home"],
-["Cable Drop Net","An under-desk net that catches chargers before they fall behind furniture.","Office"],
+["Tape End Finder","Tiny reusable clip that marks the end of tape rolls forever.",6.99,"📦"],
+["Plug Pull Tabs","Add-on tabs for plugs stuck behind couches, beds, and desks.",7.99,"🔋"],
+["Freezer Flat Pack","Freezes leftovers into thin stackable bricks.",21.99,"🧊"],
+["Counter Peel Catcher","Collapsible counter bin for peels, shells, and scraps.",15.99,"🥕"],
+["Lunchbox Cold Wall","Thin freezer panel that clips inside a lunchbox.",13.99,"🥪"],
+["Pan Handle Cool Clip","Silicone grip that clips onto hot pan handles.",10.99,"🍳"],
+["Shoe Mud Edge Mat","Mat with side bristles to clean shoe edges.",24.99,"👟"],
+["Door Ding Bumper","Soft garage wall bumper that protects car doors.",18.99,"🚙"],
+["Furniture Slider Socks","Padded socks for chair legs that slide quietly.",12.99,"🪑"],
+["Cable Drop Net","Under-desk net that catches falling chargers.",14.99,"💻"],
 
-["Beach Sand Pocket Blanket","A beach blanket with fillable sand pockets instead of stakes.","Beach"],
-["Floating Phone Pillow","A soft floating waterproof phone holder for pools and lakes.","Pool"],
-["Cooler Divider Pro","Adjustable cooler dividers for drinks, snacks, ice, and dry items.","Outdoor"],
-["Pop-Up Shade Cup","A cup with a tiny folding shade to keep drinks cooler outside.","Fun"],
-["Glow Path Pebbles","Solar garden stones that look normal by day and glow at night.","Outdoor"],
-["Table Edge Cup Rail","A clip-on drink rail for folding tables at parties or tailgates.","Party"],
-["Magnetic Snack Stadium","Magnetic snack bowls that lock together for movies and parties.","Party"],
-["Backyard Score Tower","A portable scorekeeper for cornhole, pickleball, and yard games.","Game"],
-["Campfire Color Rocks","Reusable fire-safe rocks that create fun color effects in fire pits.","Outdoor"],
-["Cam Jam Toss","A backyard game where players toss soft discs into adjustable target nets.","Game"],
+["Beach Sand Pocket Blanket","Beach blanket with fillable sand pockets instead of stakes.",29.99,"🏖️"],
+["Floating Phone Pillow","Soft floating waterproof phone holder for pools.",18.99,"📱"],
+["Cooler Divider Pro","Adjustable cooler dividers for food, drinks, and ice.",22.99,"🧊"],
+["Pop-Up Shade Cup","Drink cup with a tiny folding shade to keep drinks cool.",14.99,"🥤"],
+["Glow Path Pebbles","Solar garden stones that glow at night.",26.99,"💡"],
+["Table Edge Cup Rail","Clip-on cup rail for folding tables and parties.",19.99,"🎉"],
+["Magnetic Snack Stadium","Magnetic snack bowls that lock together for movie night.",27.99,"🍿"],
+["Backyard Score Tower","Portable scorekeeper for yard games.",24.99,"🏆"],
+["Campfire Color Rocks","Reusable fire-safe rocks that create colorful flames.",34.99,"🔥"],
+["Cam Jam Toss","Backyard toss game with soft discs and target nets.",39.99,"🥏"],
 
-["Hose Kink Blocker","A flexible sleeve that stops hoses from folding near the faucet.","Outdoor"],
-["Paint Pour Guard","A snap-on rim that stops paint from dripping down the can.","DIY"],
-["Screw Starter Pad","A sticky reusable pad that holds tiny screws upright while drilling.","DIY"],
-["Tool Shadow Stickers","Peel-and-stick outlines showing where each tool belongs.","Garage"],
-["Ladder Foot Grips","Clip-on rubber feet that help ladders grip driveways and decks.","Safety"],
-["Pantry Expire Tags","Simple color tags that show what food should be used first.","Kitchen"],
-["Bagel Butter Wheel","A rolling butter tool that spreads evenly inside bagels and toast grooves.","Kitchen"],
-["Microwave Steam Guard","A reusable cover that vents steam without dripping on food.","Kitchen"],
-["Drawer No-Jam Divider","Flexible dividers that bend around odd-shaped kitchen tools.","Kitchen"],
-["Snack Lock Box","A timer snack container for simple portion control.","Parent Hack"],
+["Hose Kink Blocker","Flexible sleeve that stops hoses from folding at the faucet.",9.99,"🪴"],
+["Paint Pour Guard","Snap-on paint rim that stops drips down the can.",8.99,"🎨"],
+["Screw Starter Pad","Sticky reusable pad that holds screws upright while drilling.",7.99,"🔩"],
+["Tool Shadow Stickers","Tool outlines that show exactly where each tool belongs.",14.99,"🧰"],
+["Ladder Foot Grips","Clip-on rubber ladder feet for better grip.",19.99,"🪜"],
+["Pantry Expire Tags","Color tags that show what pantry food should be used first.",9.99,"🥫"],
+["Bagel Butter Wheel","Rolling butter tool for bagels and toast grooves.",11.99,"🥯"],
+["Microwave Steam Guard","Reusable cover that vents steam without dripping.",16.99,"🍲"],
+["Drawer No-Jam Divider","Flexible drawer dividers for weird-shaped tools.",18.99,"🍴"],
+["Snack Lock Box","Timer snack container for simple portion control.",24.99,"🍫"],
 
-["Toothpaste Flat Roller","A satisfying clip roller that squeezes toothpaste perfectly flat.","Bathroom"],
-["Shower Steam Shelf","A shower shelf that gently warms shaving cream or face wash.","Bathroom"],
-["Pillow Cool Strip","A reusable cooling strip that slides into a pillowcase.","Sleep"],
-["Backseat Trash Dock","A mini trash bin that locks to car floor mats and won’t tip.","Car"],
-["Grocery Grip Clip","A padded handle that combines grocery bags so they’re easier to carry.","Essential"],
-["No-Spill Cereal Bowl","A bowl with a raised wall that stops cereal milk from sloshing out.","Parent Hack"],
-["Fridge Fresh Clip","A food-container clip that reminds you how old leftovers are.","Kitchen"],
-["Corner Dust Magnet","A bendable cleaning pad made for baseboard corners and stairs.","Cleaning"],
-["Garage Parking Mat","A tire-stop mat that helps cars park perfectly every time.","Garage"],
-["Measuring Cup Funnel Lid","A lid that turns a measuring cup into a no-mess funnel.","Kitchen"]
+["Toothpaste Flat Roller","Clip roller that squeezes toothpaste perfectly flat.",8.99,"🪥"],
+["Shower Steam Shelf","Shower shelf that gently warms shaving cream.",17.99,"🚿"],
+["Pillow Cool Strip","Reusable cooling strip that slides into a pillowcase.",21.99,"🛏️"],
+["Backseat Trash Dock","Mini trash bin that locks to car floor mats.",15.99,"🚘"],
+["Grocery Grip Clip","Padded handle that combines grocery bags.",9.99,"🛍️"],
+["No-Spill Cereal Bowl","Raised-wall bowl that stops cereal milk spills.",12.99,"🥣"],
+["Fridge Fresh Clip","Food-container clip that shows how old leftovers are.",10.99,"🧊"],
+["Corner Dust Magnet","Bendable cleaning pad for baseboard corners.",13.99,"🧹"],
+["Garage Parking Mat","Tire-stop mat for perfect garage parking.",29.99,"🅿️"],
+["Measuring Cup Funnel Lid","Turns any measuring cup into a funnel.",8.99,"🥄"]
 ];
 
-const grid = document.getElementById("productGrid");
+const grid = document.getElementById("grid");
+
 products.forEach((p,i)=>{
   grid.innerHTML += `
-    <div class="card">
-      <div class="num">${i+1}</div>
+    <div class="card" onclick="openProduct(${i})">
+      <div class="image">${p[3]}</div>
       <h3>${p[0]}</h3>
-      <p>${p[1]}</p>
-      <span class="tag">${p[2]}</span>
+      <div class="stars">★★★★★</div>
+      <p class="desc">${p[1]}</p>
+      <div class="price">$${p[2]}</div>
+      <button onclick="event.stopPropagation();addCart()">Add to Cart</button>
     </div>
   `;
 });
 
-const params = new URLSearchParams(window.location.search);
-if(params.get("page")==="ideas"){
-  document.getElementById("homePage").classList.add("hidden");
-  document.getElementById("ideasPage").classList.remove("hidden");
+function openVault(){
+  document.getElementById("vault").classList.add("open");
+  setTimeout(()=>{
+    document.getElementById("hero").classList.add("fade");
+  },700);
+  setTimeout(()=>{
+    document.getElementById("hero").style.display="none";
+    document.getElementById("productsPage").classList.add("show");
+    window.scrollTo(0,0);
+  },1400);
+}
+
+function openProduct(i){
+  const p = products[i];
+  document.getElementById("modalTitle").innerText = p[0];
+  document.getElementById("modalPrice").innerText = "$" + p[2];
+  document.getElementById("modalDesc").innerText = p[1] + " Designed to be simple, useful, and easy to understand at a glance.";
+  document.getElementById("modalIcon").innerText = p[3];
+
+  document.getElementById("views").innerHTML = `
+    <div>${p[3]}</div>
+    <div>📦</div>
+    <div>🔍</div>
+    <div>✅</div>
+  `;
+
+  document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+}
+
+function addCart(){
+  cart++;
+  document.getElementById("cartCount").innerText = cart;
 }
 </script>
 
