@@ -11,7 +11,7 @@ header{height:58px;background:#080b10;color:white;display:flex;align-items:cente
 nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 nav a,nav button{color:white;background:none;border:0;font-weight:800;cursor:pointer;text-decoration:none}
 select,input{padding:9px 12px;border-radius:10px;border:1px solid #ccc;font-size:14px}
-.searchBox{display:none;width:210px}
+.searchBox{width:220px}
 
 .hero{min-height:calc(100vh - 58px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;box-sizing:border-box}
 h1{font-size:58px;line-height:.9;margin:0 0 18px}
@@ -59,8 +59,8 @@ nav,nav select{width:100%}
   <nav>
     <a href="#" onclick="goHome()">Home</a>
     <button onclick="openProducts()">Products</button>
-    <input class="searchBox" id="searchInput" placeholder="Search products..." oninput="renderProducts()">
-    <select id="categoryFilter" onchange="renderProducts()"></select>
+    <input class="searchBox" id="searchInput" placeholder="Search products or categories..." oninput="searchNow()">
+    <select id="categoryFilter" onchange="searchNow()"></select>
     <button onclick="toggleCart()">Cart: <span id="cartCount">0</span></button>
   </nav>
 </header>
@@ -177,6 +177,11 @@ const synonyms=[
 ["tech","charger","cable","cord","phone","tablet","light","led"]
 ];
 
+function searchNow(){
+  showProductsPage();
+  renderProducts();
+}
+
 function animateVault(){
   document.getElementById("vault").classList.add("open");
   setTimeout(openProducts,900);
@@ -196,14 +201,12 @@ function openProducts(){
 function showProductsPage(){
   document.getElementById("homePage").style.display="none";
   document.getElementById("productsPage").style.display="block";
-  document.getElementById("searchInput").style.display="inline-block";
   renderProducts();
 }
 
 function showHomePage(){
   document.getElementById("homePage").style.display="grid";
   document.getElementById("productsPage").style.display="none";
-  document.getElementById("searchInput").style.display="none";
 }
 
 function renderCategories(){
@@ -219,11 +222,15 @@ function normalizeText(text){
 function expandSearch(query){
   let words=normalizeText(query).split(/\s+/).filter(Boolean);
   let expanded=new Set(words);
+
   words.forEach(word=>{
     synonyms.forEach(group=>{
-      if(group.includes(word)) group.forEach(similar=>expanded.add(similar));
+      if(group.includes(word)){
+        group.forEach(similar=>expanded.add(similar));
+      }
     });
   });
+
   return Array.from(expanded);
 }
 
@@ -234,7 +241,12 @@ function getProductCategories(product){
 }
 
 function productText(product){
-  return normalizeText([product.name,product.description,product.keywords,getProductCategories(product).join(" ")].join(" "));
+  return normalizeText([
+    product.name,
+    product.description,
+    product.keywords,
+    getProductCategories(product).join(" ")
+  ].join(" "));
 }
 
 function renderProducts(){
@@ -275,22 +287,34 @@ function renderProducts(){
 function addToCart(id){
   let product=products.find(item=>item.id===id);
   if(!product) return;
+
   let existing=cart.find(item=>item.id===id);
-  if(existing){existing.quantity+=1}
-  else{cart.push({id:product.id,name:product.name,price:product.price,quantity:1})}
+
+  if(existing){
+    existing.quantity+=1;
+  }else{
+    cart.push({id:product.id,name:product.name,price:product.price,quantity:1});
+  }
+
   localStorage.setItem("cart",JSON.stringify(cart));
   renderCart();
 }
 
 function renderCart(){
   document.getElementById("cartCount").textContent=cart.reduce((sum,item)=>sum+(item.quantity||1),0);
+
   let cartItems=document.getElementById("cartItems");
   let total=0;
   cartItems.innerHTML="";
-  if(cart.length===0) cartItems.innerHTML="<p>Your cart is empty.</p>";
+
+  if(cart.length===0){
+    cartItems.innerHTML="<p>Your cart is empty.</p>";
+  }
+
   cart.forEach((item,index)=>{
     let qty=item.quantity||1;
     total+=Number(item.price)*qty;
+
     cartItems.innerHTML+=`
       <div class="cartItem">
         <strong>${item.name}</strong>
@@ -301,12 +325,17 @@ function renderCart(){
         <button onclick="removeFromCart(${index})">Remove</button>
       </div>`;
   });
+
   document.getElementById("cartTotal").textContent=total.toFixed(2);
 }
 
 function changeQty(index,amount){
   cart[index].quantity=(cart[index].quantity||1)+amount;
-  if(cart[index].quantity<=0) cart.splice(index,1);
+
+  if(cart[index].quantity<=0){
+    cart.splice(index,1);
+  }
+
   localStorage.setItem("cart",JSON.stringify(cart));
   renderCart();
 }
@@ -323,15 +352,22 @@ function toggleCart(){
 }
 
 function checkout(){
-  if(cart.length===0){alert("Your cart is empty.");return}
+  if(cart.length===0){
+    alert("Your cart is empty.");
+    return;
+  }
+
   alert("Checkout coming soon!");
 }
 
 renderCategories();
 renderCart();
 
-if(window.location.href.includes("page=products")) showProductsPage();
-else showHomePage();
+if(window.location.href.includes("page=products")){
+  showProductsPage();
+}else{
+  showHomePage();
+}
 </script>
 
 </body>
