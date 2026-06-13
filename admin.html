@@ -1,207 +1,215 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Side Quests Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Iron Vault Admin</title>
 <style>
-body{margin:0;font-family:Arial;background:#f3f4f6;color:#111}
-header{height:70px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%}
-.logo{font-size:28px;font-weight:900}
-main{padding:30px 6%}
-.box{background:white;border:1px solid #ddd;border-radius:14px;padding:22px;margin-bottom:22px}
-input,textarea,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccc;border-radius:10px}
-button{cursor:pointer;border:0;font-weight:900;padding:12px 18px;border-radius:10px;margin:4px}
-.save{background:#ffd814}
-.delete{background:#ef4444;color:white}
-.edit{background:#111827;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-.card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px}
-.card img{width:100%;height:170px;object-fit:cover;border-radius:10px;background:#ddd}
-.hidden{display:none}
-.small{font-size:13px;color:#555}
+body{font-family:Arial,sans-serif;background:#faf7f0;margin:0;color:#111}
+header{padding:22px 8%;display:flex;justify-content:space-between;align-items:center;background:white}
+.logo{font-weight:900;font-size:24px}
+main{padding:30px 8%}
+.card{background:white;border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+input,select,textarea{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:10px;font-size:15px;box-sizing:border-box}
+button{background:#111;color:white;border:0;border-radius:12px;padding:13px 20px;font-weight:900;cursor:pointer}
+.danger{background:#b00020}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.item{border:1px solid #ddd;border-radius:12px;padding:15px;margin-top:12px}
+.small{color:#666;font-size:14px}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Side Quests Admin</div>
-  <div><a href="index.html" style="color:white">View Store</a></div>
+  <div class="logo">IRON VAULT ADMIN</div>
+  <a href="index.html">View Store</a>
 </header>
 
-<main id="loginBox">
-  <div class="box">
-    <h2>Admin Login</h2>
-    <p>Password for testing: <b>sidequest123</b></p>
-    <input type="password" id="password" placeholder="Enter password">
-    <button class="save" onclick="login()">Login</button>
-  </div>
-</main>
+<main>
 
-<main id="adminPanel" class="hidden">
-  <div class="box">
-    <h2 id="formTitle">Add Product</h2>
+<div class="card">
+  <h2>Add / Manage Categories</h2>
+  <input id="categoryName" placeholder="New category name, example: Camping">
+  <button onclick="addCategory()">Add Category</button>
 
-    <input type="hidden" id="editIndex">
+  <div id="categoryList"></div>
+</div>
 
-    <label>Product Name</label>
-    <input id="name">
+<div class="card">
+  <h2>Add Product</h2>
 
-    <label>Price</label>
-    <input id="price" type="number" step="0.01">
-
-    <label>Category</label>
-    <input id="category">
-
-    <label>Sizes / Options</label>
-    <input id="sizes" placeholder="Small, Medium, Large">
-
-    <label>Description</label>
-    <textarea id="desc"></textarea>
-
-    <label>Shipping Details</label>
-    <textarea id="shipping"></textarea>
-
-    <label>Upload Product Images / Views</label>
-    <input type="file" id="images" accept="image/*" multiple>
-    <p class="small">Upload main image plus extra views. First image becomes the main image.</p>
-
-    <button class="save" onclick="saveProduct()">Save Product</button>
-    <button onclick="clearForm()">Clear</button>
+  <div class="row">
+    <input id="productName" placeholder="Product name">
+    <input id="productPrice" placeholder="Price, example: 24.99">
   </div>
 
+  <select id="productCategory"></select>
+
+  <input id="productImage" placeholder="Image URL">
+  <textarea id="productDescription" placeholder="Product description"></textarea>
+
+  <button onclick="addProduct()">Add Product</button>
+</div>
+
+<div class="card">
   <h2>Current Products</h2>
-  <div class="grid" id="productList"></div>
+  <div id="productList"></div>
+</div>
+
 </main>
 
 <script>
-const ADMIN_PASSWORD = "sidequest123";
-
-const starterProducts = [
- {name:"Vegetable Chopper", price:24.99, category:"Kitchen", sizes:"Small, Medium, Large", desc:"Fast chop container for onions, peppers, fruit, and meal prep.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Mini Bag Sealer", price:9.99, category:"Kitchen", sizes:"Standard", desc:"Portable heat sealer for snack bags, chips, and pantry storage.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Pet Hair Remover Roller", price:16.99, category:"Pets", sizes:"Standard", desc:"Reusable roller that removes pet hair from couches and clothes.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Car Gap Organizer", price:19.99, category:"Car", sizes:"Driver Side, Passenger Side", desc:"Organizer that fills the seat gap and holds phone, wallet, and keys.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Under Sink Organizer", price:25.99, category:"Home", sizes:"1-Tier, 2-Tier", desc:"Sliding shelf organizer for cleaning supplies.", shipping:"Estimated delivery: 5–10 business days."}
+let categories = JSON.parse(localStorage.getItem("categories")) || [
+  "Camping",
+  "Water",
+  "Sports",
+  "Games",
+  "Survival",
+  "Outdoor"
 ];
 
-function getProducts(){
-  let saved = localStorage.getItem("sqProducts");
-  if(!saved){
-    localStorage.setItem("sqProducts", JSON.stringify(starterProducts));
-    return starterProducts;
-  }
-  return JSON.parse(saved);
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function saveData(){
+  localStorage.setItem("categories", JSON.stringify(categories));
+  localStorage.setItem("products", JSON.stringify(products));
 }
 
-function setProducts(products){
-  localStorage.setItem("sqProducts", JSON.stringify(products));
-}
+function renderCategories(){
+  const list = document.getElementById("categoryList");
+  const select = document.getElementById("productCategory");
 
-function login(){
-  if(document.getElementById("password").value === ADMIN_PASSWORD){
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("adminPanel").classList.remove("hidden");
-    renderProducts();
-  }else{
-    alert("Wrong password");
-  }
-}
+  list.innerHTML = "";
+  select.innerHTML = "";
 
-function fileToBase64(file){
-  return new Promise(resolve=>{
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.readAsDataURL(file);
+  categories.forEach((cat, index) => {
+    select.innerHTML += `<option value="${cat}">${cat}</option>`;
+
+    list.innerHTML += `
+      <div class="item">
+        <input value="${cat}" onchange="editCategory(${index}, this.value)">
+        <button class="danger" onclick="deleteCategory(${index})">Delete Category</button>
+      </div>
+    `;
   });
 }
 
-async function saveProduct(){
-  const products = getProducts();
-  const editIndex = document.getElementById("editIndex").value;
+function addCategory(){
+  const name = document.getElementById("categoryName").value.trim();
 
-  const files = Array.from(document.getElementById("images").files).slice(0,4);
-  const uploadedImages = [];
-  for(const file of files){
-    uploadedImages.push(await fileToBase64(file));
-  }
-
-  const product = {
-    name:document.getElementById("name").value,
-    price:Number(document.getElementById("price").value),
-    category:document.getElementById("category").value,
-    sizes:document.getElementById("sizes").value,
-    desc:document.getElementById("desc").value,
-    shipping:document.getElementById("shipping").value,
-    images:uploadedImages
-  };
-
-  if(!product.name || !product.price){
-    alert("Product name and price are required.");
+  if(!name){
+    alert("Enter a category name.");
     return;
   }
 
-  if(editIndex !== ""){
-    const old = products[editIndex];
-    if(uploadedImages.length === 0) product.images = old.images || [];
-    products[editIndex] = product;
-  }else{
-    products.push(product);
+  if(categories.some(c => c.toLowerCase() === name.toLowerCase())){
+    alert("That category already exists.");
+    return;
   }
 
-  setProducts(products);
-  clearForm();
+  categories.push(name);
+  document.getElementById("categoryName").value = "";
+  saveData();
+  renderCategories();
+}
+
+function editCategory(index, newName){
+  newName = newName.trim();
+
+  if(!newName){
+    alert("Category name cannot be blank.");
+    renderCategories();
+    return;
+  }
+
+  const oldName = categories[index];
+  categories[index] = newName;
+
+  products = products.map(product => {
+    if(product.category === oldName){
+      product.category = newName;
+    }
+    return product;
+  });
+
+  saveData();
+  renderCategories();
   renderProducts();
 }
 
-function editProduct(i){
-  const p = getProducts()[i];
-  document.getElementById("formTitle").innerText = "Edit Product";
-  document.getElementById("editIndex").value = i;
-  document.getElementById("name").value = p.name;
-  document.getElementById("price").value = p.price;
-  document.getElementById("category").value = p.category;
-  document.getElementById("sizes").value = p.sizes;
-  document.getElementById("desc").value = p.desc;
-  document.getElementById("shipping").value = p.shipping;
-  window.scrollTo(0,0);
+function deleteCategory(index){
+  const category = categories[index];
+
+  const used = products.some(product => product.category === category);
+
+  if(used){
+    alert("You cannot delete this category because products are using it. Move or delete those products first.");
+    return;
+  }
+
+  categories.splice(index, 1);
+  saveData();
+  renderCategories();
 }
 
-function deleteProduct(i){
-  if(!confirm("Delete this product?")) return;
-  const products = getProducts();
-  products.splice(i,1);
-  setProducts(products);
+function addProduct(){
+  const name = document.getElementById("productName").value.trim();
+  const price = document.getElementById("productPrice").value.trim();
+  const category = document.getElementById("productCategory").value;
+  const image = document.getElementById("productImage").value.trim();
+  const description = document.getElementById("productDescription").value.trim();
+
+  if(!name || !price || !category){
+    alert("Product name, price, and category are required.");
+    return;
+  }
+
+  products.push({
+    id: Date.now(),
+    name,
+    price,
+    category,
+    image,
+    description
+  });
+
+  document.getElementById("productName").value = "";
+  document.getElementById("productPrice").value = "";
+  document.getElementById("productImage").value = "";
+  document.getElementById("productDescription").value = "";
+
+  saveData();
   renderProducts();
-}
-
-function clearForm(){
-  document.getElementById("formTitle").innerText = "Add Product";
-  document.getElementById("editIndex").value = "";
-  document.getElementById("name").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("category").value = "";
-  document.getElementById("sizes").value = "";
-  document.getElementById("desc").value = "";
-  document.getElementById("shipping").value = "";
-  document.getElementById("images").value = "";
 }
 
 function renderProducts(){
-  const products = getProducts();
-  document.getElementById("productList").innerHTML = products.map((p,i)=>`
-    <div class="card">
-      ${p.images && p.images[0] ? `<img src="${p.images[0]}">` : `<div style="height:170px;background:#ddd;border-radius:10px;display:grid;place-items:center">No Image</div>`}
-      <h3>${p.name}</h3>
-      <p>${p.desc}</p>
-      <b>$${Number(p.price).toFixed(2)}</b>
-      <br><br>
-      <button class="edit" onclick="editProduct(${i})">Edit</button>
-      <button class="delete" onclick="deleteProduct(${i})">Delete</button>
-    </div>
-  `).join("");
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
+
+  if(products.length === 0){
+    list.innerHTML = `<p class="small">No products added yet.</p>`;
+    return;
+  }
+
+  products.forEach((product, index) => {
+    list.innerHTML += `
+      <div class="item">
+        <h3>${product.name}</h3>
+        <p class="small">Category: ${product.category}</p>
+        <p class="small">Price: $${product.price}</p>
+        <button class="danger" onclick="deleteProduct(${index})">Delete Product</button>
+      </div>
+    `;
+  });
 }
 
-getProducts();
+function deleteProduct(index){
+  products.splice(index, 1);
+  saveData();
+  renderProducts();
+}
+
+renderCategories();
+renderProducts();
 </script>
 
 </body>
