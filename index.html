@@ -1,177 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Side Quests</title>
-
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
 header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
 .logo{font-size:30px;font-weight:900}
-nav button{background:transparent;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
+nav button{background:none;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
 .cart{font-weight:900}
 button{cursor:pointer;border:0;font-weight:900}
-
-/* LANDING */
-.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd);transition:opacity .7s ease,transform .7s ease}
-.hero.fade{opacity:0;transform:scale(1.03)}
-h1{font-size:76px;line-height:.9;margin:0 0 20px;letter-spacing:-4px}
-.hero p{font-size:20px;color:#444;line-height:1.5}
-.openBtn{background:#f5c542;border-radius:999px;padding:16px 30px;font-size:16px;color:#111}
-
-/* COMPLETELY NEW VAULT DESIGN */
-.vaultScene{
-  height:560px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  perspective:1600px;
-}
-.wall{
-  position:absolute;
-  width:560px;
-  height:560px;
-  border-radius:36px;
-  background:linear-gradient(135deg,#9ca3af,#4b5563);
-  box-shadow:inset 0 0 55px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);
-}
-.vaultOpening{
-  position:absolute;
-  width:410px;
-  height:460px;
-  border-radius:22px;
-  background:#111827;
-  box-shadow:inset 0 0 50px #000;
-  overflow:hidden;
-}
-.vaultOpening:after{
-  content:"SIDE QUESTS";
-  color:#f5c542;
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:3px;
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  opacity:0;
-  transition:.6s;
-}
-.vaultScene.open .vaultOpening:after{opacity:1}
-
-.vaultDoor{
-  position:absolute;
-  width:430px;
-  height:480px;
-  border-radius:28px;
-  background:
-    linear-gradient(135deg,#e5e7eb 0%,#9ca3af 22%,#64748b 48%,#374151 74%,#1f2937 100%);
-  border:16px solid #6b7280;
-  box-shadow:inset 0 0 45px rgba(0,0,0,.45),0 25px 55px rgba(0,0,0,.45);
-  transform-origin:left center;
-  transition:1.25s cubic-bezier(.2,.8,.2,1);
-  z-index:5;
-}
-.vaultScene.open .vaultDoor{transform:rotateY(-105deg) translateX(-20px)}
-.doorPanel{
-  position:absolute;
-  inset:38px;
-  border:10px solid #9ca3af;
-  border-radius:20px;
-  box-shadow:inset 0 0 24px #111827;
-}
-.lockWheel{
-  position:absolute;
-  width:155px;
-  height:155px;
-  border-radius:50%;
-  border:18px solid #cbd5e1;
-  top:145px;
-  left:138px;
-  box-shadow:inset 0 0 15px #111,0 0 12px #111;
-}
-.lockWheel span{
-  position:absolute;
-  width:138px;
-  height:16px;
-  background:linear-gradient(90deg,#374151,#f8fafc,#374151);
-  border-radius:999px;
-  top:51px;
-  left:-10px;
-}
-.lockWheel span:nth-child(2){transform:rotate(60deg)}
-.lockWheel span:nth-child(3){transform:rotate(-60deg)}
-.lockWheel:after{
-  content:"";
-  position:absolute;
-  width:58px;height:58px;border-radius:50%;
-  background:radial-gradient(circle,#f8fafc,#475569);
-  top:31px;left:31px;border:5px solid #374151;
-}
-.safeBolt{
-  position:absolute;
-  width:32px;height:32px;border-radius:50%;
-  background:radial-gradient(circle,#fff,#9ca3af,#374151);
-  border:3px solid #374151;
-}
-.s1{top:30px;left:44px}.s2{top:30px;right:44px}.s3{bottom:30px;left:44px}.s4{bottom:30px;right:44px}
-.s5{top:105px;left:28px}.s6{top:105px;right:28px}.s7{bottom:105px;left:28px}.s8{bottom:105px;right:28px}
-.s9{top:214px;left:24px}.s10{top:214px;right:24px}
-.hinge{
-  position:absolute;
-  left:-42px;
-  width:55px;
-  height:100px;
-  background:linear-gradient(#cbd5e1,#475569);
-  border-radius:14px;
-  border:5px solid #374151;
-}
-.h1{top:70px}.h2{bottom:70px}
-
-/* PRODUCTS */
 .page{display:none;padding:34px 5%}
 .page.show{display:block}
-.topTitle{font-size:38px;margin:10px 0}
+
+/* HOME */
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
+h1{font-size:76px;line-height:.9;margin:0 0 20px;letter-spacing:-4px}
+.hero p{font-size:20px;color:#444;line-height:1.5}
+.openBtn{background:#f5c542;border-radius:999px;padding:16px 30px;font-size:16px}
+
+/* NEW VAULT */
+.vaultScene{height:540px;display:flex;align-items:center;justify-content:center;perspective:1600px}
+.wall{width:560px;height:540px;border-radius:34px;background:linear-gradient(135deg,#aab2bb,#4b5563);box-shadow:inset 0 0 55px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);position:absolute}
+.opening{width:400px;height:440px;background:#111827;border-radius:20px;position:absolute;box-shadow:inset 0 0 55px #000}
+.door{width:425px;height:465px;border-radius:26px;background:linear-gradient(135deg,#e5e7eb,#9ca3af 25%,#64748b 55%,#303741);border:16px solid #6b7280;position:absolute;box-shadow:inset 0 0 45px #111,0 25px 55px rgba(0,0,0,.45);transform-origin:left center;transition:1.25s}
+.vaultScene.open .door{transform:rotateY(-105deg) translateX(-18px)}
+.panel{position:absolute;inset:38px;border:10px solid #aab2bb;border-radius:18px}
+.wheel{position:absolute;width:155px;height:155px;border-radius:50%;border:18px solid #d1d5db;top:145px;left:135px}
+.wheel span{position:absolute;width:138px;height:16px;background:linear-gradient(90deg,#374151,#fff,#374151);top:51px;left:-10px;border-radius:999px}
+.wheel span:nth-child(2){transform:rotate(60deg)}
+.wheel span:nth-child(3){transform:rotate(-60deg)}
+.wheel:after{content:"";position:absolute;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,#fff,#555);top:31px;left:31px;border:5px solid #374151}
+.bolt{position:absolute;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3af,#374151);border:3px solid #374151}
+.b1{top:30px;left:44px}.b2{top:30px;right:44px}.b3{bottom:30px;left:44px}.b4{bottom:30px;right:44px}
+.b5{top:105px;left:28px}.b6{top:105px;right:28px}.b7{bottom:105px;left:28px}.b8{bottom:105px;right:28px}
+
+/* PRODUCTS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:22px;margin-top:25px}
 .card{background:white;border-radius:12px;border:1px solid #ddd;padding:14px;cursor:pointer;transition:.2s}
 .card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
-.card img{width:100%;height:190px;object-fit:cover;border-radius:9px;background:#e5e7eb}
-.placeholder{height:190px;border-radius:9px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
+.photo{height:190px;border-radius:9px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
 .card h3{font-size:17px;margin:12px 0 6px}
 .desc{font-size:14px;min-height:58px;color:#555}
 .price{font-size:24px;font-weight:900;margin:10px 0}
 .tap{font-size:13px;font-weight:900;color:#2563eb}
 
-/* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80}
-.modal.show{display:flex}
-.modalBox{width:min(950px,94vw);background:white;border-radius:16px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.bigImg{width:100%;height:360px;object-fit:cover;border-radius:14px;background:#e5e7eb}
-.views{display:flex;gap:10px;margin-top:12px}
-.views img,.viewPlaceholder{width:75px;height:75px;object-fit:cover;border-radius:10px;border:1px solid #ddd;background:#e5e7eb;display:grid;place-items:center;font-size:11px;text-align:center}
-.add{width:100%;padding:14px;background:#ffd814;border-radius:999px;margin-top:18px}
-.close{background:#111;color:white;border-radius:10px;padding:12px 18px;margin-top:12px}
-
-/* ADMIN */
-.adminBox{background:white;border-radius:16px;border:1px solid #ddd;padding:22px;margin-top:20px}
-.adminRow{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid #e5e7eb}
-.adminRow h3{margin:0 0 8px}
-.adminRow input{display:block;margin:8px 0}
+/* PRODUCT DETAIL PAGE */
+.detailWrap{display:grid;grid-template-columns:1.05fr 1fr 310px;gap:28px;align-items:start}
+.gallery{background:white;border:1px solid #ddd;border-radius:14px;padding:16px}
+.mainPhoto{height:430px;border-radius:12px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-size:22px;font-weight:900;color:#475569;padding:25px}
+.thumbs{display:flex;gap:10px;margin-top:12px}
+.thumb{width:78px;height:78px;border-radius:10px;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569;cursor:pointer}
+.info,.buyBox,.sectionBox{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
+.info h2{font-size:34px;margin:0 0 10px}
+.likeBtn{background:#eef2ff;color:#1d4ed8;border-radius:999px;padding:10px 16px;margin:10px 0}
+.optionRow{margin:18px 0}
+.optionRow label{display:block;font-weight:900;margin-bottom:8px}
+select,.qty{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px}
+.buyBox{position:sticky;top:92px}
+.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:14px}
+.buyNow{width:100%;padding:15px;background:#f5a623;border-radius:999px;margin-top:10px}
 .small{font-size:13px;color:#555}
+.detailsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:24px}
+.sectionBox h3{margin-top:0}
+.review{border-top:1px solid #eee;padding-top:14px;margin-top:14px}
+.similarGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:16px}
+.similar{background:white;border:1px solid #ddd;border-radius:12px;padding:12px;cursor:pointer}
+.similar .photo{height:120px}
 
-@media(max-width:900px){
+@media(max-width:1000px){
 .hero{grid-template-columns:1fr;text-align:center}
 h1{font-size:54px}
-.vaultScene{height:390px}
-.wall{width:340px;height:360px}
-.vaultOpening{width:250px;height:290px}
-.vaultDoor{width:265px;height:305px}
-.lockWheel{width:105px;height:105px;top:96px;left:80px}
-.lockWheel span{width:90px;top:32px}
-.modalBox,.adminRow{grid-template-columns:1fr}
+.detailWrap{grid-template-columns:1fr}
+.buyBox{position:static}
 }
 </style>
 </head>
@@ -183,258 +86,266 @@ h1{font-size:54px}
   <nav>
     <button onclick="showHome()">Home</button>
     <button onclick="showProducts()">Products</button>
-    <button onclick="showAdmin()">Admin</button>
   </nav>
   <div class="cart">Cart: <span id="cartCount">0</span></div>
 </header>
 
-<section class="hero" id="hero">
+<section class="hero" id="homePage">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
     <p>Trending-style products for kitchens, pets, cars, cleaning, storage, travel, and everyday problems.</p>
     <button class="openBtn" onclick="openVault()">Open Vault</button>
   </div>
-
   <div class="vaultScene" id="vaultScene" onclick="openVault()">
     <div class="wall"></div>
-    <div class="vaultOpening"></div>
-    <div class="vaultDoor">
-      <div class="hinge h1"></div><div class="hinge h2"></div>
-      <div class="doorPanel"></div>
-      <div class="safeBolt s1"></div><div class="safeBolt s2"></div><div class="safeBolt s3"></div><div class="safeBolt s4"></div>
-      <div class="safeBolt s5"></div><div class="safeBolt s6"></div><div class="safeBolt s7"></div><div class="safeBolt s8"></div>
-      <div class="safeBolt s9"></div><div class="safeBolt s10"></div>
-      <div class="lockWheel"><span></span><span></span><span></span></div>
+    <div class="opening"></div>
+    <div class="door">
+      <div class="panel"></div>
+      <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
+      <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
+      <div class="wheel"><span></span><span></span><span></span></div>
     </div>
   </div>
 </section>
 
 <main class="page" id="productsPage">
-  <h2 class="topTitle">Side Quests Products</h2>
-  <p>Click a product to view details and add it to cart. Product images can be added in the Admin tab.</p>
+  <h2>Side Quests Products</h2>
+  <p>Click a product to view the full product page.</p>
   <div class="grid" id="grid"></div>
 </main>
 
-<main class="page" id="adminPage">
-  <h2 class="topTitle">Admin: Insert Images / Views</h2>
-  <p>Upload real product pictures from your device. They save in your browser so they stay after refresh on this device.</p>
-  <div class="adminBox" id="adminList"></div>
-</main>
+<main class="page" id="detailPage"></main>
 
-<div class="modal" id="modal">
-  <div class="modalBox">
-    <div>
-      <img class="bigImg" id="modalImg">
-      <div class="views" id="views"></div>
-    </div>
-    <div>
-      <h2 id="modalTitle"></h2>
-      <div class="price" id="modalPrice"></div>
-      <p id="modalDesc"></p>
-      <button class="add" onclick="addCart()">Add to Cart</button>
-      <button class="close" onclick="closeModal()">Close</button>
-    </div>
+<main class="page" id="cartPage">
+  <h2>Your Cart</h2>
+  <div class="sectionBox">
+    <p id="cartMessage">Your cart is empty.</p>
   </div>
-</div>
+</main>
 
 <script>
 let cart = 0;
-let activeProduct = null;
+let likes = {};
+let currentProduct = null;
 
 const products = [
-["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99],
-["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99],
-["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99],
-["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99],
-["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99],
-["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99],
-["Bamboo Cutting Board Set","Clean-looking cutting board set for everyday meal prep.",29.99],
-["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99],
-["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99],
-["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99],
-["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99],
-["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99],
-["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99],
-["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99],
-["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99],
-["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99],
-["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99],
-["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99],
-["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99],
-["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99],
-["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99],
-["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99],
-["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99],
-["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99],
-["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99],
-["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99],
-["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99],
-["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99],
-["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99],
-["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99],
-["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99],
-["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99],
-["Digital Alarm Clock","Minimal bedside clock with large display.",17.99],
-["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99],
-["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99],
-["Resistance Bands","Portable exercise bands for home workouts.",14.99],
-["Posture Corrector","Adjustable posture support for work and home.",19.99],
-["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99],
-["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99],
-["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99],
-["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99],
-["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99],
-["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99],
-["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99],
-["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99],
-["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99],
-["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99],
-["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99],
-["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99],
-["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99]
+["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99,"Kitchen","Small, Medium, Large"],
+["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99,"Kitchen","Standard"],
+["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99,"Cleaning","Small, Medium, Large"],
+["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99,"Kitchen","2-Pack, 4-Pack"],
+["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99,"Kitchen","250ml, 500ml"],
+["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99,"Pets","Standard"],
+["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99,"Pets","Small, Large"],
+["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99,"Car","Driver Side, Passenger Side"],
+["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99,"Car","Standard"],
+["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99,"Car","Medium, Large"],
+["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99,"Home","1-Tier, 2-Tier"],
+["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99,"Home","Black, Silver"],
+["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99,"Home","4-Pack, 8-Pack"],
+["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99,"Office","Small, Large"],
+["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99,"Home","Standard"],
+["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99,"Cleaning","Standard"],
+["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99,"Office","Standard"],
+["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99,"Cleaning","4-Piece, 8-Piece"],
+["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99,"Cleaning","Standard"],
+["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99,"Cleaning","Standard"],
+["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99,"Home","1-Pack, 3-Pack"],
+["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99,"Room","Standard"],
+["Digital Alarm Clock","Minimal bedside clock with large display.",17.99,"Room","White, Black"],
+["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99,"Room","White, Black"],
+["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99,"Home","1-Pack, 2-Pack"],
+["Resistance Bands","Portable exercise bands for home workouts.",14.99,"Fitness","Light, Medium, Heavy"],
+["Posture Corrector","Adjustable posture support for work and home.",19.99,"Fitness","Small, Medium, Large"],
+["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99,"Fitness","Standard"],
+["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99,"Travel","White, Black"],
+["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99,"Travel","Small, Large"],
+["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99,"Travel","Standard"],
+["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99,"Travel","6-Pack, 8-Pack"],
+["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99,"Travel","Black, Brown"],
+["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99,"Travel","Standard"],
+["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99,"Travel","Small, Large"],
+["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99,"Kitchen","Standard"],
+["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99,"Kitchen","Black, Silver"],
+["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99,"Kitchen","Standard"],
+["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99,"Home","Single Door, Sliding Door"],
+["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99,"Outdoor","4-Pack, 8-Pack"],
+["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99,"Kitchen","6-Pack, 12-Pack"],
+["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99,"Kitchen","1 Quart, 2 Quart"],
+["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99,"Kitchen","5-Pack, 10-Pack"],
+["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99,"Kitchen","2-Pack, 4-Pack"],
+["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99,"Pets","Standard"],
+["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99,"Pets","Small, Large"],
+["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99,"Pets","Left Hand, Right Hand"],
+["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99,"Car","Standard"],
+["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99,"Car","Standard"],
+["Bamboo Cutting Board Set","Cutting board set for everyday meal prep.",29.99,"Kitchen","3-Piece Set"]
 ];
 
-let images = JSON.parse(localStorage.getItem("sideQuestImages") || "{}");
-
-function getMainImage(i){
-  return images[i] && images[i][0] ? images[i][0] : "";
+function placeholder(name){
+  return `<div class="photo">${name}<br><span class="small">Product image goes here</span></div>`;
 }
 
-function imageHTML(i){
-  const src = getMainImage(i);
-  if(src) return `<img src="${src}" alt="${products[i][0]}">`;
-  return `<div class="placeholder">No image yet<br><span class="small">Add in Admin</span></div>`;
-}
-
-function renderProducts(){
-  const grid = document.getElementById("grid");
-  grid.innerHTML = "";
-  products.forEach((p,i)=>{
-    grid.innerHTML += `
-      <div class="card" onclick="openProduct(${i})">
-        ${imageHTML(i)}
-        <h3>${p[0]}</h3>
-        <p class="desc">${p[1]}</p>
-        <div class="price">$${p[2]}</div>
-        <div class="tap">Click for details</div>
-      </div>
-    `;
+function showOnly(id){
+  ["homePage","productsPage","detailPage","cartPage"].forEach(x=>{
+    document.getElementById(x).classList.remove("show");
+    if(x==="homePage") document.getElementById(x).style.display="none";
   });
+  const el=document.getElementById(id);
+  if(id==="homePage") el.style.display="grid";
+  else el.classList.add("show");
+  window.scrollTo(0,0);
 }
 
-function renderAdmin(){
-  const admin = document.getElementById("adminList");
-  admin.innerHTML = "";
-  products.forEach((p,i)=>{
-    admin.innerHTML += `
-      <div class="adminRow">
-        <div>
-          <h3>${i+1}. ${p[0]}</h3>
-          <p class="small">${p[1]}</p>
-          <input type="file" accept="image/*" multiple onchange="uploadImages(event,${i})">
-          <button onclick="clearImages(${i})">Clear Images</button>
-        </div>
-        <div class="views">
-          ${(images[i] || []).map(src=>`<img src="${src}">`).join("") || `<div class="viewPlaceholder">No images</div>`}
-        </div>
-      </div>
-    `;
-  });
+function showHome(){
+  showOnly("homePage");
+  document.getElementById("vaultScene").classList.remove("open");
 }
 
-function uploadImages(event,i){
-  const files = Array.from(event.target.files).slice(0,4);
-  if(!files.length) return;
-  images[i] = [];
-  let loaded = 0;
-
-  files.forEach(file=>{
-    const reader = new FileReader();
-    reader.onload = e=>{
-      images[i].push(e.target.result);
-      loaded++;
-      if(loaded === files.length){
-        localStorage.setItem("sideQuestImages", JSON.stringify(images));
-        renderProducts();
-        renderAdmin();
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function clearImages(i){
-  delete images[i];
-  localStorage.setItem("sideQuestImages", JSON.stringify(images));
-  renderProducts();
-  renderAdmin();
+function showProducts(){
+  showOnly("productsPage");
 }
 
 function openVault(){
   document.getElementById("vaultScene").classList.add("open");
-  setTimeout(()=>document.getElementById("hero").classList.add("fade"),850);
-  setTimeout(()=>showProducts(),1500);
+  setTimeout(()=>showProducts(),1200);
 }
 
-function showHome(){
-  document.getElementById("hero").style.display = "grid";
-  document.getElementById("hero").classList.remove("fade");
-  document.getElementById("vaultScene").classList.remove("open");
-  document.getElementById("productsPage").classList.remove("show");
-  document.getElementById("adminPage").classList.remove("show");
+function renderProducts(){
+  const grid=document.getElementById("grid");
+  grid.innerHTML="";
+  products.forEach((p,i)=>{
+    grid.innerHTML+=`
+      <div class="card" onclick="openProductPage(${i})">
+        ${placeholder(p[0])}
+        <h3>${p[0]}</h3>
+        <p class="desc">${p[1]}</p>
+        <div class="price">$${p[2]}</div>
+        <div class="tap">View product details</div>
+      </div>
+    `;
+  });
 }
 
-function showProducts(){
-  document.getElementById("hero").style.display = "none";
-  document.getElementById("productsPage").classList.add("show");
-  document.getElementById("adminPage").classList.remove("show");
-  window.scrollTo(0,0);
+function openProductPage(i){
+  currentProduct=i;
+  const p=products[i];
+  const options=p[4].split(",");
+  const similar=products
+    .map((x,idx)=>({x,idx}))
+    .filter(o=>o.idx!==i && o.x[3]===p[3])
+    .slice(0,4);
+
+  document.getElementById("detailPage").innerHTML=`
+    <button onclick="showProducts()" style="margin-bottom:18px;padding:10px 16px;border-radius:10px">← Back to products</button>
+
+    <div class="detailWrap">
+      <div class="gallery">
+        <div class="mainPhoto" id="mainPhoto">${p[0]}<br><span class="small">Main product image</span></div>
+        <div class="thumbs">
+          <div class="thumb" onclick="changeView('Front view')">Front</div>
+          <div class="thumb" onclick="changeView('Side view')">Side</div>
+          <div class="thumb" onclick="changeView('In use')">In Use</div>
+          <div class="thumb" onclick="changeView('Packaging')">Box</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h2>${p[0]}</h2>
+        <p>${p[1]}</p>
+        <button class="likeBtn" onclick="likeProduct(${i})">♡ Like <span id="likeCount">${likes[i]||0}</span></button>
+
+        <div class="detailsGrid">
+          <div class="sectionBox">
+            <h3>Product Information</h3>
+            <p>Designed for everyday use, easy storage, and simple problem-solving.</p>
+            <p><b>Category:</b> ${p[3]}</p>
+            <p><b>Condition:</b> New</p>
+          </div>
+
+          <div class="sectionBox">
+            <h3>What’s Included</h3>
+            <p>1 × ${p[0]}</p>
+            <p>Basic packaging</p>
+            <p>Simple use instructions</p>
+          </div>
+
+          <div class="sectionBox">
+            <h3>Shipping Details</h3>
+            <p>Estimated delivery: 5–10 business days.</p>
+            <p>Tracking provided after shipment.</p>
+            <p class="small">Final shipping details can be changed later.</p>
+          </div>
+
+          <div class="sectionBox">
+            <h3>Reviews</h3>
+            <p>No reviews yet.</p>
+            <div class="review">Be the first customer to review this product.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="buyBox">
+        <div class="price">$${p[2]}</div>
+        <p class="small">In stock</p>
+
+        <div class="optionRow">
+          <label>Size / Option</label>
+          <select>
+            ${options.map(o=>`<option>${o.trim()}</option>`).join("")}
+          </select>
+        </div>
+
+        <div class="optionRow">
+          <label>Quantity</label>
+          <select class="qty">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+        </div>
+
+        <button class="add" onclick="addCart()">Add to Cart</button>
+        <button class="buyNow" onclick="addCart();showCart()">Buy Now</button>
+        <p class="small">Secure checkout placeholder. Payment setup can be added later.</p>
+      </aside>
+    </div>
+
+    <div class="sectionBox" style="margin-top:28px">
+      <h3>Similar Items</h3>
+      <div class="similarGrid">
+        ${similar.map(o=>`
+          <div class="similar" onclick="openProductPage(${o.idx})">
+            ${placeholder(o.x[0])}
+            <h4>${o.x[0]}</h4>
+            <b>$${o.x[2]}</b>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  showOnly("detailPage");
 }
 
-function showAdmin(){
-  document.getElementById("hero").style.display = "none";
-  document.getElementById("productsPage").classList.remove("show");
-  document.getElementById("adminPage").classList.add("show");
-  renderAdmin();
-  window.scrollTo(0,0);
+function changeView(label){
+  const p=products[currentProduct];
+  document.getElementById("mainPhoto").innerHTML=`${p[0]}<br><span class="small">${label} image goes here</span>`;
 }
 
-function openProduct(i){
-  activeProduct = i;
-  const p = products[i];
-  const productImages = images[i] || [];
-  const main = productImages[0] || "";
-
-  document.getElementById("modalTitle").innerText = p[0];
-  document.getElementById("modalPrice").innerText = "$" + p[2];
-  document.getElementById("modalDesc").innerText = p[1];
-
-  if(main){
-    document.getElementById("modalImg").src = main;
-  }else{
-    document.getElementById("modalImg").src = "";
-    document.getElementById("modalImg").alt = "No image uploaded yet";
-  }
-
-  document.getElementById("views").innerHTML = productImages.length
-    ? productImages.map(src=>`<img src="${src}" onclick="document.getElementById('modalImg').src='${src}'">`).join("")
-    : `<div class="viewPlaceholder">Add images in Admin</div>`;
-
-  document.getElementById("modal").classList.add("show");
-}
-
-function closeModal(){
-  document.getElementById("modal").classList.remove("show");
+function likeProduct(i){
+  likes[i]=(likes[i]||0)+1;
+  document.getElementById("likeCount").innerText=likes[i];
 }
 
 function addCart(){
   cart++;
-  document.getElementById("cartCount").innerText = cart;
-  closeModal();
+  document.getElementById("cartCount").innerText=cart;
+}
+
+function showCart(){
+  showOnly("cartPage");
+  document.getElementById("cartMessage").innerText=`You have ${cart} item(s) in your cart.`;
 }
 
 renderProducts();
-renderAdmin();
 </script>
 
 </body>
