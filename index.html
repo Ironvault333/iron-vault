@@ -10,7 +10,9 @@
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
 header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
 .logo{font-size:30px;font-weight:900}
+nav{display:flex;align-items:center}
 nav button{background:transparent;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
+.categorySelect{padding:10px 14px;border-radius:10px;border:none;margin-left:15px;font-weight:700;background:white;color:#111}
 .cart{font-weight:900}
 button{border:0;cursor:pointer;font-weight:900}
 .page{display:none;padding:35px 5%}
@@ -60,6 +62,8 @@ select{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8
 .small{font-size:14px;color:#555}
 
 @media(max-width:1000px){
+header{height:auto;flex-direction:column;gap:12px;padding:16px 6%}
+nav{flex-wrap:wrap;justify-content:center}
 .hero,.detailWrap{grid-template-columns:1fr}
 h1{font-size:52px}
 .buyBox{position:static}
@@ -77,10 +81,16 @@ h1{font-size:52px}
 
 <header>
   <div class="logo">Side Quests</div>
+
   <nav>
     <button onclick="showHome()">Home</button>
     <button onclick="showProducts()">Products</button>
+
+    <select id="categorySelect" class="categorySelect" onchange="filterCategory(this.value)">
+      <option value="All">All Categories</option>
+    </select>
   </nav>
+
   <div class="cart">Cart: <span id="cartCount">0</span></div>
 </header>
 
@@ -104,7 +114,7 @@ h1{font-size:52px}
 </section>
 
 <main class="page" id="productsPage">
-  <h2>Products</h2>
+  <h2 id="productsTitle">Products</h2>
   <p>Click a product to view the full product page.</p>
   <div class="grid" id="productGrid"></div>
 </main>
@@ -122,7 +132,9 @@ h1{font-size:52px}
 let cart = Number(localStorage.getItem("cartCount") || 0);
 document.getElementById("cartCount").innerText = cart;
 
-const CATALOG_VERSION = "50-products-v1";
+let selectedCategory = "All";
+
+const CATALOG_VERSION = "50-products-v2-category-menu";
 
 const starterProducts = [
 {name:"Vegetable Chopper Pro",price:24.99,category:"Kitchen",sizes:"Small, Medium, Large",desc:"Fast chop container for onions, peppers, fruit, and meal prep.",shipping:"Estimated delivery: 5–10 business days."},
@@ -130,55 +142,46 @@ const starterProducts = [
 {name:"Silicone Scrub Gloves",price:13.99,category:"Cleaning",sizes:"Small, Medium, Large",desc:"Dish gloves with built-in scrub bristles for dishes, sinks, and quick cleaning.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Magnetic Spice Rack",price:22.99,category:"Kitchen",sizes:"2-Pack, 4-Pack",desc:"Space-saving magnetic shelves for spices, oils, and small kitchen items.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Air Fryer Oil Sprayer",price:12.99,category:"Kitchen",sizes:"250ml, 500ml",desc:"Refillable oil sprayer for air fryers, pans, grilling, and salads.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Pet Hair Remover Roller",price:16.99,category:"Pets",sizes:"Standard",desc:"Reusable roller that pulls pet hair from couches, clothes, blankets, and car seats.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Portable Dog Water Bottle",price:18.99,category:"Pets",sizes:"Small, Large",desc:"Travel water bottle for dogs on walks, hikes, road trips, and parks.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Cat Window Hammock",price:24.99,category:"Pets",sizes:"Standard",desc:"Window-mounted cat perch for sun lounging, resting, and watching outside.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Slow Feeder Pet Bowl",price:14.99,category:"Pets",sizes:"Small, Large",desc:"Pet bowl designed to slow down fast eating and make meals last longer.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Pet Grooming Glove",price:12.99,category:"Pets",sizes:"Left Hand, Right Hand",desc:"Grooming glove that removes loose fur while you pet your dog or cat.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Car Seat Gap Organizer",price:19.99,category:"Car",sizes:"Driver Side, Passenger Side",desc:"Fills the seat gap and holds phone, wallet, keys, cards, and small items.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Leakproof Car Trash Can",price:15.99,category:"Car",sizes:"Standard",desc:"Compact trash bin for wrappers, receipts, tissues, and road trip mess.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Foldable Trunk Organizer",price:28.99,category:"Car",sizes:"Medium, Large",desc:"Keeps groceries, emergency supplies, tools, and sports gear from rolling around.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Dashboard Phone Mount",price:13.99,category:"Car",sizes:"Standard",desc:"Simple phone mount for maps, music, calls, and hands-free driving.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Portable Tire Inflator",price:39.99,category:"Car",sizes:"Standard",desc:"Compact inflator for car tires, bike tires, balls, and emergency use.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Under Sink Organizer",price:25.99,category:"Home",sizes:"1-Tier, 2-Tier",desc:"Sliding organizer for cleaning bottles, soaps, sponges, and bathroom supplies.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"No-Drill Shower Shelf",price:18.99,category:"Home",sizes:"Black, Silver",desc:"Wall shelf for shampoo, body wash, razors, soap, and shower accessories.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Adjustable Drawer Dividers",price:14.99,category:"Home",sizes:"4-Pack, 8-Pack",desc:"Dividers for kitchen drawers, bathroom drawers, office drawers, and junk drawers.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Cable Management Box",price:21.99,category:"Home",sizes:"Small, Large",desc:"Hides messy power strips, cords, chargers, and desk cables.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Laundry Backpack Bag",price:17.99,category:"Home",sizes:"Standard",desc:"Laundry bag with backpack straps for dorms, apartments, and shared laundry rooms.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Electric Lint Remover",price:16.99,category:"Cleaning",sizes:"Standard",desc:"Rechargeable fabric shaver for sweaters, blankets, couches, and clothing.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Mini Desk Vacuum",price:12.99,category:"Cleaning",sizes:"Standard",desc:"Tiny vacuum for crumbs, keyboards, desks, drawers, and car cup holders.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Drill Brush Scrubber Set",price:14.99,category:"Cleaning",sizes:"4-Piece, 8-Piece",desc:"Brush attachments that turn a drill into a powerful cleaning scrubber.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Baseboard Cleaner Tool",price:18.99,category:"Cleaning",sizes:"Standard",desc:"Long-handled cleaner for baseboards, wall edges, and hard-to-reach dust lines.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Blind Cleaner Brush",price:8.99,category:"Cleaning",sizes:"Standard",desc:"Multi-slat brush that cleans window blinds faster than wiping one by one.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Rechargeable Closet Light",price:18.99,category:"Home Tech",sizes:"1-Pack, 3-Pack",desc:"Motion light for closets, cabinets, hallways, pantries, and dark corners.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Sunset Projector Lamp",price:19.99,category:"Home Tech",sizes:"Standard",desc:"Small room lamp that creates sunset-style lighting for rooms and videos.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Large Display Alarm Clock",price:17.99,category:"Home Tech",sizes:"White, Black",desc:"Minimal bedside alarm clock with an easy-to-read display.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Mini Desk Humidifier",price:21.99,category:"Home Tech",sizes:"White, Black",desc:"Compact humidifier for desk, bedroom, travel, and dry rooms.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Smart Plug Timer",price:16.99,category:"Home Tech",sizes:"1-Pack, 2-Pack",desc:"Plug-in timer for lamps, holiday lights, appliances, and routines.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Resistance Band Set",price:14.99,category:"Fitness",sizes:"Light, Medium, Heavy",desc:"Portable workout bands for stretching, strength training, and home workouts.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Posture Corrector Brace",price:19.99,category:"Fitness",sizes:"Small, Medium, Large",desc:"Adjustable support for posture reminders while working, studying, or sitting.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Massage Roller Ball",price:11.99,category:"Fitness",sizes:"Standard",desc:"Handheld roller for feet, back, shoulders, and sore muscles.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Wearable Neck Fan",price:24.99,category:"Travel",sizes:"White, Black",desc:"Hands-free fan for sports, outdoor work, travel, heat, and summer days.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Insulated Bottle Sleeve",price:13.99,category:"Travel",sizes:"Small, Large",desc:"Bottle holder with strap and pocket for walks, games, school, and travel.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Hanging Toiletry Bag",price:16.99,category:"Travel",sizes:"Standard",desc:"Travel bathroom organizer that hangs in hotels, camps, and small bathrooms.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Packing Cube Set",price:18.99,category:"Travel",sizes:"6-Pack, 8-Pack",desc:"Suitcase organizers that separate clothes, shoes, laundry, and accessories.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Slim RFID Wallet",price:14.99,category:"Travel",sizes:"Black, Brown",desc:"Slim card wallet with RFID-blocking storage and pocket-friendly design.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Luggage Cup Holder",price:11.99,category:"Travel",sizes:"Standard",desc:"Cup holder that straps to suitcase handles for airport and road travel.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Travel Cable Organizer",price:12.99,category:"Travel",sizes:"Small, Large",desc:"Pouch for chargers, cords, earbuds, adapters, and tech accessories.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Mini Waffle Maker",price:22.99,category:"Kitchen",sizes:"Standard",desc:"Small waffle maker for quick breakfasts, snacks, dorms, and tiny kitchens.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Milk Frother Wand",price:9.99,category:"Kitchen",sizes:"Black, Silver",desc:"Handheld frother for coffee, matcha, protein drinks, and hot chocolate.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Digital Kitchen Scale",price:13.99,category:"Kitchen",sizes:"Standard",desc:"Compact scale for baking, meal prep, coffee, and portion measuring.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Magnetic Screen Door",price:24.99,category:"Home",sizes:"Single Door, Sliding Door",desc:"Hands-free mesh screen door for patios, back doors, pets, and fresh air.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Magnetic Screen Door",price:24.99,category:"Outdoor",sizes:"Single Door, Sliding Door",desc:"Hands-free mesh screen door for patios, back doors, pets, and fresh air.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Solar Outdoor Path Lights",price:26.99,category:"Outdoor",sizes:"4-Pack, 8-Pack",desc:"Solar lights for gardens, patios, pathways, driveways, and yards.",shipping:"Estimated delivery: 5–10 business days."},
-
 {name:"Reusable Produce Bags",price:11.99,category:"Kitchen",sizes:"6-Pack, 12-Pack",desc:"Washable mesh bags for groceries, produce, pantry storage, and organizing.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Cold Brew Pitcher",price:21.99,category:"Kitchen",sizes:"1 Quart, 2 Quart",desc:"Simple pitcher for homemade cold brew coffee and flavored drinks.",shipping:"Estimated delivery: 5–10 business days."},
 {name:"Glass Food Storage Set",price:27.99,category:"Kitchen",sizes:"5-Pack, 10-Pack",desc:"Stackable containers for leftovers, lunch prep, snacks, and fridge storage.",shipping:"Estimated delivery: 5–10 business days."},
@@ -200,8 +203,28 @@ function getProducts(){
 }
 
 function imageHTML(p){
-  if(p.images && p.images[0]) return `<img src="${p.images[0]}" alt="${p.name}">`;
+  if(p.images && p.images[0]) return `<img src="${p.images[0]}" alt="${p.name}" style="width:100%;height:190px;object-fit:cover;border-radius:10px;">`;
   return `<div class="placeholder">${p.name}<br><span class="small">Image coming soon</span></div>`;
+}
+
+function buildCategoryDropdown(){
+  const products = getProducts();
+  const categories = [...new Set(products.map(p => p.category).filter(Boolean))].sort();
+  const dropdown = document.getElementById("categorySelect");
+
+  dropdown.innerHTML = `<option value="All">All Categories</option>`;
+
+  categories.forEach(category=>{
+    dropdown.innerHTML += `<option value="${category}">${category}</option>`;
+  });
+
+  dropdown.value = selectedCategory;
+}
+
+function filterCategory(category){
+  selectedCategory = category;
+  renderProducts();
+  showOnly("productsPage");
 }
 
 function showOnly(id){
@@ -223,6 +246,8 @@ function showHome(){
 }
 
 function showProducts(){
+  selectedCategory = "All";
+  buildCategoryDropdown();
   renderProducts();
   showOnly("productsPage");
 }
@@ -233,16 +258,31 @@ function openSafe(){
 }
 
 function renderProducts(){
-  const products = getProducts();
-  document.getElementById("productGrid").innerHTML = products.map((p,i)=>`
-    <div class="card" onclick="openProduct(${i})">
-      ${imageHTML(p)}
-      <h3>${p.name}</h3>
-      <p class="desc">${p.desc}</p>
-      <div class="price">$${Number(p.price).toFixed(2)}</div>
-      <div class="tap">View product details</div>
-    </div>
-  `).join("");
+  buildCategoryDropdown();
+
+  const allProducts = getProducts();
+  let products = allProducts;
+
+  if(selectedCategory !== "All"){
+    products = allProducts.filter(p => p.category === selectedCategory);
+  }
+
+  document.getElementById("productsTitle").innerText =
+    selectedCategory === "All" ? "Products" : selectedCategory + " Products";
+
+  document.getElementById("productGrid").innerHTML = products.map((p)=>{
+    const realIndex = allProducts.findIndex(x => x.name === p.name);
+
+    return `
+      <div class="card" onclick="openProduct(${realIndex})">
+        ${imageHTML(p)}
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="price">$${Number(p.price).toFixed(2)}</div>
+        <div class="tap">View product details</div>
+      </div>
+    `;
+  }).join("");
 }
 
 function openProduct(i){
@@ -258,14 +298,14 @@ function openProduct(i){
       <div class="box">
         ${
           imgs[0]
-          ? `<img class="mainImg" id="mainImg" src="${imgs[0]}" alt="${p.name}">`
+          ? `<img class="mainImg" id="mainImg" src="${imgs[0]}" alt="${p.name}" style="width:100%;height:420px;object-fit:cover;border-radius:12px;">`
           : `<div class="mainPlaceholder">${p.name}<br><span class="small">Main product image coming soon</span></div>`
         }
 
         <div class="thumbs">
           ${
             imgs.length
-            ? imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'">`).join("")
+            ? imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'" style="width:75px;height:75px;object-fit:cover;border-radius:9px;">`).join("")
             : `
               <div class="thumbPlaceholder">Front</div>
               <div class="thumbPlaceholder">Side</div>
@@ -358,6 +398,7 @@ function showCart(){
 }
 
 renderProducts();
+buildCategoryDropdown();
 </script>
 
 </body>
