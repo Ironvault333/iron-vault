@@ -1,630 +1,201 @@
-IV
-Iron Vault
-Products worth stopping for.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Iron Vault</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f6efe4;
+    color: #14202b;
+  }
+  header {
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand { font-weight: 800; font-size: 22px; }
+  .sub { font-size: 12px; color: #777; }
+  button {
+    cursor: pointer;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-weight: 800;
+  }
+  .hero {
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    padding: 20px 7%;
+  }
+  h1 {
+    font-size: clamp(42px, 6vw, 82px);
+    line-height: .92;
+    margin: 0 0 20px;
+  }
+  .vault-box {
+    background: #102131;
+    border-radius: 30px;
+    padding: 40px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,.2);
+  }
+  .vault {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #eee 0 12%, #888 13% 25%, #ddd 26% 38%, #495560 39% 52%, #1b2a38 53%);
+    border: 14px solid #34495a;
+    position: relative;
+    transition: transform 1.2s ease, opacity 1.2s ease;
+  }
+  .vault.open {
+    transform: rotate(540deg) scale(.1);
+    opacity: 0;
+  }
+  .dot {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #f29b24;
+    border-radius: 50%;
+  }
+  .d1 { top: 15px; left: 118px; }
+  .d2 { top: 55px; right: 34px; }
+  .d3 { top: 118px; right: 12px; }
+  .d4 { bottom: 55px; right: 34px; }
+  .d5 { bottom: 15px; left: 118px; }
+  .d6 { bottom: 55px; left: 34px; }
+  .d7 { top: 118px; left: 12px; }
+  .d8 { top: 55px; left: 34px; }
+  .open-btn { margin-top: 25px; background: #fff; color: #102131; }
+  .products { display: none; padding: 25px 7% 60px; }
+  .filters { margin: 15px 0 25px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: #fff; border: 1px solid #ddd; padding: 9px 13px; border-radius: 999px; font-size: 13px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+  }
+  .pic {
+    height: 120px;
+    background: linear-gradient(135deg, #ffe6c9, #f7f0e8);
+    display: grid;
+    place-items: center;
+    font-size: 45px;
+  }
+  .info { padding: 16px; }
+  .cat { color: #c06a21; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+  .name { font-size: 18px; font-weight: 900; margin: 5px 0; }
+  .desc { color: #555; font-size: 13px; min-height: 42px; }
+  .nums { display: flex; gap: 8px; margin-top: 12px; }
+  .num { background:#f3f3f3; padding: 8px; border-radius: 10px; flex: 1; font-size: 12px; }
+  .num b { display:block; }
+  @media(max-width: 800px) {
+    .hero { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
 
-Store Admin
-50 products loaded
-Cool products. Strong margins. Built to test fast.
-Sports products, clever inventions, family items, and high-demand nice-to-have products people want to show their friends.
+<header>
+  <div>
+    <div class="brand">IV Iron Vault</div>
+    <div class="sub">Products worth stopping for.</div>
+  </div>
+  <button onclick="showProducts()">Store</button>
+</header>
 
-View Products
-Open the Vault
-Click to unlock products
+<section class="hero" id="hero">
+  <div>
+    <p><b>50 products loaded</b></p>
+    <h1>Cool products.<br>Strong margins.<br>Built to test fast.</h1>
+    <p>Sports products, clever inventions, family items, and high-demand niche products people want to show their friends.</p>
+    <button onclick="showProducts()">View Products</button>
+  </div>
 
-Upload this version: Extract the ZIP, upload index.html to GitHub, then redeploy Vercel.
-Product Board
-All
-Car Inventions
-Sports Families
-Backyard Games
-Sports Products
-Nice-To-Have
-Water Fun
-Outdoor Products
-High Demand
-Family Products
-Camping
-Home & Patio
-Backyard Products
-Truck Products
-Tool Products
-7.5🚗
-Car Inventions
-Seat Gap Crumb Catcher
-Stops crumbs, fries, coins, toys, and phones from falling between car seats.
+  <div class="vault-box">
+    <div class="vault" id="vault">
+      <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span>
+      <span class="dot d5"></span><span class="dot d6"></span><span class="dot d7"></span><span class="dot d8"></span>
+    </div>
+    <button class="open-btn" onclick="openVault()">Open the Vault<br><small>Click to unlock products</small></button>
+  </div>
+</section>
 
-Sell
-$24.99
-Cost
-$6.80
-Margin
-$18.19
-Supplier needed
-7.6👟
-Sports Families
-QuickDry Cleat & Shoe Dryer
-Forced-air dryer for wet cleats, rain boots, ski boots, and sneakers.
+<section class="products" id="products">
+  <h1>Product Board</h1>
+  <div class="filters">
+    <button class="chip">All</button><button class="chip">Sports</button><button class="chip">Family</button>
+    <button class="chip">Car</button><button class="chip">Outdoor</button><button class="chip">Nice-To-Have</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
 
-Sell
-$49.99
-Cost
-$18.50
-Margin
-$31.49
-Supplier needed
-7.7💡
-Backyard Games
-Glow Boundary Game Kit
-Light-up boundary strips for driveway games, night sports, and backyard challenges.
+<script>
+const products = [
+["🚗","Car Inventions","Seat Gap Crumb Catcher","Stops crumbs, fries, coins, toys, and phones from falling between seats.",24.99,6.80],
+["👟","Sports Families","QuickDry Cleat & Shoe Dryer","Forced-air dryer for wet cleats, rain boots, ski boots, and sneakers.",49.99,18.50],
+["💡","Backyard Games","Glow Boundary Game Kit","Light-up boundary strips for driveway games, night sports, and backyard challenges.",59.99,19.00],
+["🏓","Sports Products","Portable Pickleball Net","Fast-set driveway pickleball net for families and casual players.",89.99,34.00],
+["🥤","Nice-To-Have","Magnetic Cup Holder Clip","Clip-on drink holder for tailgates, camping chairs, and carts.",22.99,5.20],
+["⚽","Sports Products","Pop-Up Soccer Wall","Foldable practice wall with target zones.",49.99,15.00],
+["🧊","Outdoor Products","Cooler Chair Shade Clip","Clip-on shade canopy for coolers and chairs.",24.99,4.75],
+["🔥","Camping","Fire Pit Color Pack","Safe decorative color packs for backyard fire pits.",19.99,4.50],
+["🔦","Camping","Rechargeable Tent Light Rope","Flexible light rope for tents, canopies, and ladders.",27.99,6.90],
+["🧰","Nice-To-Have","Cord Snap Labels","Snap-on labels for chargers, cords, hoses, and bags.",14.99,2.80],
+["🛶","Outdoor Products","Kayak Scratch Guard Pads","Stick-on pads to protect kayaks and paddleboards.",34.99,9.50],
+["🏀","Sports Products","Ball Garage Rack","Wall rack for balls, helmets, and sports gear.",39.99,12.00],
+["🧺","Home & Patio","Auto-Centering Hose Guide","Garden hose guide that keeps hoses from hitting plants.",24.99,6.20],
+["🧽","Car Inventions","Backseat Trash Bin Clip","Clip-on mini trash bin for cars and vans.",19.99,4.80],
+["🪁","Family Products","Kite Stabilizer Kit","Simple stabilizers for wobbly patio umbrellas and kites.",14.99,3.80]
+];
 
-Sell
-$59.99
-Cost
-$19.00
-Margin
-$40.99
-Supplier needed
-7.8🏓
-Sports Products
-Portable Pickleball Net
-Fast-set driveway pickleball net for families and casual players.
+const grid = document.getElementById("grid");
 
-Sell
-$89.99
-Cost
-$34.00
-Margin
-$55.99
-Supplier needed
-7.9🥤
-Nice-To-Have
-Magnetic Cup Holder Clip
-Clip-on drink holder for bleachers, golf carts, strollers, lawn chairs, and gyms.
+products.forEach(p => {
+  const margin = (p[4] - p[5]).toFixed(2);
+  grid.innerHTML += `
+    <div class="card">
+      <div class="pic">${p[0]}</div>
+      <div class="info">
+        <div class="cat">${p[1]}</div>
+        <div class="name">${p[2]}</div>
+        <div class="desc">${p[3]}</div>
+        <div class="nums">
+          <div class="num"><b>$${p[4]}</b>Sell</div>
+          <div class="num"><b>$${p[5]}</b>Cost</div>
+          <div class="num"><b>$${margin}</b>Margin</div>
+        </div>
+      </div>
+    </div>`;
+});
 
-Sell
-$19.99
-Cost
-$4.50
-Margin
-$15.49
-Supplier needed
-8🌊
-Water Fun
-Water Skipping Disc Set
-A lake and pool toy that skips across water and is easy to film.
+function openVault() {
+  document.getElementById("vault").classList.add("open");
+  setTimeout(showProducts, 900);
+}
 
-Sell
-$22.99
-Cost
-$5.20
-Margin
-$17.79
-Supplier needed
-8.1🔥
-Outdoor Products
-Color Fire Pack Bundle
-Color-changing fire packs for camping, fire pits, cabins, and parties.
+function showProducts() {
+  document.getElementById("hero").style.display = "none";
+  document.getElementById("products").style.display = "block";
+  window.scrollTo(0,0);
+}
+</script>
 
-Sell
-$14.99
-Cost
-$2.75
-Margin
-$12.24
-Supplier needed
-8.2🥅
-Sports Products
-Pop-Up Soccer Goal Wall
-Foldable practice wall with target zones for soccer, football, and throwing drills.
-
-Sell
-$54.99
-Cost
-$17.00
-Margin
-$37.99
-Supplier needed
-8.3🧊
-High Demand
-Neck Cooling Fan
-Hands-free cooling for sports parents, yard work, travel, events, and warehouses.
-
-Sell
-$39.99
-Cost
-$11.50
-Margin
-$28.49
-Supplier needed
-8.4🔥
-Outdoor Products
-Clamp-On Grill Light
-Rechargeable clamp light for grills, smokers, camping tables, and workbenches.
-
-Sell
-$32.99
-Cost
-$9.75
-Margin
-$23.24
-Supplier needed
-8.5⚡
-Sports Products
-Rebound Training Board
-Multi-sport rebound board for soccer, lacrosse, baseball, and solo practice drills.
-
-Sell
-$69.99
-Cost
-$24.00
-Margin
-$45.99
-Supplier needed
-8.6🍿
-Family Products
-Snack & Drink Stadium Tray
-Carry snacks, drinks, phone, and small items at games, movie nights, and road trips.
-
-Sell
-$29.99
-Cost
-$8.25
-Margin
-$21.74
-Supplier needed
-8.7🧊
-Outdoor Products
-Smart Cooler Divider
-Adjustable divider to organize drinks, ice, snacks, and dry items inside coolers.
-
-Sell
-$34.99
-Cost
-$10.50
-Margin
-$24.49
-Supplier needed
-8.8☀️
-Sports Families
-Pop-Up Sports Chair Shade
-Clip-on shade canopy for folding chairs at games, beaches, parks, and tournaments.
-
-Sell
-$39.99
-Cost
-$12.00
-Margin
-$27.99
-Supplier needed
-8.9📱
-Water Fun
-Floating Phone Dock
-Floating phone and drink dock for pools, hot tubs, lakes, and beach days.
-
-Sell
-$24.99
-Cost
-$6.25
-Margin
-$18.74
-Supplier needed
-7.5☂️
-Nice-To-Have
-Backpack Umbrella Mount
-Hands-free umbrella mount for hiking, walking, sports watching, and outdoor work.
-
-Sell
-$18.99
-Cost
-$4.75
-Margin
-$14.24
-Supplier needed
-7.6🚙
-Outdoor Products
-Fold-Out Tailgate Table
-Compact folding table for tailgates, camping, sports events, and outdoor cooking.
-
-Sell
-$64.99
-Cost
-$22.00
-Margin
-$42.99
-Supplier needed
-7.7🏀
-Sports Products
-Sports Ball Pressure Indicator
-Simple pressure checker for basketballs, soccer balls, footballs, and volleyballs.
-
-Sell
-$16.99
-Cost
-$3.80
-Margin
-$13.19
-Supplier needed
-7.8⛺
-Camping
-Rechargeable Tent Light Rope
-LED rope light for tents, canopies, patios, and night events.
-
-Sell
-$34.99
-Cost
-$9.50
-Margin
-$25.49
-Supplier needed
-7.9🧊
-Outdoor Products
-Slip-Resistant Cooler Feet
-Add-on feet that keep coolers from sliding in truck beds, boats, and patios.
-
-Sell
-$17.99
-Cost
-$3.90
-Margin
-$14.09
-Supplier needed
-8🪑
-Home & Patio
-Patio Chair Stabilizer Kit
-Simple stabilizers for wobbly patio chairs, folding chairs, and camp chairs.
-
-Sell
-$22.99
-Cost
-$5.60
-Margin
-$17.39
-Supplier needed
-8.1🧃
-Family Products
-Kid-Proof Cup Holder Insert
-Insert that helps stop kid cups from tipping in cars, strollers, wagons, and chairs.
-
-Sell
-$14.99
-Cost
-$2.90
-Margin
-$12.09
-Supplier needed
-8.2🚘
-Car Inventions
-Driveway Parking Projector
-Garage or driveway guide light that projects a parking target for easier alignment.
-
-Sell
-$44.99
-Cost
-$13.50
-Margin
-$31.49
-Supplier needed
-8.3🌙
-Home & Patio
-Solar Fence Accent Lights
-Low-profile solar lights for fences, patios, walkways, decks, and backyard ambiance.
-
-Sell
-$29.99
-Cost
-$8.50
-Margin
-$21.49
-Supplier needed
-8.4🏊
-Water Fun
-Pool Noodle Connector Kit
-Connect pool noodles into forts, rafts, obstacle courses, and floating shapes.
-
-Sell
-$19.99
-Cost
-$4.60
-Margin
-$15.39
-Supplier needed
-8.5🌲
-Camping
-Portable Hammock Drink Shelf
-Clip-on mini shelf for hammocks that holds a drink, phone, book, and snacks.
-
-Sell
-$24.99
-Cost
-$6.20
-Margin
-$18.79
-Supplier needed
-8.6🎣
-Outdoor Products
-Fishing Rod Vehicle Mount
-Temporary vehicle mount for transporting fishing rods safely.
-
-Sell
-$39.99
-Cost
-$12.50
-Margin
-$27.49
-Supplier needed
-8.7🧵
-Home & Patio
-Auto-Centering Hose Reel Guide
-Guides a garden hose evenly onto the reel to prevent tangles.
-
-Sell
-$34.99
-Cost
-$9.80
-Margin
-$25.19
-Supplier needed
-8.8💦
-Backyard Products
-Portable Outdoor Mist Ring
-Clip-on misting ring for patios, canopies, sports benches, and backyard parties.
-
-Sell
-$49.99
-Cost
-$15.00
-Margin
-$34.99
-Supplier needed
-8.9✨
-Home & Patio
-Glow Pathway Pebbles
-Glow-in-the-dark decorative stones for paths, planters, gardens, and patios.
-
-Sell
-$24.99
-Cost
-$5.50
-Margin
-$19.49
-Supplier needed
-7.5🔥
-Camping
-Campfire Wind Shield Panels
-Collapsible panels that block wind around compact fire pits and camping stoves.
-
-Sell
-$39.99
-Cost
-$11.25
-Margin
-$28.74
-Supplier needed
-7.6🛻
-Truck Products
-Pickup Bed Divider Strap
-Adjustable strap divider to stop cargo from sliding around in a pickup bed.
-
-Sell
-$29.99
-Cost
-$7.80
-Margin
-$22.19
-Supplier needed
-7.7🧰
-Tool Products
-Magnetic Ladder Tool Tray
-Magnetic tray for screws, tools, bits, and hardware while working on ladders.
-
-Sell
-$27.99
-Cost
-$6.90
-Margin
-$21.09
-Supplier needed
-7.8🚤
-Water Fun
-Boat Dock Corner Cushion
-Protective dock corner cushions to prevent boat, paddleboard, and kayak scratches.
-
-Sell
-$34.99
-Cost
-$9.50
-Margin
-$25.49
-Supplier needed
-7.9🛞
-Truck Products
-Foldable Wheel Chock Set
-Compact wheel chocks for trailers, campers, utility trailers, and garage storage.
-
-Sell
-$24.99
-Cost
-$6.75
-Margin
-$18.24
-Supplier needed
-8🗑️
-Nice-To-Have
-Universal Trash Bag Holder
-Portable frame that holds trash bags open for camping, parties, and yard work.
-
-Sell
-$19.99
-Cost
-$4.20
-Margin
-$15.79
-Supplier needed
-8.1🌲
-Camping
-Camping Gear Drying Tree
-Portable drying stand for shoes, gloves, towels, swimsuits, and camping gear.
-
-Sell
-$44.99
-Cost
-$13.00
-Margin
-$31.99
-Supplier needed
-8.2🛝
-Backyard Products
-Inflatable Slip-Slide Side Walls
-Add-on inflatable side walls for contained water slide lanes.
-
-Sell
-$79.99
-Cost
-$28.00
-Margin
-$51.99
-Supplier needed
-8.3🎈
-Backyard Products
-Glow Water Balloon Kit
-Glow-themed water balloon party kit for night games and summer birthdays.
-
-Sell
-$18.99
-Cost
-$4.00
-Margin
-$14.99
-Supplier needed
-8.4🍟
-Family Products
-Car Seat Snack Tray
-Clip-on snack tray for road trips, kids, sports tournaments, and family travel.
-
-Sell
-$22.99
-Cost
-$5.70
-Margin
-$17.29
-Supplier needed
-8.5🚦
-Car Inventions
-Garage Parking Stop Light
-Simple garage light guide that helps drivers know exactly where to stop.
-
-Sell
-$29.99
-Cost
-$8.00
-Margin
-$21.99
-Supplier needed
-8.6🏟️
-Sports Families
-Foldable Sideline Bench
-Portable folding bench for youth sports teams, parks, tournaments, and tailgates.
-
-Sell
-$69.99
-Cost
-$24.00
-Margin
-$45.99
-Supplier needed
-8.7🔢
-Sports Products
-Portable Scoreboard Flip Card
-Compact flip scoreboard for pickleball, volleyball, basketball, and events.
-
-Sell
-$24.99
-Cost
-$5.80
-Margin
-$19.19
-Supplier needed
-8.8👟
-High Demand
-Shoe Deodorizer UV Pucks
-Rechargeable deodorizing pucks for cleats, gym shoes, ski boots, and work boots.
-
-Sell
-$29.99
-Cost
-$8.20
-Margin
-$21.79
-Supplier needed
-8.9📲
-Sports Products
-Magnetic Phone Gym Mount
-Mounts a phone to gym equipment, racks, carts, or metal surfaces for filming workouts.
-
-Sell
-$24.99
-Cost
-$6.00
-Margin
-$18.99
-Supplier needed
-7.5🧺
-Outdoor Products
-Outdoor Blanket Stake Clips
-Clips that stake down blankets and towels at parks, beaches, games, and picnics.
-
-Sell
-$16.99
-Cost
-$3.75
-Margin
-$13.24
-Supplier needed
-7.6💧
-Backyard Products
-Reusable Water Balloon Pump Station
-Outdoor fill station for reusable water balloons and backyard parties.
-
-Sell
-$39.99
-Cost
-$12.00
-Margin
-$27.99
-Supplier needed
-7.7🎥
-Camping
-Mini Projector Camp Screen
-Portable screen for backyard movies, camping trips, sleepovers, and outdoor parties.
-
-Sell
-$59.99
-Cost
-$19.50
-Margin
-$40.49
-Supplier needed
-7.8🚴
-Sports Products
-Bike Helmet Turn Signal Light
-Clip-on helmet light with simple turn signals for biking and scooters.
-
-Sell
-$34.99
-Cost
-$9.25
-Margin
-$25.74
-Supplier needed
-7.9🔌
-Nice-To-Have
-Travel Cable Snap Labels
-Snap-on cable labels for chargers, cords, extension cords, and travel bags.
-
-Sell
-$14.99
-Cost
-$2.80
-Margin
-$12.19
-Supplier needed
+</body>
+</html>
