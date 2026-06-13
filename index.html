@@ -1,22 +1,630 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Iron Vault</title>
-<style>
-body{margin:0;font-family:Arial;background:#f7f3ec;color:#141414}header{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;border-bottom:1px solid #ddd2c4;position:sticky;top:0;background:#f7f3ec;z-index:9}.brand{display:flex;gap:12px;align-items:center}.logo{background:#111820;color:#fff;border-radius:14px;width:46px;height:46px;display:grid;place-items:center;font-weight:900}h1{margin:0;font-size:22px}.brand p{margin:2px 0;color:#6f675d;font-size:13px}button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer}.dark{background:#111820;color:white}.light{background:white;border:1px solid #ddd2c4}.danger{background:#b94a48;color:white}.hero{padding:60px 5vw 30px;display:grid;grid-template-columns:1.1fr .9fr;gap:30px}.hero h2{font-size:clamp(42px,7vw,82px);line-height:.92;margin:14px 0;letter-spacing:-3px}.hero p{font-size:20px;color:#6f675d;line-height:1.5}.tag{display:inline-block;background:white;border:1px solid #ddd2c4;border-radius:99px;padding:9px 13px;color:#d88d32;font-weight:900;font-size:12px}.vault{background:linear-gradient(145deg,#2d3944,#0c1117);border-radius:30px;display:grid;place-items:center;min-height:300px}.vault div{background:white;border-radius:24px;padding:34px;text-align:center;font-size:30px}.notice{margin:0 5vw 20px;background:#fff7df;border:1px solid #ead39b;border-radius:18px;padding:16px}.section{padding:30px 5vw}.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.active{background:#111820;color:white}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:white;border:1px solid #ddd2c4;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px #0000000d}.img{height:165px;background:radial-gradient(circle at 35% 25%,#fff 0,#f2dfcd 42%,#d7bd9f 100%);display:grid;place-items:center;font-size:62px;position:relative}.score{position:absolute;top:12px;right:12px;background:#111820;color:white;border-radius:99px;padding:7px 10px;font-size:12px;font-weight:900}.body{padding:18px}.cat{color:#d88d32;font-weight:900;font-size:11px;text-transform:uppercase}.body h3{font-size:21px;margin:8px 0}.body p{color:#6f675d;line-height:1.4}.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.num{background:#f7f3ec;border-radius:12px;padding:9px}.num small{display:block;color:#6f675d;font-weight:900;font-size:11px}.badge{background:#f1eee8;border-radius:99px;padding:7px 9px;font-size:11px;font-weight:900}.admin{display:none}.admin.open{display:block}.layout{display:grid;grid-template-columns:380px 1fr;gap:22px}.panel{background:white;border:1px solid #ddd2c4;border-radius:24px;padding:22px}label{display:block;font-weight:900;margin:10px 0 6px}input,textarea,select{width:100%;box-sizing:border-box;border:1px solid #ddd2c4;border-radius:12px;padding:11px;font:inherit}textarea{min-height:80px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid #ddd2c4;text-align:left;vertical-align:top}.small{font-size:12px;color:#6f675d}@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:850px){.hero,.layout{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.grid,.twocol{grid-template-columns:1fr}}
-</style></head><body>
-<header><div class="brand"><div class="logo">IV</div><div><h1>Iron Vault</h1><p>Products worth stopping for.</p></div></div><div><button class="light" onclick="store()">Store</button> <button class="dark" onclick="admin()">Admin</button></div></header>
-<div id="store"><section class="hero"><div><span class="tag">50 products loaded</span><h2>Cool products. Strong margins. Built to test fast.</h2><p>Sports products, clever inventions, family items, and high-demand nice-to-have products people want to show their friends.</p><button class="dark" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">View Products</button></div><div class="vault"><div>⚙️<br><b>Open the Vault</b><p>Useful. Giftable. Scroll-stopping.</p></div></div></section><div class="notice"><b>Upload this version:</b> Extract the ZIP, upload <b>index.html</b> to GitHub, then redeploy Vercel.</div><section class="section" id="products"><h2>Product Board</h2><div id="filters" class="filters"></div><div id="grid" class="grid"></div></section></div>
-<section id="admin" class="admin section"><h2>Iron Vault Admin</h2><div class="layout"><div class="panel"><h3 id="formTitle">Add Product</h3><input type="hidden" id="id"><label>Name</label><input id="name"><label>Category</label><input id="category"><label>Description</label><textarea id="desc"></textarea><div class="twocol"><div><label>Sell</label><input id="sell" type="number" step="0.01"></div><div><label>Cost</label><input id="cost" type="number" step="0.01"></div></div><label>Supplier</label><input id="supplier"><label>Emoji</label><input id="emoji"><label>Status</label><select id="active"><option value="true">Active</option><option value="false">Hidden</option></select><br><br><button class="dark" onclick="saveProduct()">Save</button> <button class="light" onclick="clearForm()">New</button> <button class="danger" onclick="resetProducts()">Reset</button></div><div class="panel"><h3>Products</h3><div id="table"></div></div></div></section>
-<script>
-const DEFAULT_PRODUCTS = [{"id": 1, "name": "Seat Gap Crumb Catcher", "category": "Car Inventions", "sell": 24.99, "cost": 6.8, "emoji": "\ud83d\ude97", "desc": "Stops crumbs, fries, coins, toys, and phones from falling between car seats.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.5, "active": true}, {"id": 2, "name": "QuickDry Cleat & Shoe Dryer", "category": "Sports Families", "sell": 49.99, "cost": 18.5, "emoji": "\ud83d\udc5f", "desc": "Forced-air dryer for wet cleats, rain boots, ski boots, and sneakers.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.6, "active": true}, {"id": 3, "name": "Glow Boundary Game Kit", "category": "Backyard Games", "sell": 59.99, "cost": 19, "emoji": "\ud83d\udca1", "desc": "Light-up boundary strips for driveway games, night sports, and backyard challenges.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.7, "active": true}, {"id": 4, "name": "Portable Pickleball Net", "category": "Sports Products", "sell": 89.99, "cost": 34, "emoji": "\ud83c\udfd3", "desc": "Fast-set driveway pickleball net for families and casual players.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.8, "active": true}, {"id": 5, "name": "Magnetic Cup Holder Clip", "category": "Nice-To-Have", "sell": 19.99, "cost": 4.5, "emoji": "\ud83e\udd64", "desc": "Clip-on drink holder for bleachers, golf carts, strollers, lawn chairs, and gyms.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.9, "active": true}, {"id": 6, "name": "Water Skipping Disc Set", "category": "Water Fun", "sell": 22.99, "cost": 5.2, "emoji": "\ud83c\udf0a", "desc": "A lake and pool toy that skips across water and is easy to film.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.0, "active": true}, {"id": 7, "name": "Color Fire Pack Bundle", "category": "Outdoor Products", "sell": 14.99, "cost": 2.75, "emoji": "\ud83d\udd25", "desc": "Color-changing fire packs for camping, fire pits, cabins, and parties.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.1, "active": true}, {"id": 8, "name": "Pop-Up Soccer Goal Wall", "category": "Sports Products", "sell": 54.99, "cost": 17, "emoji": "\ud83e\udd45", "desc": "Foldable practice wall with target zones for soccer, football, and throwing drills.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.2, "active": true}, {"id": 9, "name": "Neck Cooling Fan", "category": "High Demand", "sell": 39.99, "cost": 11.5, "emoji": "\ud83e\uddca", "desc": "Hands-free cooling for sports parents, yard work, travel, events, and warehouses.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.3, "active": true}, {"id": 10, "name": "Clamp-On Grill Light", "category": "Outdoor Products", "sell": 32.99, "cost": 9.75, "emoji": "\ud83d\udd25", "desc": "Rechargeable clamp light for grills, smokers, camping tables, and workbenches.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.4, "active": true}, {"id": 11, "name": "Rebound Training Board", "category": "Sports Products", "sell": 69.99, "cost": 24, "emoji": "\u26a1", "desc": "Multi-sport rebound board for soccer, lacrosse, baseball, and solo practice drills.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.5, "active": true}, {"id": 12, "name": "Snack & Drink Stadium Tray", "category": "Family Products", "sell": 29.99, "cost": 8.25, "emoji": "\ud83c\udf7f", "desc": "Carry snacks, drinks, phone, and small items at games, movie nights, and road trips.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.6, "active": true}, {"id": 13, "name": "Smart Cooler Divider", "category": "Outdoor Products", "sell": 34.99, "cost": 10.5, "emoji": "\ud83e\uddca", "desc": "Adjustable divider to organize drinks, ice, snacks, and dry items inside coolers.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.7, "active": true}, {"id": 14, "name": "Pop-Up Sports Chair Shade", "category": "Sports Families", "sell": 39.99, "cost": 12, "emoji": "\u2600\ufe0f", "desc": "Clip-on shade canopy for folding chairs at games, beaches, parks, and tournaments.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.8, "active": true}, {"id": 15, "name": "Floating Phone Dock", "category": "Water Fun", "sell": 24.99, "cost": 6.25, "emoji": "\ud83d\udcf1", "desc": "Floating phone and drink dock for pools, hot tubs, lakes, and beach days.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.9, "active": true}, {"id": 16, "name": "Backpack Umbrella Mount", "category": "Nice-To-Have", "sell": 18.99, "cost": 4.75, "emoji": "\u2602\ufe0f", "desc": "Hands-free umbrella mount for hiking, walking, sports watching, and outdoor work.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.5, "active": true}, {"id": 17, "name": "Fold-Out Tailgate Table", "category": "Outdoor Products", "sell": 64.99, "cost": 22, "emoji": "\ud83d\ude99", "desc": "Compact folding table for tailgates, camping, sports events, and outdoor cooking.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.6, "active": true}, {"id": 18, "name": "Sports Ball Pressure Indicator", "category": "Sports Products", "sell": 16.99, "cost": 3.8, "emoji": "\ud83c\udfc0", "desc": "Simple pressure checker for basketballs, soccer balls, footballs, and volleyballs.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.7, "active": true}, {"id": 19, "name": "Rechargeable Tent Light Rope", "category": "Camping", "sell": 34.99, "cost": 9.5, "emoji": "\u26fa", "desc": "LED rope light for tents, canopies, patios, and night events.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.8, "active": true}, {"id": 20, "name": "Slip-Resistant Cooler Feet", "category": "Outdoor Products", "sell": 17.99, "cost": 3.9, "emoji": "\ud83e\uddca", "desc": "Add-on feet that keep coolers from sliding in truck beds, boats, and patios.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.9, "active": true}, {"id": 21, "name": "Patio Chair Stabilizer Kit", "category": "Home & Patio", "sell": 22.99, "cost": 5.6, "emoji": "\ud83e\ude91", "desc": "Simple stabilizers for wobbly patio chairs, folding chairs, and camp chairs.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.0, "active": true}, {"id": 22, "name": "Kid-Proof Cup Holder Insert", "category": "Family Products", "sell": 14.99, "cost": 2.9, "emoji": "\ud83e\uddc3", "desc": "Insert that helps stop kid cups from tipping in cars, strollers, wagons, and chairs.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.1, "active": true}, {"id": 23, "name": "Driveway Parking Projector", "category": "Car Inventions", "sell": 44.99, "cost": 13.5, "emoji": "\ud83d\ude98", "desc": "Garage or driveway guide light that projects a parking target for easier alignment.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.2, "active": true}, {"id": 24, "name": "Solar Fence Accent Lights", "category": "Home & Patio", "sell": 29.99, "cost": 8.5, "emoji": "\ud83c\udf19", "desc": "Low-profile solar lights for fences, patios, walkways, decks, and backyard ambiance.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.3, "active": true}, {"id": 25, "name": "Pool Noodle Connector Kit", "category": "Water Fun", "sell": 19.99, "cost": 4.6, "emoji": "\ud83c\udfca", "desc": "Connect pool noodles into forts, rafts, obstacle courses, and floating shapes.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.4, "active": true}, {"id": 26, "name": "Portable Hammock Drink Shelf", "category": "Camping", "sell": 24.99, "cost": 6.2, "emoji": "\ud83c\udf32", "desc": "Clip-on mini shelf for hammocks that holds a drink, phone, book, and snacks.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.5, "active": true}, {"id": 27, "name": "Fishing Rod Vehicle Mount", "category": "Outdoor Products", "sell": 39.99, "cost": 12.5, "emoji": "\ud83c\udfa3", "desc": "Temporary vehicle mount for transporting fishing rods safely.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.6, "active": true}, {"id": 28, "name": "Auto-Centering Hose Reel Guide", "category": "Home & Patio", "sell": 34.99, "cost": 9.8, "emoji": "\ud83e\uddf5", "desc": "Guides a garden hose evenly onto the reel to prevent tangles.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.7, "active": true}, {"id": 29, "name": "Portable Outdoor Mist Ring", "category": "Backyard Products", "sell": 49.99, "cost": 15, "emoji": "\ud83d\udca6", "desc": "Clip-on misting ring for patios, canopies, sports benches, and backyard parties.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.8, "active": true}, {"id": 30, "name": "Glow Pathway Pebbles", "category": "Home & Patio", "sell": 24.99, "cost": 5.5, "emoji": "\u2728", "desc": "Glow-in-the-dark decorative stones for paths, planters, gardens, and patios.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.9, "active": true}, {"id": 31, "name": "Campfire Wind Shield Panels", "category": "Camping", "sell": 39.99, "cost": 11.25, "emoji": "\ud83d\udd25", "desc": "Collapsible panels that block wind around compact fire pits and camping stoves.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.5, "active": true}, {"id": 32, "name": "Pickup Bed Divider Strap", "category": "Truck Products", "sell": 29.99, "cost": 7.8, "emoji": "\ud83d\udefb", "desc": "Adjustable strap divider to stop cargo from sliding around in a pickup bed.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.6, "active": true}, {"id": 33, "name": "Magnetic Ladder Tool Tray", "category": "Tool Products", "sell": 27.99, "cost": 6.9, "emoji": "\ud83e\uddf0", "desc": "Magnetic tray for screws, tools, bits, and hardware while working on ladders.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.7, "active": true}, {"id": 34, "name": "Boat Dock Corner Cushion", "category": "Water Fun", "sell": 34.99, "cost": 9.5, "emoji": "\ud83d\udea4", "desc": "Protective dock corner cushions to prevent boat, paddleboard, and kayak scratches.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.8, "active": true}, {"id": 35, "name": "Foldable Wheel Chock Set", "category": "Truck Products", "sell": 24.99, "cost": 6.75, "emoji": "\ud83d\udede", "desc": "Compact wheel chocks for trailers, campers, utility trailers, and garage storage.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.9, "active": true}, {"id": 36, "name": "Universal Trash Bag Holder", "category": "Nice-To-Have", "sell": 19.99, "cost": 4.2, "emoji": "\ud83d\uddd1\ufe0f", "desc": "Portable frame that holds trash bags open for camping, parties, and yard work.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.0, "active": true}, {"id": 37, "name": "Camping Gear Drying Tree", "category": "Camping", "sell": 44.99, "cost": 13, "emoji": "\ud83c\udf32", "desc": "Portable drying stand for shoes, gloves, towels, swimsuits, and camping gear.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.1, "active": true}, {"id": 38, "name": "Inflatable Slip-Slide Side Walls", "category": "Backyard Products", "sell": 79.99, "cost": 28, "emoji": "\ud83d\udedd", "desc": "Add-on inflatable side walls for contained water slide lanes.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.2, "active": true}, {"id": 39, "name": "Glow Water Balloon Kit", "category": "Backyard Products", "sell": 18.99, "cost": 4, "emoji": "\ud83c\udf88", "desc": "Glow-themed water balloon party kit for night games and summer birthdays.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.3, "active": true}, {"id": 40, "name": "Car Seat Snack Tray", "category": "Family Products", "sell": 22.99, "cost": 5.7, "emoji": "\ud83c\udf5f", "desc": "Clip-on snack tray for road trips, kids, sports tournaments, and family travel.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.4, "active": true}, {"id": 41, "name": "Garage Parking Stop Light", "category": "Car Inventions", "sell": 29.99, "cost": 8, "emoji": "\ud83d\udea6", "desc": "Simple garage light guide that helps drivers know exactly where to stop.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.5, "active": true}, {"id": 42, "name": "Foldable Sideline Bench", "category": "Sports Families", "sell": 69.99, "cost": 24, "emoji": "\ud83c\udfdf\ufe0f", "desc": "Portable folding bench for youth sports teams, parks, tournaments, and tailgates.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.6, "active": true}, {"id": 43, "name": "Portable Scoreboard Flip Card", "category": "Sports Products", "sell": 24.99, "cost": 5.8, "emoji": "\ud83d\udd22", "desc": "Compact flip scoreboard for pickleball, volleyball, basketball, and events.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.7, "active": true}, {"id": 44, "name": "Shoe Deodorizer UV Pucks", "category": "High Demand", "sell": 29.99, "cost": 8.2, "emoji": "\ud83d\udc5f", "desc": "Rechargeable deodorizing pucks for cleats, gym shoes, ski boots, and work boots.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.8, "active": true}, {"id": 45, "name": "Magnetic Phone Gym Mount", "category": "Sports Products", "sell": 24.99, "cost": 6, "emoji": "\ud83d\udcf2", "desc": "Mounts a phone to gym equipment, racks, carts, or metal surfaces for filming workouts.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 8.9, "active": true}, {"id": 46, "name": "Outdoor Blanket Stake Clips", "category": "Outdoor Products", "sell": 16.99, "cost": 3.75, "emoji": "\ud83e\uddfa", "desc": "Clips that stake down blankets and towels at parks, beaches, games, and picnics.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.5, "active": true}, {"id": 47, "name": "Reusable Water Balloon Pump Station", "category": "Backyard Products", "sell": 39.99, "cost": 12, "emoji": "\ud83d\udca7", "desc": "Outdoor fill station for reusable water balloons and backyard parties.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.6, "active": true}, {"id": 48, "name": "Mini Projector Camp Screen", "category": "Camping", "sell": 59.99, "cost": 19.5, "emoji": "\ud83c\udfa5", "desc": "Portable screen for backyard movies, camping trips, sleepovers, and outdoor parties.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.7, "active": true}, {"id": 49, "name": "Bike Helmet Turn Signal Light", "category": "Sports Products", "sell": 34.99, "cost": 9.25, "emoji": "\ud83d\udeb4", "desc": "Clip-on helmet light with simple turn signals for biking and scooters.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.8, "active": true}, {"id": 50, "name": "Travel Cable Snap Labels", "category": "Nice-To-Have", "sell": 14.99, "cost": 2.8, "emoji": "\ud83d\udd0c", "desc": "Snap-on cable labels for chargers, cords, extension cords, and travel bags.", "ship": "6-14 days", "supplier": "Supplier needed", "score": 7.9, "active": true}];
-const KEY='ironVault50Products';let products=JSON.parse(localStorage.getItem(KEY)||'null')||DEFAULT_PRODUCTS;let filter='All';
-function money(n){return '$'+Number(n||0).toFixed(2)}function margin(p){return Number(p.sell||0)-Number(p.cost||0)}
-function cats(){return ['All',...[...new Set(products.filter(p=>p.active).map(p=>p.category))]]}
-function setFilter(c){filter=c;render()}function saveAll(){localStorage.setItem(KEY,JSON.stringify(products));render()}
-function render(){filters.innerHTML=cats().map(c=>`<button class="${c==filter?'active':'light'}" onclick="setFilter('${c}')">${c}</button>`).join('');let list=products.filter(p=>p.active&&(filter=='All'||p.category==filter));grid.innerHTML=list.map(p=>`<article class="card"><div class="img"><span class="score">${p.score}</span>${p.emoji}</div><div class="body"><div class="cat">${p.category}</div><h3>${p.name}</h3><p>${p.desc}</p><div class="nums"><div class="num"><small>Sell</small><b>${money(p.sell)}</b></div><div class="num"><small>Cost</small><b>${money(p.cost)}</b></div><div class="num"><small>Margin</small><b>${money(margin(p))}</b></div></div><span class="badge">${p.supplier}</span></div></article>`).join('');renderTable()}
-function admin(){document.getElementById('store').style.display='none';document.getElementById('admin').classList.add('open');renderTable()}function store(){document.getElementById('store').style.display='block';document.getElementById('admin').classList.remove('open')}
-function v(id){return document.getElementById(id).value}function sv(id,x){document.getElementById(id).value=x??''}
-function saveProduct(){let id=v('id')?Number(v('id')):Date.now();let p={id,name:v('name'),category:v('category'),desc:v('desc'),sell:Number(v('sell')),cost:Number(v('cost')),supplier:v('supplier')||'Supplier needed',emoji:v('emoji')||'📦',score:8,active:v('active')=='true'};let i=products.findIndex(x=>x.id==id);if(i>=0)products[i]=p;else products.push(p);clearForm();saveAll()}
-function editProduct(id){let p=products.find(x=>x.id==id);['id','name','category','desc','sell','cost','supplier','emoji'].forEach(k=>sv(k,p[k]));sv('active',String(p.active));formTitle.textContent='Edit Product';scrollTo(0,0)}
-function deleteProduct(id){if(confirm('Delete this product?')){products=products.filter(p=>p.id!=id);saveAll()}}function clearForm(){['id','name','category','desc','sell','cost','supplier','emoji'].forEach(x=>sv(x,''));sv('active','true');formTitle.textContent='Add Product'}function resetProducts(){if(confirm('Reset demo products?')){products=DEFAULT_PRODUCTS;localStorage.removeItem(KEY);render()}}
-function renderTable(){if(!document.getElementById('table'))return;table.innerHTML='<table><tr><th>Product</th><th>Price</th><th></th></tr>'+products.map(p=>`<tr><td><b>${p.emoji} ${p.name}</b><br><span class="small">${p.category}</span></td><td>${money(p.sell)}<br><span class="small">Cost ${money(p.cost)}</span></td><td><button class="light" onclick="editProduct(${p.id})">Edit</button> <button class="danger" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join('')+'</table>'}
-render();
-</script></body></html>
+IV
+Iron Vault
+Products worth stopping for.
+
+Store Admin
+50 products loaded
+Cool products. Strong margins. Built to test fast.
+Sports products, clever inventions, family items, and high-demand nice-to-have products people want to show their friends.
+
+View Products
+Open the Vault
+Click to unlock products
+
+Upload this version: Extract the ZIP, upload index.html to GitHub, then redeploy Vercel.
+Product Board
+All
+Car Inventions
+Sports Families
+Backyard Games
+Sports Products
+Nice-To-Have
+Water Fun
+Outdoor Products
+High Demand
+Family Products
+Camping
+Home & Patio
+Backyard Products
+Truck Products
+Tool Products
+7.5🚗
+Car Inventions
+Seat Gap Crumb Catcher
+Stops crumbs, fries, coins, toys, and phones from falling between car seats.
+
+Sell
+$24.99
+Cost
+$6.80
+Margin
+$18.19
+Supplier needed
+7.6👟
+Sports Families
+QuickDry Cleat & Shoe Dryer
+Forced-air dryer for wet cleats, rain boots, ski boots, and sneakers.
+
+Sell
+$49.99
+Cost
+$18.50
+Margin
+$31.49
+Supplier needed
+7.7💡
+Backyard Games
+Glow Boundary Game Kit
+Light-up boundary strips for driveway games, night sports, and backyard challenges.
+
+Sell
+$59.99
+Cost
+$19.00
+Margin
+$40.99
+Supplier needed
+7.8🏓
+Sports Products
+Portable Pickleball Net
+Fast-set driveway pickleball net for families and casual players.
+
+Sell
+$89.99
+Cost
+$34.00
+Margin
+$55.99
+Supplier needed
+7.9🥤
+Nice-To-Have
+Magnetic Cup Holder Clip
+Clip-on drink holder for bleachers, golf carts, strollers, lawn chairs, and gyms.
+
+Sell
+$19.99
+Cost
+$4.50
+Margin
+$15.49
+Supplier needed
+8🌊
+Water Fun
+Water Skipping Disc Set
+A lake and pool toy that skips across water and is easy to film.
+
+Sell
+$22.99
+Cost
+$5.20
+Margin
+$17.79
+Supplier needed
+8.1🔥
+Outdoor Products
+Color Fire Pack Bundle
+Color-changing fire packs for camping, fire pits, cabins, and parties.
+
+Sell
+$14.99
+Cost
+$2.75
+Margin
+$12.24
+Supplier needed
+8.2🥅
+Sports Products
+Pop-Up Soccer Goal Wall
+Foldable practice wall with target zones for soccer, football, and throwing drills.
+
+Sell
+$54.99
+Cost
+$17.00
+Margin
+$37.99
+Supplier needed
+8.3🧊
+High Demand
+Neck Cooling Fan
+Hands-free cooling for sports parents, yard work, travel, events, and warehouses.
+
+Sell
+$39.99
+Cost
+$11.50
+Margin
+$28.49
+Supplier needed
+8.4🔥
+Outdoor Products
+Clamp-On Grill Light
+Rechargeable clamp light for grills, smokers, camping tables, and workbenches.
+
+Sell
+$32.99
+Cost
+$9.75
+Margin
+$23.24
+Supplier needed
+8.5⚡
+Sports Products
+Rebound Training Board
+Multi-sport rebound board for soccer, lacrosse, baseball, and solo practice drills.
+
+Sell
+$69.99
+Cost
+$24.00
+Margin
+$45.99
+Supplier needed
+8.6🍿
+Family Products
+Snack & Drink Stadium Tray
+Carry snacks, drinks, phone, and small items at games, movie nights, and road trips.
+
+Sell
+$29.99
+Cost
+$8.25
+Margin
+$21.74
+Supplier needed
+8.7🧊
+Outdoor Products
+Smart Cooler Divider
+Adjustable divider to organize drinks, ice, snacks, and dry items inside coolers.
+
+Sell
+$34.99
+Cost
+$10.50
+Margin
+$24.49
+Supplier needed
+8.8☀️
+Sports Families
+Pop-Up Sports Chair Shade
+Clip-on shade canopy for folding chairs at games, beaches, parks, and tournaments.
+
+Sell
+$39.99
+Cost
+$12.00
+Margin
+$27.99
+Supplier needed
+8.9📱
+Water Fun
+Floating Phone Dock
+Floating phone and drink dock for pools, hot tubs, lakes, and beach days.
+
+Sell
+$24.99
+Cost
+$6.25
+Margin
+$18.74
+Supplier needed
+7.5☂️
+Nice-To-Have
+Backpack Umbrella Mount
+Hands-free umbrella mount for hiking, walking, sports watching, and outdoor work.
+
+Sell
+$18.99
+Cost
+$4.75
+Margin
+$14.24
+Supplier needed
+7.6🚙
+Outdoor Products
+Fold-Out Tailgate Table
+Compact folding table for tailgates, camping, sports events, and outdoor cooking.
+
+Sell
+$64.99
+Cost
+$22.00
+Margin
+$42.99
+Supplier needed
+7.7🏀
+Sports Products
+Sports Ball Pressure Indicator
+Simple pressure checker for basketballs, soccer balls, footballs, and volleyballs.
+
+Sell
+$16.99
+Cost
+$3.80
+Margin
+$13.19
+Supplier needed
+7.8⛺
+Camping
+Rechargeable Tent Light Rope
+LED rope light for tents, canopies, patios, and night events.
+
+Sell
+$34.99
+Cost
+$9.50
+Margin
+$25.49
+Supplier needed
+7.9🧊
+Outdoor Products
+Slip-Resistant Cooler Feet
+Add-on feet that keep coolers from sliding in truck beds, boats, and patios.
+
+Sell
+$17.99
+Cost
+$3.90
+Margin
+$14.09
+Supplier needed
+8🪑
+Home & Patio
+Patio Chair Stabilizer Kit
+Simple stabilizers for wobbly patio chairs, folding chairs, and camp chairs.
+
+Sell
+$22.99
+Cost
+$5.60
+Margin
+$17.39
+Supplier needed
+8.1🧃
+Family Products
+Kid-Proof Cup Holder Insert
+Insert that helps stop kid cups from tipping in cars, strollers, wagons, and chairs.
+
+Sell
+$14.99
+Cost
+$2.90
+Margin
+$12.09
+Supplier needed
+8.2🚘
+Car Inventions
+Driveway Parking Projector
+Garage or driveway guide light that projects a parking target for easier alignment.
+
+Sell
+$44.99
+Cost
+$13.50
+Margin
+$31.49
+Supplier needed
+8.3🌙
+Home & Patio
+Solar Fence Accent Lights
+Low-profile solar lights for fences, patios, walkways, decks, and backyard ambiance.
+
+Sell
+$29.99
+Cost
+$8.50
+Margin
+$21.49
+Supplier needed
+8.4🏊
+Water Fun
+Pool Noodle Connector Kit
+Connect pool noodles into forts, rafts, obstacle courses, and floating shapes.
+
+Sell
+$19.99
+Cost
+$4.60
+Margin
+$15.39
+Supplier needed
+8.5🌲
+Camping
+Portable Hammock Drink Shelf
+Clip-on mini shelf for hammocks that holds a drink, phone, book, and snacks.
+
+Sell
+$24.99
+Cost
+$6.20
+Margin
+$18.79
+Supplier needed
+8.6🎣
+Outdoor Products
+Fishing Rod Vehicle Mount
+Temporary vehicle mount for transporting fishing rods safely.
+
+Sell
+$39.99
+Cost
+$12.50
+Margin
+$27.49
+Supplier needed
+8.7🧵
+Home & Patio
+Auto-Centering Hose Reel Guide
+Guides a garden hose evenly onto the reel to prevent tangles.
+
+Sell
+$34.99
+Cost
+$9.80
+Margin
+$25.19
+Supplier needed
+8.8💦
+Backyard Products
+Portable Outdoor Mist Ring
+Clip-on misting ring for patios, canopies, sports benches, and backyard parties.
+
+Sell
+$49.99
+Cost
+$15.00
+Margin
+$34.99
+Supplier needed
+8.9✨
+Home & Patio
+Glow Pathway Pebbles
+Glow-in-the-dark decorative stones for paths, planters, gardens, and patios.
+
+Sell
+$24.99
+Cost
+$5.50
+Margin
+$19.49
+Supplier needed
+7.5🔥
+Camping
+Campfire Wind Shield Panels
+Collapsible panels that block wind around compact fire pits and camping stoves.
+
+Sell
+$39.99
+Cost
+$11.25
+Margin
+$28.74
+Supplier needed
+7.6🛻
+Truck Products
+Pickup Bed Divider Strap
+Adjustable strap divider to stop cargo from sliding around in a pickup bed.
+
+Sell
+$29.99
+Cost
+$7.80
+Margin
+$22.19
+Supplier needed
+7.7🧰
+Tool Products
+Magnetic Ladder Tool Tray
+Magnetic tray for screws, tools, bits, and hardware while working on ladders.
+
+Sell
+$27.99
+Cost
+$6.90
+Margin
+$21.09
+Supplier needed
+7.8🚤
+Water Fun
+Boat Dock Corner Cushion
+Protective dock corner cushions to prevent boat, paddleboard, and kayak scratches.
+
+Sell
+$34.99
+Cost
+$9.50
+Margin
+$25.49
+Supplier needed
+7.9🛞
+Truck Products
+Foldable Wheel Chock Set
+Compact wheel chocks for trailers, campers, utility trailers, and garage storage.
+
+Sell
+$24.99
+Cost
+$6.75
+Margin
+$18.24
+Supplier needed
+8🗑️
+Nice-To-Have
+Universal Trash Bag Holder
+Portable frame that holds trash bags open for camping, parties, and yard work.
+
+Sell
+$19.99
+Cost
+$4.20
+Margin
+$15.79
+Supplier needed
+8.1🌲
+Camping
+Camping Gear Drying Tree
+Portable drying stand for shoes, gloves, towels, swimsuits, and camping gear.
+
+Sell
+$44.99
+Cost
+$13.00
+Margin
+$31.99
+Supplier needed
+8.2🛝
+Backyard Products
+Inflatable Slip-Slide Side Walls
+Add-on inflatable side walls for contained water slide lanes.
+
+Sell
+$79.99
+Cost
+$28.00
+Margin
+$51.99
+Supplier needed
+8.3🎈
+Backyard Products
+Glow Water Balloon Kit
+Glow-themed water balloon party kit for night games and summer birthdays.
+
+Sell
+$18.99
+Cost
+$4.00
+Margin
+$14.99
+Supplier needed
+8.4🍟
+Family Products
+Car Seat Snack Tray
+Clip-on snack tray for road trips, kids, sports tournaments, and family travel.
+
+Sell
+$22.99
+Cost
+$5.70
+Margin
+$17.29
+Supplier needed
+8.5🚦
+Car Inventions
+Garage Parking Stop Light
+Simple garage light guide that helps drivers know exactly where to stop.
+
+Sell
+$29.99
+Cost
+$8.00
+Margin
+$21.99
+Supplier needed
+8.6🏟️
+Sports Families
+Foldable Sideline Bench
+Portable folding bench for youth sports teams, parks, tournaments, and tailgates.
+
+Sell
+$69.99
+Cost
+$24.00
+Margin
+$45.99
+Supplier needed
+8.7🔢
+Sports Products
+Portable Scoreboard Flip Card
+Compact flip scoreboard for pickleball, volleyball, basketball, and events.
+
+Sell
+$24.99
+Cost
+$5.80
+Margin
+$19.19
+Supplier needed
+8.8👟
+High Demand
+Shoe Deodorizer UV Pucks
+Rechargeable deodorizing pucks for cleats, gym shoes, ski boots, and work boots.
+
+Sell
+$29.99
+Cost
+$8.20
+Margin
+$21.79
+Supplier needed
+8.9📲
+Sports Products
+Magnetic Phone Gym Mount
+Mounts a phone to gym equipment, racks, carts, or metal surfaces for filming workouts.
+
+Sell
+$24.99
+Cost
+$6.00
+Margin
+$18.99
+Supplier needed
+7.5🧺
+Outdoor Products
+Outdoor Blanket Stake Clips
+Clips that stake down blankets and towels at parks, beaches, games, and picnics.
+
+Sell
+$16.99
+Cost
+$3.75
+Margin
+$13.24
+Supplier needed
+7.6💧
+Backyard Products
+Reusable Water Balloon Pump Station
+Outdoor fill station for reusable water balloons and backyard parties.
+
+Sell
+$39.99
+Cost
+$12.00
+Margin
+$27.99
+Supplier needed
+7.7🎥
+Camping
+Mini Projector Camp Screen
+Portable screen for backyard movies, camping trips, sleepovers, and outdoor parties.
+
+Sell
+$59.99
+Cost
+$19.50
+Margin
+$40.49
+Supplier needed
+7.8🚴
+Sports Products
+Bike Helmet Turn Signal Light
+Clip-on helmet light with simple turn signals for biking and scooters.
+
+Sell
+$34.99
+Cost
+$9.25
+Margin
+$25.74
+Supplier needed
+7.9🔌
+Nice-To-Have
+Travel Cable Snap Labels
+Snap-on cable labels for chargers, cords, extension cords, and travel bags.
+
+Sell
+$14.99
+Cost
+$2.80
+Margin
+$12.19
+Supplier needed
