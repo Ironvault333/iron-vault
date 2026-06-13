@@ -16,13 +16,11 @@ button{border:0;cursor:pointer;font-weight:900}
 .page{display:none;padding:35px 5%}
 .page.show{display:block}
 
-/* HOME */
 .hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
 h1{font-size:72px;line-height:.9;margin:0 0 20px;letter-spacing:-3px}
 .hero p{font-size:20px;color:#444;line-height:1.5}
 .openBtn{background:#f5c542;color:#111;border-radius:999px;padding:16px 30px;font-size:16px}
 
-/* BANK SAFE */
 .safeScene{height:520px;display:flex;align-items:center;justify-content:center;perspective:1500px}
 .safeWall{width:520px;height:500px;background:linear-gradient(135deg,#b8bec6,#59616a);border-radius:34px;box-shadow:inset 0 0 60px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);position:absolute}
 .safeOpening{width:350px;height:390px;background:#111827;border-radius:22px;position:absolute;box-shadow:inset 0 0 50px #000}
@@ -38,23 +36,20 @@ h1{font-size:72px;line-height:.9;margin:0 0 20px;letter-spacing:-3px}
 .b1{top:28px;left:40px}.b2{top:28px;right:40px}.b3{bottom:28px;left:40px}.b4{bottom:28px;right:40px}
 .b5{top:105px;left:24px}.b6{top:105px;right:24px}.b7{bottom:105px;left:24px}.b8{bottom:105px;right:24px}
 
-/* PRODUCTS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;margin-top:25px}
 .card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;transition:.2s}
 .card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
-.card img,.placeholder{width:100%;height:190px;border-radius:10px;object-fit:cover;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
+.placeholder{width:100%;height:190px;border-radius:10px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
 .card h3{margin:12px 0 6px;font-size:18px}
 .desc{font-size:14px;color:#555;min-height:58px}
 .price{font-size:25px;font-weight:900;margin:10px 0}
 .tap{font-size:13px;color:#2563eb;font-weight:900}
 
-/* DETAIL PAGE */
 .detailWrap{display:grid;grid-template-columns:1.1fr 1fr 310px;gap:25px;align-items:start}
 .box{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
-.mainImg{width:100%;height:420px;object-fit:cover;border-radius:12px;background:#e5e7eb}
 .mainPlaceholder{height:420px;border-radius:12px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:20px}
 .thumbs{display:flex;gap:10px;margin-top:12px}
-.thumbs img,.thumbPlaceholder{width:75px;height:75px;border-radius:9px;object-fit:cover;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569}
+.thumbPlaceholder{width:75px;height:75px;border-radius:9px;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569}
 .likeBtn{background:#eef2ff;color:#1d4ed8;border-radius:999px;padding:10px 16px;margin:10px 0}
 .buyBox{position:sticky;top:92px}
 select{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0 14px}
@@ -92,7 +87,7 @@ h1{font-size:52px}
 <section class="hero" id="homePage">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
-    <p>Useful trending-style products for home, kitchen, pets, car, travel, and everyday upgrades.</p>
+    <p>Useful, clever, almost-need-to-have products for home, kitchen, pets, car, travel, cleaning, and everyday upgrades.</p>
     <button class="openBtn" onclick="openSafe()">Open Vault</button>
   </div>
 
@@ -127,23 +122,80 @@ h1{font-size:52px}
 let cart = Number(localStorage.getItem("cartCount") || 0);
 document.getElementById("cartCount").innerText = cart;
 
+const CATALOG_VERSION = "50-products-v1";
+
 const starterProducts = [
-{name:"Vegetable Chopper",price:24.99,category:"Kitchen",sizes:"Small, Medium, Large",desc:"Fast chop container for onions, peppers, fruit, and meal prep.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Mini Bag Sealer",price:9.99,category:"Kitchen",sizes:"Standard",desc:"Portable heat sealer for snack bags, chips, and pantry storage.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Pet Hair Remover Roller",price:16.99,category:"Pets",sizes:"Standard",desc:"Reusable roller that removes pet hair from couches and clothes.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Car Gap Organizer",price:19.99,category:"Car",sizes:"Driver Side, Passenger Side",desc:"Organizer that fills the seat gap and holds phone, wallet, and keys.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Under Sink Organizer",price:25.99,category:"Home",sizes:"1-Tier, 2-Tier",desc:"Sliding shelf organizer for cleaning supplies.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Dog Water Bottle",price:18.99,category:"Pets",sizes:"Small, Large",desc:"Portable dog water bottle for walks, hikes, and car rides.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Trunk Organizer",price:28.99,category:"Car",sizes:"Medium, Large",desc:"Foldable trunk organizer for groceries, tools, and sports gear.",shipping:"Estimated delivery: 5–10 business days."},
-{name:"Drawer Dividers",price:14.99,category:"Home",sizes:"4-Pack, 8-Pack",desc:"Adjustable dividers for kitchen, bathroom, and office drawers.",shipping:"Estimated delivery: 5–10 business days."}
+{name:"Vegetable Chopper Pro",price:24.99,category:"Kitchen",sizes:"Small, Medium, Large",desc:"Fast chop container for onions, peppers, fruit, and meal prep.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Mini Heat Bag Sealer",price:9.99,category:"Kitchen",sizes:"Standard",desc:"Portable sealer that helps keep chips, snacks, and pantry bags fresh.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Silicone Scrub Gloves",price:13.99,category:"Cleaning",sizes:"Small, Medium, Large",desc:"Dish gloves with built-in scrub bristles for dishes, sinks, and quick cleaning.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Magnetic Spice Rack",price:22.99,category:"Kitchen",sizes:"2-Pack, 4-Pack",desc:"Space-saving magnetic shelves for spices, oils, and small kitchen items.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Air Fryer Oil Sprayer",price:12.99,category:"Kitchen",sizes:"250ml, 500ml",desc:"Refillable oil sprayer for air fryers, pans, grilling, and salads.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Pet Hair Remover Roller",price:16.99,category:"Pets",sizes:"Standard",desc:"Reusable roller that pulls pet hair from couches, clothes, blankets, and car seats.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Portable Dog Water Bottle",price:18.99,category:"Pets",sizes:"Small, Large",desc:"Travel water bottle for dogs on walks, hikes, road trips, and parks.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Cat Window Hammock",price:24.99,category:"Pets",sizes:"Standard",desc:"Window-mounted cat perch for sun lounging, resting, and watching outside.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Slow Feeder Pet Bowl",price:14.99,category:"Pets",sizes:"Small, Large",desc:"Pet bowl designed to slow down fast eating and make meals last longer.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Pet Grooming Glove",price:12.99,category:"Pets",sizes:"Left Hand, Right Hand",desc:"Grooming glove that removes loose fur while you pet your dog or cat.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Car Seat Gap Organizer",price:19.99,category:"Car",sizes:"Driver Side, Passenger Side",desc:"Fills the seat gap and holds phone, wallet, keys, cards, and small items.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Leakproof Car Trash Can",price:15.99,category:"Car",sizes:"Standard",desc:"Compact trash bin for wrappers, receipts, tissues, and road trip mess.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Foldable Trunk Organizer",price:28.99,category:"Car",sizes:"Medium, Large",desc:"Keeps groceries, emergency supplies, tools, and sports gear from rolling around.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Dashboard Phone Mount",price:13.99,category:"Car",sizes:"Standard",desc:"Simple phone mount for maps, music, calls, and hands-free driving.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Portable Tire Inflator",price:39.99,category:"Car",sizes:"Standard",desc:"Compact inflator for car tires, bike tires, balls, and emergency use.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Under Sink Organizer",price:25.99,category:"Home",sizes:"1-Tier, 2-Tier",desc:"Sliding organizer for cleaning bottles, soaps, sponges, and bathroom supplies.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"No-Drill Shower Shelf",price:18.99,category:"Home",sizes:"Black, Silver",desc:"Wall shelf for shampoo, body wash, razors, soap, and shower accessories.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Adjustable Drawer Dividers",price:14.99,category:"Home",sizes:"4-Pack, 8-Pack",desc:"Dividers for kitchen drawers, bathroom drawers, office drawers, and junk drawers.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Cable Management Box",price:21.99,category:"Home",sizes:"Small, Large",desc:"Hides messy power strips, cords, chargers, and desk cables.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Laundry Backpack Bag",price:17.99,category:"Home",sizes:"Standard",desc:"Laundry bag with backpack straps for dorms, apartments, and shared laundry rooms.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Electric Lint Remover",price:16.99,category:"Cleaning",sizes:"Standard",desc:"Rechargeable fabric shaver for sweaters, blankets, couches, and clothing.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Mini Desk Vacuum",price:12.99,category:"Cleaning",sizes:"Standard",desc:"Tiny vacuum for crumbs, keyboards, desks, drawers, and car cup holders.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Drill Brush Scrubber Set",price:14.99,category:"Cleaning",sizes:"4-Piece, 8-Piece",desc:"Brush attachments that turn a drill into a powerful cleaning scrubber.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Baseboard Cleaner Tool",price:18.99,category:"Cleaning",sizes:"Standard",desc:"Long-handled cleaner for baseboards, wall edges, and hard-to-reach dust lines.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Blind Cleaner Brush",price:8.99,category:"Cleaning",sizes:"Standard",desc:"Multi-slat brush that cleans window blinds faster than wiping one by one.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Rechargeable Closet Light",price:18.99,category:"Home Tech",sizes:"1-Pack, 3-Pack",desc:"Motion light for closets, cabinets, hallways, pantries, and dark corners.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Sunset Projector Lamp",price:19.99,category:"Home Tech",sizes:"Standard",desc:"Small room lamp that creates sunset-style lighting for rooms and videos.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Large Display Alarm Clock",price:17.99,category:"Home Tech",sizes:"White, Black",desc:"Minimal bedside alarm clock with an easy-to-read display.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Mini Desk Humidifier",price:21.99,category:"Home Tech",sizes:"White, Black",desc:"Compact humidifier for desk, bedroom, travel, and dry rooms.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Smart Plug Timer",price:16.99,category:"Home Tech",sizes:"1-Pack, 2-Pack",desc:"Plug-in timer for lamps, holiday lights, appliances, and routines.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Resistance Band Set",price:14.99,category:"Fitness",sizes:"Light, Medium, Heavy",desc:"Portable workout bands for stretching, strength training, and home workouts.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Posture Corrector Brace",price:19.99,category:"Fitness",sizes:"Small, Medium, Large",desc:"Adjustable support for posture reminders while working, studying, or sitting.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Massage Roller Ball",price:11.99,category:"Fitness",sizes:"Standard",desc:"Handheld roller for feet, back, shoulders, and sore muscles.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Wearable Neck Fan",price:24.99,category:"Travel",sizes:"White, Black",desc:"Hands-free fan for sports, outdoor work, travel, heat, and summer days.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Insulated Bottle Sleeve",price:13.99,category:"Travel",sizes:"Small, Large",desc:"Bottle holder with strap and pocket for walks, games, school, and travel.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Hanging Toiletry Bag",price:16.99,category:"Travel",sizes:"Standard",desc:"Travel bathroom organizer that hangs in hotels, camps, and small bathrooms.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Packing Cube Set",price:18.99,category:"Travel",sizes:"6-Pack, 8-Pack",desc:"Suitcase organizers that separate clothes, shoes, laundry, and accessories.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Slim RFID Wallet",price:14.99,category:"Travel",sizes:"Black, Brown",desc:"Slim card wallet with RFID-blocking storage and pocket-friendly design.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Luggage Cup Holder",price:11.99,category:"Travel",sizes:"Standard",desc:"Cup holder that straps to suitcase handles for airport and road travel.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Travel Cable Organizer",price:12.99,category:"Travel",sizes:"Small, Large",desc:"Pouch for chargers, cords, earbuds, adapters, and tech accessories.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Mini Waffle Maker",price:22.99,category:"Kitchen",sizes:"Standard",desc:"Small waffle maker for quick breakfasts, snacks, dorms, and tiny kitchens.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Milk Frother Wand",price:9.99,category:"Kitchen",sizes:"Black, Silver",desc:"Handheld frother for coffee, matcha, protein drinks, and hot chocolate.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Digital Kitchen Scale",price:13.99,category:"Kitchen",sizes:"Standard",desc:"Compact scale for baking, meal prep, coffee, and portion measuring.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Magnetic Screen Door",price:24.99,category:"Home",sizes:"Single Door, Sliding Door",desc:"Hands-free mesh screen door for patios, back doors, pets, and fresh air.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Solar Outdoor Path Lights",price:26.99,category:"Outdoor",sizes:"4-Pack, 8-Pack",desc:"Solar lights for gardens, patios, pathways, driveways, and yards.",shipping:"Estimated delivery: 5–10 business days."},
+
+{name:"Reusable Produce Bags",price:11.99,category:"Kitchen",sizes:"6-Pack, 12-Pack",desc:"Washable mesh bags for groceries, produce, pantry storage, and organizing.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Cold Brew Pitcher",price:21.99,category:"Kitchen",sizes:"1 Quart, 2 Quart",desc:"Simple pitcher for homemade cold brew coffee and flavored drinks.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Glass Food Storage Set",price:27.99,category:"Kitchen",sizes:"5-Pack, 10-Pack",desc:"Stackable containers for leftovers, lunch prep, snacks, and fridge storage.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Silicone Ice Cube Tray",price:10.99,category:"Kitchen",sizes:"2-Pack, 4-Pack",desc:"Easy-release trays for drinks, smoothies, iced coffee, and coolers.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Bamboo Cutting Board Set",price:29.99,category:"Kitchen",sizes:"3-Piece Set",desc:"Cutting board set for meal prep, serving, chopping, and everyday cooking.",shipping:"Estimated delivery: 5–10 business days."}
 ];
 
 function getProducts(){
-  let saved = localStorage.getItem("sqProducts");
-  if(!saved){
+  const version = localStorage.getItem("sqCatalogVersion");
+  const saved = localStorage.getItem("sqProducts");
+
+  if(version !== CATALOG_VERSION || !saved){
     localStorage.setItem("sqProducts", JSON.stringify(starterProducts));
+    localStorage.setItem("sqCatalogVersion", CATALOG_VERSION);
     return starterProducts;
   }
+
   return JSON.parse(saved);
 }
 
@@ -278,7 +330,7 @@ function openProduct(i){
       <div class="similarGrid">
         ${
           similar.length
-          ? similar.map(s=>`
+          ? similar.map((s)=>`
             <div class="card">
               ${imageHTML(s)}
               <h4>${s.name}</h4>
