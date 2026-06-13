@@ -2,72 +2,176 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Side Quests</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f3f3;color:#111}
-header{height:72px;background:#16202a;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:20}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
+header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
 .logo{font-size:30px;font-weight:900}
+nav button{background:transparent;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
 .cart{font-weight:900}
-button{border:0;cursor:pointer;font-weight:900}
-.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;padding:50px 7%;background:linear-gradient(135deg,#f8f4ec,#ddd);transition:.8s}
-.hero.fade{opacity:0;transform:scale(1.02)}
-h1{font-size:74px;line-height:.9;margin:0 0 22px;letter-spacing:-4px}
+button{cursor:pointer;border:0;font-weight:900}
+
+/* LANDING */
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd);transition:opacity .7s ease,transform .7s ease}
+.hero.fade{opacity:0;transform:scale(1.03)}
+h1{font-size:76px;line-height:.9;margin:0 0 20px;letter-spacing:-4px}
 .hero p{font-size:20px;color:#444;line-height:1.5}
-.openBtn{background:#f6c344;padding:16px 30px;border-radius:999px;font-size:16px}
+.openBtn{background:#f5c542;border-radius:999px;padding:16px 30px;font-size:16px;color:#111}
 
-/* REAL GRAY BANK VAULT */
-.vault-wrap{display:flex;justify-content:center;perspective:1700px}
-.vault{width:520px;height:520px;border-radius:50%;position:relative;background:#565f68;box-shadow:0 45px 85px rgba(0,0,0,.45),inset 0 0 45px #222;cursor:pointer}
-.inside{position:absolute;inset:70px;border-radius:50%;background:#f4f4f4;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:60px;overflow:hidden;box-shadow:inset 0 0 65px #111}
-.inside img{width:100%;height:85px;object-fit:cover;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,.32)}
-.door{position:absolute;inset:0;border-radius:50%;transform-origin:left center;transition:1.35s cubic-bezier(.2,.8,.2,1);z-index:5;background:radial-gradient(circle at 35% 25%,#f0f0f0 0,#b8bec3 18%,#7b858e 40%,#4d555d 65%,#252b30 100%);border:26px solid #68717a;box-shadow:inset 0 0 55px #1d2226,0 28px 65px rgba(0,0,0,.45)}
-.vault.open .door{transform:rotateY(-121deg)}
-.ring{position:absolute;inset:45px;border-radius:50%;border:18px solid #8b949d;box-shadow:inset 0 0 30px #222}
-.ring2{position:absolute;inset:100px;border-radius:50%;border:11px solid #3c444b}
-.bolt{position:absolute;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3aa 50%,#333);border:3px solid #30363b}
-.b1{top:28px;left:240px}.b2{bottom:28px;left:240px}.b3{left:28px;top:240px}.b4{right:28px;top:240px}
-.b5{top:86px;left:86px}.b6{top:86px;right:86px}.b7{bottom:86px;left:86px}.b8{bottom:86px;right:86px}
-.b9{top:175px;left:43px}.b10{top:175px;right:43px}.b11{bottom:175px;left:43px}.b12{bottom:175px;right:43px}
-.handle{position:absolute;width:200px;height:200px;top:160px;left:160px;border-radius:50%;border:19px solid #a3abb2;box-shadow:inset 0 0 12px #111}
-.handle span{position:absolute;width:172px;height:19px;background:linear-gradient(90deg,#353b40,#f5f5f5,#353b40);top:72px;left:-5px;border-radius:99px}
-.handle span:nth-child(2){transform:rotate(60deg)}
-.handle span:nth-child(3){transform:rotate(-60deg)}
-.handle:after{content:"";position:absolute;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle,#fff,#666);top:44px;left:44px;border:5px solid #30363b}
+/* COMPLETELY NEW VAULT DESIGN */
+.vaultScene{
+  height:560px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1600px;
+}
+.wall{
+  position:absolute;
+  width:560px;
+  height:560px;
+  border-radius:36px;
+  background:linear-gradient(135deg,#9ca3af,#4b5563);
+  box-shadow:inset 0 0 55px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);
+}
+.vaultOpening{
+  position:absolute;
+  width:410px;
+  height:460px;
+  border-radius:22px;
+  background:#111827;
+  box-shadow:inset 0 0 50px #000;
+  overflow:hidden;
+}
+.vaultOpening:after{
+  content:"SIDE QUESTS";
+  color:#f5c542;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:3px;
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  opacity:0;
+  transition:.6s;
+}
+.vaultScene.open .vaultOpening:after{opacity:1}
 
-/* STORE */
-.products{display:none;padding:34px 5%}
-.products.show{display:block}
+.vaultDoor{
+  position:absolute;
+  width:430px;
+  height:480px;
+  border-radius:28px;
+  background:
+    linear-gradient(135deg,#e5e7eb 0%,#9ca3af 22%,#64748b 48%,#374151 74%,#1f2937 100%);
+  border:16px solid #6b7280;
+  box-shadow:inset 0 0 45px rgba(0,0,0,.45),0 25px 55px rgba(0,0,0,.45);
+  transform-origin:left center;
+  transition:1.25s cubic-bezier(.2,.8,.2,1);
+  z-index:5;
+}
+.vaultScene.open .vaultDoor{transform:rotateY(-105deg) translateX(-20px)}
+.doorPanel{
+  position:absolute;
+  inset:38px;
+  border:10px solid #9ca3af;
+  border-radius:20px;
+  box-shadow:inset 0 0 24px #111827;
+}
+.lockWheel{
+  position:absolute;
+  width:155px;
+  height:155px;
+  border-radius:50%;
+  border:18px solid #cbd5e1;
+  top:145px;
+  left:138px;
+  box-shadow:inset 0 0 15px #111,0 0 12px #111;
+}
+.lockWheel span{
+  position:absolute;
+  width:138px;
+  height:16px;
+  background:linear-gradient(90deg,#374151,#f8fafc,#374151);
+  border-radius:999px;
+  top:51px;
+  left:-10px;
+}
+.lockWheel span:nth-child(2){transform:rotate(60deg)}
+.lockWheel span:nth-child(3){transform:rotate(-60deg)}
+.lockWheel:after{
+  content:"";
+  position:absolute;
+  width:58px;height:58px;border-radius:50%;
+  background:radial-gradient(circle,#f8fafc,#475569);
+  top:31px;left:31px;border:5px solid #374151;
+}
+.safeBolt{
+  position:absolute;
+  width:32px;height:32px;border-radius:50%;
+  background:radial-gradient(circle,#fff,#9ca3af,#374151);
+  border:3px solid #374151;
+}
+.s1{top:30px;left:44px}.s2{top:30px;right:44px}.s3{bottom:30px;left:44px}.s4{bottom:30px;right:44px}
+.s5{top:105px;left:28px}.s6{top:105px;right:28px}.s7{bottom:105px;left:28px}.s8{bottom:105px;right:28px}
+.s9{top:214px;left:24px}.s10{top:214px;right:24px}
+.hinge{
+  position:absolute;
+  left:-42px;
+  width:55px;
+  height:100px;
+  background:linear-gradient(#cbd5e1,#475569);
+  border-radius:14px;
+  border:5px solid #374151;
+}
+.h1{top:70px}.h2{bottom:70px}
+
+/* PRODUCTS */
+.page{display:none;padding:34px 5%}
+.page.show{display:block}
 .topTitle{font-size:38px;margin:10px 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:22px;margin-top:25px}
-.card{background:white;border-radius:10px;border:1px solid #ddd;padding:14px;transition:.2s;cursor:pointer}
+.card{background:white;border-radius:12px;border:1px solid #ddd;padding:14px;cursor:pointer;transition:.2s}
 .card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
-.card img{width:100%;height:190px;object-fit:cover;border-radius:8px;background:#eee}
+.card img{width:100%;height:190px;object-fit:cover;border-radius:9px;background:#e5e7eb}
+.placeholder{height:190px;border-radius:9px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
 .card h3{font-size:17px;margin:12px 0 6px}
 .desc{font-size:14px;min-height:58px;color:#555}
 .price{font-size:24px;font-weight:900;margin:10px 0}
-.tap{font-size:13px;font-weight:900;color:#0066c0}
+.tap{font-size:13px;font-weight:900;color:#2563eb}
 
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50}
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:80}
 .modal.show{display:flex}
 .modalBox{width:min(950px,94vw);background:white;border-radius:16px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.bigImg{width:100%;height:360px;object-fit:cover;border-radius:14px;background:#eee}
+.bigImg{width:100%;height:360px;object-fit:cover;border-radius:14px;background:#e5e7eb}
 .views{display:flex;gap:10px;margin-top:12px}
-.views img{width:75px;height:75px;object-fit:cover;border-radius:10px;border:1px solid #ddd}
+.views img,.viewPlaceholder{width:75px;height:75px;object-fit:cover;border-radius:10px;border:1px solid #ddd;background:#e5e7eb;display:grid;place-items:center;font-size:11px;text-align:center}
 .add{width:100%;padding:14px;background:#ffd814;border-radius:999px;margin-top:18px}
 .close{background:#111;color:white;border-radius:10px;padding:12px 18px;margin-top:12px}
+
+/* ADMIN */
+.adminBox{background:white;border-radius:16px;border:1px solid #ddd;padding:22px;margin-top:20px}
+.adminRow{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid #e5e7eb}
+.adminRow h3{margin:0 0 8px}
+.adminRow input{display:block;margin:8px 0}
+.small{font-size:13px;color:#555}
 
 @media(max-width:900px){
 .hero{grid-template-columns:1fr;text-align:center}
 h1{font-size:54px}
-.vault{width:345px;height:345px}
-.inside{inset:47px;padding:42px}
-.door{border-width:18px}
-.handle{width:132px;height:132px;top:106px;left:106px}
-.handle span{width:116px;top:46px}
-.modalBox{grid-template-columns:1fr}
+.vaultScene{height:390px}
+.wall{width:340px;height:360px}
+.vaultOpening{width:250px;height:290px}
+.vaultDoor{width:265px;height:305px}
+.lockWheel{width:105px;height:105px;top:96px;left:80px}
+.lockWheel span{width:90px;top:32px}
+.modalBox,.adminRow{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -76,34 +180,45 @@ h1{font-size:54px}
 
 <header>
   <div class="logo">Side Quests</div>
+  <nav>
+    <button onclick="showHome()">Home</button>
+    <button onclick="showProducts()">Products</button>
+    <button onclick="showAdmin()">Admin</button>
+  </nav>
   <div class="cart">Cart: <span id="cartCount">0</span></div>
 </header>
 
 <section class="hero" id="hero">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
-    <p>Trending-style products people already understand: kitchen tools, pet items, car accessories, organizers, cleaning gadgets, travel gear, and simple everyday problem solvers.</p>
+    <p>Trending-style products for kitchens, pets, cars, cleaning, storage, travel, and everyday problems.</p>
     <button class="openBtn" onclick="openVault()">Open Vault</button>
   </div>
 
-  <div class="vault-wrap">
-    <div class="vault" id="vault" onclick="openVault()">
-      <div class="inside" id="insidePreview"></div>
-      <div class="door">
-        <div class="ring"></div><div class="ring2"></div>
-        <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
-        <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
-        <div class="bolt b9"></div><div class="bolt b10"></div><div class="bolt b11"></div><div class="bolt b12"></div>
-        <div class="handle"><span></span><span></span><span></span></div>
-      </div>
+  <div class="vaultScene" id="vaultScene" onclick="openVault()">
+    <div class="wall"></div>
+    <div class="vaultOpening"></div>
+    <div class="vaultDoor">
+      <div class="hinge h1"></div><div class="hinge h2"></div>
+      <div class="doorPanel"></div>
+      <div class="safeBolt s1"></div><div class="safeBolt s2"></div><div class="safeBolt s3"></div><div class="safeBolt s4"></div>
+      <div class="safeBolt s5"></div><div class="safeBolt s6"></div><div class="safeBolt s7"></div><div class="safeBolt s8"></div>
+      <div class="safeBolt s9"></div><div class="safeBolt s10"></div>
+      <div class="lockWheel"><span></span><span></span><span></span></div>
     </div>
   </div>
 </section>
 
-<main class="products" id="productsPage">
+<main class="page" id="productsPage">
   <h2 class="topTitle">Side Quests Products</h2>
-  <p>Click any product to view images, details, and add it to cart.</p>
+  <p>Click a product to view details and add it to cart. Product images can be added in the Admin tab.</p>
   <div class="grid" id="grid"></div>
+</main>
+
+<main class="page" id="adminPage">
+  <h2 class="topTitle">Admin: Insert Images / Views</h2>
+  <p>Upload real product pictures from your device. They save in your browser so they stay after refresh on this device.</p>
+  <div class="adminBox" id="adminList"></div>
 </main>
 
 <div class="modal" id="modal">
@@ -124,109 +239,187 @@ h1{font-size:54px}
 
 <script>
 let cart = 0;
+let activeProduct = null;
 
 const products = [
-["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99,"https://source.unsplash.com/800x600/?vegetable,chopper,kitchen"],
-["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99,"https://source.unsplash.com/800x600/?bag,sealer,kitchen"],
-["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99,"https://source.unsplash.com/800x600/?silicone,cleaning,gloves"],
-["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99,"https://source.unsplash.com/800x600/?spice,rack,kitchen"],
-["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99,"https://source.unsplash.com/800x600/?oil,spray,bottle"],
-["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99,"https://source.unsplash.com/800x600/?produce,bags"],
-["Bamboo Cutting Board Set","Clean-looking cutting board set for everyday meal prep.",29.99,"https://source.unsplash.com/800x600/?bamboo,cutting,board"],
-["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99,"https://source.unsplash.com/800x600/?cold,brew,pitcher"],
-["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99,"https://source.unsplash.com/800x600/?glass,food,containers"],
-["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99,"https://source.unsplash.com/800x600/?silicone,ice,tray"],
-
-["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99,"https://source.unsplash.com/800x600/?pet,hair,roller"],
-["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99,"https://source.unsplash.com/800x600/?dog,water,bottle"],
-["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99,"https://source.unsplash.com/800x600/?cat,window,hammock"],
-["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99,"https://source.unsplash.com/800x600/?slow,feeder,dog,bowl"],
-["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99,"https://source.unsplash.com/800x600/?pet,grooming,glove"],
-
-["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99,"https://source.unsplash.com/800x600/?car,seat,organizer"],
-["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99,"https://source.unsplash.com/800x600/?car,trash,can"],
-["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99,"https://source.unsplash.com/800x600/?trunk,organizer"],
-["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99,"https://source.unsplash.com/800x600/?car,phone,mount"],
-["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99,"https://source.unsplash.com/800x600/?portable,tire,inflator"],
-
-["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99,"https://source.unsplash.com/800x600/?under,sink,organizer"],
-["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99,"https://source.unsplash.com/800x600/?shower,shelf"],
-["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99,"https://source.unsplash.com/800x600/?drawer,organizer"],
-["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99,"https://source.unsplash.com/800x600/?cable,management,box"],
-["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99,"https://source.unsplash.com/800x600/?laundry,bag"],
-
-["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99,"https://source.unsplash.com/800x600/?fabric,shaver"],
-["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99,"https://source.unsplash.com/800x600/?mini,vacuum,desk"],
-["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99,"https://source.unsplash.com/800x600/?drill,brush,cleaning"],
-["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99,"https://source.unsplash.com/800x600/?baseboard,cleaning"],
-["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99,"https://source.unsplash.com/800x600/?blind,cleaning,brush"],
-
-["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99,"https://source.unsplash.com/800x600/?led,closet,light"],
-["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99,"https://source.unsplash.com/800x600/?sunset,lamp"],
-["Digital Alarm Clock","Minimal bedside clock with large display.",17.99,"https://source.unsplash.com/800x600/?digital,alarm,clock"],
-["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99,"https://source.unsplash.com/800x600/?mini,humidifier"],
-["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99,"https://source.unsplash.com/800x600/?smart,plug"],
-
-["Resistance Bands","Portable exercise bands for home workouts.",14.99,"https://source.unsplash.com/800x600/?resistance,bands"],
-["Posture Corrector","Adjustable posture support for work and home.",19.99,"https://source.unsplash.com/800x600/?posture,corrector"],
-["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99,"https://source.unsplash.com/800x600/?massage,roller"],
-["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99,"https://source.unsplash.com/800x600/?neck,fan"],
-["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99,"https://source.unsplash.com/800x600/?water,bottle,sleeve"],
-
-["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99,"https://source.unsplash.com/800x600/?travel,toiletry,bag"],
-["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99,"https://source.unsplash.com/800x600/?packing,cubes"],
-["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99,"https://source.unsplash.com/800x600/?slim,wallet"],
-["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99,"https://source.unsplash.com/800x600/?luggage,cup,holder"],
-["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99,"https://source.unsplash.com/800x600/?cable,organizer,travel"],
-
-["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99,"https://source.unsplash.com/800x600/?mini,waffle,maker"],
-["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99,"https://source.unsplash.com/800x600/?milk,frother"],
-["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99,"https://source.unsplash.com/800x600/?digital,kitchen,scale"],
-["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99,"https://source.unsplash.com/800x600/?magnetic,screen,door"],
-["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99,"https://source.unsplash.com/800x600/?solar,outdoor,lights"]
+["Vegetable Chopper","Fast chop container for onions, peppers, fruit, and meal prep.",24.99],
+["Mini Bag Sealer","Portable heat sealer for snack bags, chips, and pantry storage.",9.99],
+["Silicone Scrub Gloves","Dishwashing gloves with scrub bristles built into the palms.",13.99],
+["Magnetic Spice Rack","Space-saving magnetic spice shelves for fridge or metal surfaces.",22.99],
+["Oil Spray Bottle","Refillable oil sprayer for air fryers, pans, and salads.",12.99],
+["Reusable Produce Bags","Washable mesh bags for groceries, produce, and storage.",11.99],
+["Bamboo Cutting Board Set","Clean-looking cutting board set for everyday meal prep.",29.99],
+["Cold Brew Maker","Simple pitcher for homemade cold brew coffee.",21.99],
+["Glass Food Containers","Stackable glass containers for leftovers and lunch prep.",27.99],
+["Silicone Ice Cube Tray","Easy-release ice cube tray for drinks, smoothies, and coolers.",10.99],
+["Pet Hair Remover Roller","Reusable roller that removes pet hair from couches and clothes.",16.99],
+["Dog Water Bottle","Portable dog water bottle for walks, hikes, and car rides.",18.99],
+["Cat Window Hammock","Window-mounted cat perch for sun lounging.",24.99],
+["Slow Feeder Bowl","Pet bowl designed to slow down fast eating.",14.99],
+["Pet Grooming Glove","Glove that removes loose fur while petting.",12.99],
+["Car Gap Organizer","Organizer that fills the seat gap and holds phone, wallet, and keys.",19.99],
+["Car Trash Can","Small leakproof car trash bin for road trips and daily driving.",15.99],
+["Trunk Organizer","Foldable trunk organizer for groceries, tools, and sports gear.",28.99],
+["Phone Mount","Dashboard phone holder for navigation and hands-free driving.",13.99],
+["Cordless Tire Inflator","Portable tire inflator for cars, bikes, and balls.",39.99],
+["Under Sink Organizer","Sliding shelf organizer for cleaning supplies.",25.99],
+["Shower Corner Shelf","No-drill shower storage shelf for shampoo and soap.",18.99],
+["Drawer Dividers","Adjustable dividers for kitchen, bathroom, and office drawers.",14.99],
+["Cable Management Box","Clean-looking box to hide power strips and cords.",21.99],
+["Laundry Backpack Bag","Tall laundry bag with backpack straps.",17.99],
+["Electric Lint Remover","Rechargeable fabric shaver for sweaters, couches, and blankets.",16.99],
+["Mini Desk Vacuum","Tiny vacuum for crumbs, keyboards, and desks.",12.99],
+["Drill Brush Scrubber","Brush attachments for power-drill cleaning.",14.99],
+["Baseboard Cleaner","Long-handled baseboard and wall edge cleaning tool.",18.99],
+["Blind Cleaner Brush","Multi-slat brush for cleaning window blinds.",8.99],
+["LED Closet Light","Rechargeable motion light for closets and cabinets.",18.99],
+["Sunset Lamp","Small projector lamp for room lighting and videos.",19.99],
+["Digital Alarm Clock","Minimal bedside clock with large display.",17.99],
+["Mini Humidifier","Compact humidifier for desk, bedroom, or travel.",21.99],
+["Smart Plug","Plug-in outlet timer for lamps and small appliances.",16.99],
+["Resistance Bands","Portable exercise bands for home workouts.",14.99],
+["Posture Corrector","Adjustable posture support for work and home.",19.99],
+["Massage Roller Ball","Handheld roller for feet, back, and sore muscles.",11.99],
+["Neck Fan","Wearable fan for outdoor work, sports, and travel.",24.99],
+["Water Bottle Sleeve","Insulated bottle holder with strap and storage pocket.",13.99],
+["Travel Toiletry Bag","Hanging travel organizer for bathroom items.",16.99],
+["Packing Cubes","Travel cubes for organized suitcases and bags.",18.99],
+["RFID Wallet","Slim wallet with RFID blocking and card storage.",14.99],
+["Luggage Cup Holder","Travel cup holder that straps onto suitcase handles.",11.99],
+["Travel Cable Organizer","Small pouch for chargers, cords, and earbuds.",12.99],
+["Mini Waffle Maker","Small waffle maker for quick breakfasts and snacks.",22.99],
+["Milk Frother","Handheld frother for coffee, matcha, and hot chocolate.",9.99],
+["Digital Kitchen Scale","Compact scale for baking and meal prep.",13.99],
+["Magnetic Screen Door","Hands-free mesh screen door for patios and back doors.",24.99],
+["Solar Outdoor Lights","Outdoor solar lights for paths, patios, and gardens.",26.99]
 ];
 
-const grid = document.getElementById("grid");
+let images = JSON.parse(localStorage.getItem("sideQuestImages") || "{}");
 
-products.forEach((p,i)=>{
-  grid.innerHTML += `
-    <div class="card" onclick="openProduct(${i})">
-      <img src="${p[3]}" alt="${p[0]}">
-      <h3>${p[0]}</h3>
-      <p class="desc">${p[1]}</p>
-      <div class="price">$${p[2]}</div>
-      <div class="tap">Click for details</div>
-    </div>
-  `;
-});
+function getMainImage(i){
+  return images[i] && images[i][0] ? images[i][0] : "";
+}
 
-const preview = document.getElementById("insidePreview");
-products.slice(0,6).forEach(p=>{
-  preview.innerHTML += `<img src="${p[3]}" alt="${p[0]}">`;
-});
+function imageHTML(i){
+  const src = getMainImage(i);
+  if(src) return `<img src="${src}" alt="${products[i][0]}">`;
+  return `<div class="placeholder">No image yet<br><span class="small">Add in Admin</span></div>`;
+}
+
+function renderProducts(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  products.forEach((p,i)=>{
+    grid.innerHTML += `
+      <div class="card" onclick="openProduct(${i})">
+        ${imageHTML(i)}
+        <h3>${p[0]}</h3>
+        <p class="desc">${p[1]}</p>
+        <div class="price">$${p[2]}</div>
+        <div class="tap">Click for details</div>
+      </div>
+    `;
+  });
+}
+
+function renderAdmin(){
+  const admin = document.getElementById("adminList");
+  admin.innerHTML = "";
+  products.forEach((p,i)=>{
+    admin.innerHTML += `
+      <div class="adminRow">
+        <div>
+          <h3>${i+1}. ${p[0]}</h3>
+          <p class="small">${p[1]}</p>
+          <input type="file" accept="image/*" multiple onchange="uploadImages(event,${i})">
+          <button onclick="clearImages(${i})">Clear Images</button>
+        </div>
+        <div class="views">
+          ${(images[i] || []).map(src=>`<img src="${src}">`).join("") || `<div class="viewPlaceholder">No images</div>`}
+        </div>
+      </div>
+    `;
+  });
+}
+
+function uploadImages(event,i){
+  const files = Array.from(event.target.files).slice(0,4);
+  if(!files.length) return;
+  images[i] = [];
+  let loaded = 0;
+
+  files.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = e=>{
+      images[i].push(e.target.result);
+      loaded++;
+      if(loaded === files.length){
+        localStorage.setItem("sideQuestImages", JSON.stringify(images));
+        renderProducts();
+        renderAdmin();
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function clearImages(i){
+  delete images[i];
+  localStorage.setItem("sideQuestImages", JSON.stringify(images));
+  renderProducts();
+  renderAdmin();
+}
 
 function openVault(){
-  document.getElementById("vault").classList.add("open");
-  setTimeout(()=>document.getElementById("hero").classList.add("fade"),700);
-  setTimeout(()=>{
-    document.getElementById("hero").style.display="none";
-    document.getElementById("productsPage").classList.add("show");
-    window.scrollTo(0,0);
-  },1450);
+  document.getElementById("vaultScene").classList.add("open");
+  setTimeout(()=>document.getElementById("hero").classList.add("fade"),850);
+  setTimeout(()=>showProducts(),1500);
+}
+
+function showHome(){
+  document.getElementById("hero").style.display = "grid";
+  document.getElementById("hero").classList.remove("fade");
+  document.getElementById("vaultScene").classList.remove("open");
+  document.getElementById("productsPage").classList.remove("show");
+  document.getElementById("adminPage").classList.remove("show");
+}
+
+function showProducts(){
+  document.getElementById("hero").style.display = "none";
+  document.getElementById("productsPage").classList.add("show");
+  document.getElementById("adminPage").classList.remove("show");
+  window.scrollTo(0,0);
+}
+
+function showAdmin(){
+  document.getElementById("hero").style.display = "none";
+  document.getElementById("productsPage").classList.remove("show");
+  document.getElementById("adminPage").classList.add("show");
+  renderAdmin();
+  window.scrollTo(0,0);
 }
 
 function openProduct(i){
+  activeProduct = i;
   const p = products[i];
+  const productImages = images[i] || [];
+  const main = productImages[0] || "";
+
   document.getElementById("modalTitle").innerText = p[0];
   document.getElementById("modalPrice").innerText = "$" + p[2];
-  document.getElementById("modalDesc").innerText = p[1] + " This is a practical, trending-style product selected for everyday usefulness and easy online selling.";
-  document.getElementById("modalImg").src = p[3];
-  document.getElementById("views").innerHTML = `
-    <img src="${p[3]}">
-    <img src="${p[3]}&sig=2">
-    <img src="${p[3]}&sig=3">
-    <img src="${p[3]}&sig=4">
-  `;
+  document.getElementById("modalDesc").innerText = p[1];
+
+  if(main){
+    document.getElementById("modalImg").src = main;
+  }else{
+    document.getElementById("modalImg").src = "";
+    document.getElementById("modalImg").alt = "No image uploaded yet";
+  }
+
+  document.getElementById("views").innerHTML = productImages.length
+    ? productImages.map(src=>`<img src="${src}" onclick="document.getElementById('modalImg').src='${src}'">`).join("")
+    : `<div class="viewPlaceholder">Add images in Admin</div>`;
+
   document.getElementById("modal").classList.add("show");
 }
 
@@ -239,6 +432,9 @@ function addCart(){
   document.getElementById("cartCount").innerText = cart;
   closeModal();
 }
+
+renderProducts();
+renderAdmin();
 </script>
 
 </body>
