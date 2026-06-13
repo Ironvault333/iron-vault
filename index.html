@@ -1,39 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Side Quests</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Side Quests</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f3f4f6;color:#111}
-header{height:70px;background:#111827;color:white;display:flex;justify-content:space-between;align-items:center;padding:0 6%;position:sticky;top:0}
-.logo{font-size:28px;font-weight:900}
-button{cursor:pointer;border:0;font-weight:900}
-nav button{background:transparent;color:white;margin-left:18px}
-.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:50px 6%;gap:40px;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
-h1{font-size:70px;line-height:.9;margin:0 0 20px}
-.openBtn{background:#f5c542;padding:16px 28px;border-radius:999px}
-.vault{height:430px;background:linear-gradient(135deg,#9ca3af,#374151);border-radius:35px;display:grid;place-items:center;box-shadow:inset 0 0 50px #111,0 30px 60px #999}
-.vaultDoor{width:300px;height:340px;background:linear-gradient(135deg,#e5e7eb,#64748b,#1f2937);border:16px solid #6b7280;border-radius:22px;display:grid;place-items:center;transition:1s}
-.vault.open .vaultDoor{transform:rotateY(-75deg)}
-.wheel{width:140px;height:140px;border-radius:50%;border:18px solid #d1d5db}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#111}
+header{height:72px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:50}
+.logo{font-size:30px;font-weight:900}
+nav button{background:transparent;color:white;border:0;font-weight:900;margin-left:18px;cursor:pointer}
+.cart{font-weight:900}
+button{border:0;cursor:pointer;font-weight:900}
 .page{display:none;padding:35px 5%}
-.show{display:block}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
-.card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px;cursor:pointer}
-.card img,.placeholder{width:100%;height:190px;border-radius:10px;object-fit:cover;background:#dbe1e8;display:grid;place-items:center;text-align:center;font-weight:900;color:#475569}
-.price{font-size:24px;font-weight:900;margin:10px 0}
-.detail{display:grid;grid-template-columns:1fr 1fr 300px;gap:25px}
+.page.show{display:block}
+
+/* HOME */
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;padding:55px 6%;background:linear-gradient(135deg,#f7efe3,#d6d9dd)}
+h1{font-size:72px;line-height:.9;margin:0 0 20px;letter-spacing:-3px}
+.hero p{font-size:20px;color:#444;line-height:1.5}
+.openBtn{background:#f5c542;color:#111;border-radius:999px;padding:16px 30px;font-size:16px}
+
+/* BANK SAFE */
+.safeScene{height:520px;display:flex;align-items:center;justify-content:center;perspective:1500px}
+.safeWall{width:520px;height:500px;background:linear-gradient(135deg,#b8bec6,#59616a);border-radius:34px;box-shadow:inset 0 0 60px rgba(0,0,0,.45),0 35px 70px rgba(0,0,0,.35);position:absolute}
+.safeOpening{width:350px;height:390px;background:#111827;border-radius:22px;position:absolute;box-shadow:inset 0 0 50px #000}
+.safeDoor{width:380px;height:420px;border-radius:26px;background:linear-gradient(135deg,#e5e7eb,#9ca3af 30%,#64748b 58%,#303741);border:16px solid #6b7280;position:absolute;box-shadow:inset 0 0 45px #111,0 25px 55px rgba(0,0,0,.45);transform-origin:left center;transition:1.25s ease}
+.safeScene.open .safeDoor{transform:rotateY(-105deg) translateX(-18px)}
+.panel{position:absolute;inset:35px;border:10px solid #aab2bb;border-radius:20px}
+.wheel{position:absolute;width:145px;height:145px;border-radius:50%;border:17px solid #d1d5db;top:137px;left:117px}
+.wheel span{position:absolute;width:128px;height:15px;background:linear-gradient(90deg,#374151,#fff,#374151);top:49px;left:-9px;border-radius:999px}
+.wheel span:nth-child(2){transform:rotate(60deg)}
+.wheel span:nth-child(3){transform:rotate(-60deg)}
+.wheel:after{content:"";position:absolute;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle,#fff,#555);top:29px;left:29px;border:5px solid #374151}
+.bolt{position:absolute;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#fff,#9ca3af,#374151);border:3px solid #374151}
+.b1{top:28px;left:40px}.b2{top:28px;right:40px}.b3{bottom:28px;left:40px}.b4{bottom:28px;right:40px}
+.b5{top:105px;left:24px}.b6{top:105px;right:24px}.b7{bottom:105px;left:24px}.b8{bottom:105px;right:24px}
+
+/* PRODUCTS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;margin-top:25px}
+.card{background:white;border:1px solid #ddd;border-radius:14px;padding:14px;cursor:pointer;transition:.2s}
+.card:hover{box-shadow:0 10px 28px rgba(0,0,0,.16);transform:translateY(-3px)}
+.card img,.placeholder{width:100%;height:190px;border-radius:10px;object-fit:cover;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:15px}
+.card h3{margin:12px 0 6px;font-size:18px}
+.desc{font-size:14px;color:#555;min-height:58px}
+.price{font-size:25px;font-weight:900;margin:10px 0}
+.tap{font-size:13px;color:#2563eb;font-weight:900}
+
+/* DETAIL PAGE */
+.detailWrap{display:grid;grid-template-columns:1.1fr 1fr 310px;gap:25px;align-items:start}
 .box{background:white;border:1px solid #ddd;border-radius:14px;padding:20px}
-.mainImg{width:100%;height:420px;object-fit:cover;border-radius:12px;background:#ddd}
-.thumbs{display:flex;gap:10px;margin-top:10px}
-.thumbs img{width:75px;height:75px;object-fit:cover;border-radius:8px;cursor:pointer}
-.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:15px}
+.mainImg{width:100%;height:420px;object-fit:cover;border-radius:12px;background:#e5e7eb}
+.mainPlaceholder{height:420px;border-radius:12px;background:linear-gradient(135deg,#e5e7eb,#cbd5e1);display:grid;place-items:center;text-align:center;font-weight:900;color:#475569;padding:20px}
+.thumbs{display:flex;gap:10px;margin-top:12px}
+.thumbs img,.thumbPlaceholder{width:75px;height:75px;border-radius:9px;object-fit:cover;background:#e5e7eb;border:1px solid #ddd;display:grid;place-items:center;font-size:12px;text-align:center;color:#475569}
+.likeBtn{background:#eef2ff;color:#1d4ed8;border-radius:999px;padding:10px 16px;margin:10px 0}
+.buyBox{position:sticky;top:92px}
+select{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0 14px}
+.add{width:100%;padding:15px;background:#ffd814;border-radius:999px;margin-top:10px}
 .buy{width:100%;padding:15px;background:#f5a623;border-radius:999px;margin-top:10px}
+.sectionGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:25px}
 .similarGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-.small{color:#555;font-size:14px}
-@media(max-width:900px){.hero,.detail{grid-template-columns:1fr}h1{font-size:52px}}
+.small{font-size:14px;color:#555}
+
+@media(max-width:1000px){
+.hero,.detailWrap{grid-template-columns:1fr}
+h1{font-size:52px}
+.buyBox{position:static}
+.safeScene{height:390px}
+.safeWall{width:340px;height:350px}
+.safeOpening{width:240px;height:280px}
+.safeDoor{width:260px;height:300px}
+.wheel{width:105px;height:105px;top:95px;left:77px}
+.wheel span{width:90px;top:33px}
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -42,22 +86,31 @@ h1{font-size:70px;line-height:.9;margin:0 0 20px}
     <button onclick="showHome()">Home</button>
     <button onclick="showProducts()">Products</button>
   </nav>
-  <div>Cart: <span id="cartCount">0</span></div>
+  <div class="cart">Cart: <span id="cartCount">0</span></div>
 </header>
 
-<section class="hero" id="home">
+<section class="hero" id="homePage">
   <div>
     <h1>Better. Faster. Stronger. Products.</h1>
     <p>Useful trending-style products for home, kitchen, pets, car, travel, and everyday upgrades.</p>
-    <button class="openBtn" onclick="openVault()">Open Vault</button>
+    <button class="openBtn" onclick="openSafe()">Open Vault</button>
   </div>
-  <div class="vault" id="vault" onclick="openVault()">
-    <div class="vaultDoor"><div class="wheel"></div></div>
+
+  <div class="safeScene" id="safeScene" onclick="openSafe()">
+    <div class="safeWall"></div>
+    <div class="safeOpening"></div>
+    <div class="safeDoor">
+      <div class="panel"></div>
+      <div class="bolt b1"></div><div class="bolt b2"></div><div class="bolt b3"></div><div class="bolt b4"></div>
+      <div class="bolt b5"></div><div class="bolt b6"></div><div class="bolt b7"></div><div class="bolt b8"></div>
+      <div class="wheel"><span></span><span></span><span></span></div>
+    </div>
   </div>
 </section>
 
 <main class="page" id="productsPage">
   <h2>Products</h2>
+  <p>Click a product to view the full product page.</p>
   <div class="grid" id="productGrid"></div>
 </main>
 
@@ -75,11 +128,14 @@ let cart = Number(localStorage.getItem("cartCount") || 0);
 document.getElementById("cartCount").innerText = cart;
 
 const starterProducts = [
- {name:"Vegetable Chopper", price:24.99, category:"Kitchen", sizes:"Small, Medium, Large", desc:"Fast chop container for onions, peppers, fruit, and meal prep.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Mini Bag Sealer", price:9.99, category:"Kitchen", sizes:"Standard", desc:"Portable heat sealer for snack bags, chips, and pantry storage.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Pet Hair Remover Roller", price:16.99, category:"Pets", sizes:"Standard", desc:"Reusable roller that removes pet hair from couches and clothes.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Car Gap Organizer", price:19.99, category:"Car", sizes:"Driver Side, Passenger Side", desc:"Organizer that fills the seat gap and holds phone, wallet, and keys.", shipping:"Estimated delivery: 5–10 business days."},
- {name:"Under Sink Organizer", price:25.99, category:"Home", sizes:"1-Tier, 2-Tier", desc:"Sliding shelf organizer for cleaning supplies.", shipping:"Estimated delivery: 5–10 business days."}
+{name:"Vegetable Chopper",price:24.99,category:"Kitchen",sizes:"Small, Medium, Large",desc:"Fast chop container for onions, peppers, fruit, and meal prep.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Mini Bag Sealer",price:9.99,category:"Kitchen",sizes:"Standard",desc:"Portable heat sealer for snack bags, chips, and pantry storage.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Pet Hair Remover Roller",price:16.99,category:"Pets",sizes:"Standard",desc:"Reusable roller that removes pet hair from couches and clothes.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Car Gap Organizer",price:19.99,category:"Car",sizes:"Driver Side, Passenger Side",desc:"Organizer that fills the seat gap and holds phone, wallet, and keys.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Under Sink Organizer",price:25.99,category:"Home",sizes:"1-Tier, 2-Tier",desc:"Sliding shelf organizer for cleaning supplies.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Dog Water Bottle",price:18.99,category:"Pets",sizes:"Small, Large",desc:"Portable dog water bottle for walks, hikes, and car rides.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Trunk Organizer",price:28.99,category:"Car",sizes:"Medium, Large",desc:"Foldable trunk organizer for groceries, tools, and sports gear.",shipping:"Estimated delivery: 5–10 business days."},
+{name:"Drawer Dividers",price:14.99,category:"Home",sizes:"4-Pack, 8-Pack",desc:"Adjustable dividers for kitchen, bathroom, and office drawers.",shipping:"Estimated delivery: 5–10 business days."}
 ];
 
 function getProducts(){
@@ -91,36 +147,48 @@ function getProducts(){
   return JSON.parse(saved);
 }
 
-function imgHTML(p){
-  if(p.images && p.images[0]) return `<img src="${p.images[0]}">`;
-  return `<div class="placeholder">Image coming soon</div>`;
+function imageHTML(p){
+  if(p.images && p.images[0]) return `<img src="${p.images[0]}" alt="${p.name}">`;
+  return `<div class="placeholder">${p.name}<br><span class="small">Image coming soon</span></div>`;
 }
 
 function showOnly(id){
-  document.getElementById("home").style.display="none";
+  document.getElementById("homePage").style.display = "none";
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
-  if(id==="home") document.getElementById("home").style.display="grid";
-  else document.getElementById(id).classList.add("show");
+
+  if(id === "homePage"){
+    document.getElementById("homePage").style.display = "grid";
+  } else {
+    document.getElementById(id).classList.add("show");
+  }
+
   window.scrollTo(0,0);
 }
 
-function showHome(){showOnly("home")}
-function showProducts(){renderProducts();showOnly("productsPage")}
+function showHome(){
+  document.getElementById("safeScene").classList.remove("open");
+  showOnly("homePage");
+}
 
-function openVault(){
-  document.getElementById("vault").classList.add("open");
-  setTimeout(showProducts,1000);
+function showProducts(){
+  renderProducts();
+  showOnly("productsPage");
+}
+
+function openSafe(){
+  document.getElementById("safeScene").classList.add("open");
+  setTimeout(showProducts, 1100);
 }
 
 function renderProducts(){
   const products = getProducts();
   document.getElementById("productGrid").innerHTML = products.map((p,i)=>`
     <div class="card" onclick="openProduct(${i})">
-      ${imgHTML(p)}
+      ${imageHTML(p)}
       <h3>${p.name}</h3>
-      <p class="small">${p.desc}</p>
+      <p class="desc">${p.desc}</p>
       <div class="price">$${Number(p.price).toFixed(2)}</div>
-      <b>View product details</b>
+      <div class="tap">View product details</div>
     </div>
   `).join("");
 }
@@ -132,43 +200,74 @@ function openProduct(i){
   const similar = products.filter((x,idx)=>idx!==i && x.category===p.category).slice(0,4);
 
   document.getElementById("detailPage").innerHTML = `
-    <button onclick="showProducts()">← Back to Products</button>
-    <br><br>
+    <button onclick="showProducts()" style="padding:10px 16px;border-radius:10px;margin-bottom:18px">← Back to Products</button>
 
-    <div class="detail">
+    <div class="detailWrap">
       <div class="box">
-        ${imgs[0] ? `<img class="mainImg" id="mainImg" src="${imgs[0]}">` : `<div class="mainImg placeholder">Image coming soon</div>`}
+        ${
+          imgs[0]
+          ? `<img class="mainImg" id="mainImg" src="${imgs[0]}" alt="${p.name}">`
+          : `<div class="mainPlaceholder">${p.name}<br><span class="small">Main product image coming soon</span></div>`
+        }
+
         <div class="thumbs">
-          ${imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'">`).join("")}
+          ${
+            imgs.length
+            ? imgs.map(src=>`<img src="${src}" onclick="document.getElementById('mainImg').src='${src}'">`).join("")
+            : `
+              <div class="thumbPlaceholder">Front</div>
+              <div class="thumbPlaceholder">Side</div>
+              <div class="thumbPlaceholder">In Use</div>
+              <div class="thumbPlaceholder">Box</div>
+            `
+          }
         </div>
       </div>
 
       <div class="box">
         <h2>${p.name}</h2>
         <p>${p.desc}</p>
-        <button onclick="likeProduct()">♡ Like</button>
+        <button class="likeBtn" onclick="alert('Liked!')">♡ Like</button>
 
-        <h3>Product Information</h3>
-        <p><b>Category:</b> ${p.category}</p>
-        <p><b>Available Options:</b> ${p.sizes}</p>
+        <div class="sectionGrid">
+          <div>
+            <h3>Product Information</h3>
+            <p><b>Category:</b> ${p.category}</p>
+            <p><b>Available Options:</b> ${p.sizes}</p>
+            <p>Designed for simple everyday use.</p>
+          </div>
 
-        <h3>Shipping Details</h3>
-        <p>${p.shipping}</p>
+          <div>
+            <h3>Shipping Details</h3>
+            <p>${p.shipping}</p>
+            <p class="small">Shipping settings can be edited later in Admin.</p>
+          </div>
 
-        <h3>Reviews</h3>
-        <p>No reviews yet. Be the first to review this product.</p>
+          <div>
+            <h3>Reviews</h3>
+            <p>No reviews yet.</p>
+            <p class="small">Be the first to review this product.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="box">
+      <div class="box buyBox">
         <div class="price">$${Number(p.price).toFixed(2)}</div>
+        <p><b>In stock</b></p>
+
         <label><b>Option</b></label>
-        <select style="width:100%;padding:12px;margin:10px 0">
+        <select>
           ${p.sizes.split(",").map(s=>`<option>${s.trim()}</option>`).join("")}
         </select>
+
         <label><b>Quantity</b></label>
-        <select style="width:100%;padding:12px;margin:10px 0">
-          <option>1</option><option>2</option><option>3</option>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
         </select>
+
         <button class="add" onclick="addCart()">Add to Cart</button>
         <button class="buy" onclick="addCart();showCart()">Buy Now</button>
       </div>
@@ -177,16 +276,21 @@ function openProduct(i){
     <div class="box" style="margin-top:25px">
       <h3>Similar Items</h3>
       <div class="similarGrid">
-        ${similar.map(s=>`
-          <div class="card">
-            ${imgHTML(s)}
-            <h4>${s.name}</h4>
-            <b>$${Number(s.price).toFixed(2)}</b>
-          </div>
-        `).join("") || "<p>No similar items yet.</p>"}
+        ${
+          similar.length
+          ? similar.map(s=>`
+            <div class="card">
+              ${imageHTML(s)}
+              <h4>${s.name}</h4>
+              <b>$${Number(s.price).toFixed(2)}</b>
+            </div>
+          `).join("")
+          : `<p>No similar items yet.</p>`
+        }
       </div>
     </div>
   `;
+
   showOnly("detailPage");
 }
 
@@ -199,10 +303,6 @@ function addCart(){
 function showCart(){
   document.getElementById("cartText").innerText = `You have ${cart} item(s) in your cart.`;
   showOnly("cartPage");
-}
-
-function likeProduct(){
-  alert("Liked!");
 }
 
 renderProducts();
