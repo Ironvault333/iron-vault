@@ -2,38 +2,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ripple</title>
+<title>Moonwave</title>
 
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#eaf7fb;color:#111}
-header{height:58px;background:#06151f;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 8%;box-sizing:border-box;position:sticky;top:0;z-index:50}
+body{margin:0;font-family:Arial,sans-serif;background:#07111f;color:#111}
+header{height:58px;background:#050914;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 8%;box-sizing:border-box;position:sticky;top:0;z-index:50}
 .logo{font-size:25px;font-weight:900}
 nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 nav a,nav button{color:white;background:none;border:0;font-weight:800;cursor:pointer;text-decoration:none}
 select,input{padding:9px 12px;border-radius:10px;border:1px solid #ccc;font-size:14px}
 .searchBox{width:220px}
 
-.hero{min-height:calc(100vh - 58px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;box-sizing:border-box;background:radial-gradient(circle at right,#bff4ff,#eaf7fb 45%,#f8fbff)}
-h1{font-size:58px;line-height:.9;margin:0 0 18px}
-p{color:#35505c;font-size:16px;line-height:1.5}
-.yellowBtn{background:#00c2ff;color:white;border:0;border-radius:999px;padding:14px 28px;font-weight:900;cursor:pointer;box-shadow:0 10px 25px rgba(0,194,255,.28)}
+.hero{min-height:calc(100vh - 58px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 8%;box-sizing:border-box;background:radial-gradient(circle at right,#24436f,#07111f 55%,#02050b)}
+h1{font-size:58px;line-height:.9;margin:0 0 18px;color:white}
+p{color:#c8d8e8;font-size:16px;line-height:1.5}
+.yellowBtn{background:#9bdcff;color:#07111f;border:0;border-radius:999px;padding:14px 28px;font-weight:900;cursor:pointer;box-shadow:0 10px 25px rgba(155,220,255,.25)}
 .yellowBtn:hover{opacity:.85}
 
-.rippleWrap{display:flex;justify-content:center;align-items:center}
-.rippleButton{width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,#ffffff 0%,#8eeaff 35%,#00a7d8 70%,#046b8d 100%);position:relative;display:grid;place-items:center;cursor:pointer;box-shadow:0 25px 70px rgba(0,130,180,.35);overflow:hidden}
-.rippleButton:before,.rippleButton:after{content:"";position:absolute;border:3px solid rgba(255,255,255,.75);border-radius:50%;width:120px;height:120px;animation:ripplePulse 2.2s infinite}
-.rippleButton:after{animation-delay:.8s}
-.rippleCenter{width:105px;height:105px;border-radius:50%;background:white;display:grid;place-items:center;font-weight:900;font-size:20px;color:#04789d;z-index:3;box-shadow:0 8px 30px rgba(0,0,0,.18)}
-.rippleButton.open{animation:openRipple .9s ease forwards}
-
-@keyframes ripplePulse{
-  0%{transform:scale(.6);opacity:.95}
-  100%{transform:scale(2.8);opacity:0}
-}
-@keyframes openRipple{
-  0%{transform:scale(1)}
-  60%{transform:scale(1.12)}
-  100%{transform:scale(18);opacity:0}
+.moonWrap{display:flex;justify-content:center;align-items:center;position:relative}
+.moonButton{width:340px;height:340px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e9edf2 42%,#bbc7d6 75%,#8090a5 100%);position:relative;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 55px rgba(220,240,255,.55),0 25px 70px rgba(0,0,0,.45);overflow:hidden}
+.moonButton:before{content:"";position:absolute;width:72px;height:72px;border-radius:50%;background:rgba(120,135,155,.25);top:75px;left:90px;box-shadow:95px 45px 0 rgba(120,135,155,.18),40px 135px 0 rgba(120,135,155,.16),150px 150px 0 rgba(120,135,155,.14)}
+.moonCenter{z-index:3;font-size:24px;font-weight:900;color:#17263d;text-shadow:0 1px 0 white}
+.wave{position:fixed;left:0;bottom:-120%;width:100%;height:120%;background:linear-gradient(180deg,#9bdcff,#1478a8,#07111f);z-index:999;transform:skewY(-7deg);display:none}
+.wave.open{display:block;animation:waveOver 1s ease forwards}
+@keyframes waveOver{
+  0%{bottom:-120%}
+  100%{bottom:120%}
 }
 
 .productsPage{display:none;padding:45px 8%;background:#f7efe6;min-height:100vh}
@@ -63,7 +57,7 @@ nav,nav select{width:100%}
 <body>
 
 <header>
-  <div class="logo">Ripple</div>
+  <div class="logo">Moonwave</div>
   <nav>
     <a href="#" onclick="goHome()">Home</a>
     <button onclick="openProducts()">Products</button>
@@ -77,15 +71,17 @@ nav,nav select{width:100%}
   <div>
     <h1>Better. Faster.<br>Stronger. Products.</h1>
     <p>Useful, clever, almost-need-to-have products for home, kitchen, pets, car, travel, cleaning, and everyday upgrades.</p>
-    <button class="yellowBtn" onclick="animateRipple()">Explore Ripple</button>
+    <button class="yellowBtn" onclick="animateMoonwave()">Explore Moonwave</button>
   </div>
 
-  <div class="rippleWrap">
-    <div class="rippleButton" id="rippleButton" onclick="animateRipple()">
-      <div class="rippleCenter">Ripple</div>
+  <div class="moonWrap">
+    <div class="moonButton" id="moonButton" onclick="animateMoonwave()">
+      <div class="moonCenter">Moonwave</div>
     </div>
   </div>
 </section>
+
+<div class="wave" id="wave"></div>
 
 <section class="productsPage" id="productsPage">
   <div class="productsTop">
@@ -186,14 +182,17 @@ function searchNow(){
   renderProducts();
 }
 
-function animateRipple(){
-  document.getElementById("rippleButton").classList.add("open");
-  setTimeout(openProducts,900);
+function animateMoonwave(){
+  let wave=document.getElementById("wave");
+  wave.classList.remove("open");
+  void wave.offsetWidth;
+  wave.classList.add("open");
+  setTimeout(openProducts,650);
 }
 
 function goHome(){
   window.history.pushState(null,"","index.html");
-  document.getElementById("rippleButton").classList.remove("open");
+  document.getElementById("wave").classList.remove("open");
   showHomePage();
 }
 
