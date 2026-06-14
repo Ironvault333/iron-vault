@@ -2,91 +2,113 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Iron Vault</title>
+<title>Moonwave</title>
 <style>
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#faf7f0;
+  background:#07111f;
+  color:white;
+  overflow-x:hidden;
+}
+#landing{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top,#1d3557,#07111f 70%);
+}
+.logo{
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:35px;
+}
+.moon{
+  width:230px;
+  height:230px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#d8d8d8 55%,#aaa);
+  box-shadow:0 0 80px rgba(255,255,255,.7);
+  cursor:pointer;
+  transition:.25s;
+}
+.moon:hover{
+  transform:scale(1.06);
+}
+.clickText{
+  margin-top:30px;
+  color:#cfe8ff;
+  font-size:18px;
+}
+.wave{
+  position:fixed;
+  left:0;
+  bottom:-120%;
+  width:100%;
+  height:120%;
+  background:linear-gradient(180deg,#3ddcff,#0b70ff,#053b7a);
+  z-index:99;
+  border-radius:50% 50% 0 0;
+  transition:bottom 1.2s ease-in-out;
+}
+.wave.active{
+  bottom:0;
+}
+#shopPage{
+  display:none;
+  background:#f5f7fb;
   color:#111;
+  min-height:100vh;
 }
 header{
   padding:22px 8%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#faf7f0;
+  background:#07111f;
+  color:white;
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:20;
 }
-.logo{
-  font-weight:900;
-  font-size:26px;
-}
-.nav{
+nav{
   display:flex;
   gap:12px;
   align-items:center;
 }
-select,button{
-  background:#111;
-  color:white;
+button,select{
   border:0;
   border-radius:12px;
   padding:13px 18px;
   font-weight:900;
   cursor:pointer;
 }
-.hero{
-  min-height:70vh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  padding:0 8%;
-  gap:40px;
-}
-h1{
-  font-size:72px;
-  line-height:.9;
-  margin:0 0 20px;
-}
-p{
-  font-size:18px;
-  color:#555;
-}
-.vaultBox{
-  display:grid;
-  place-items:center;
-}
-.vault{
-  width:330px;
-  height:330px;
-  border-radius:50%;
-  background:radial-gradient(circle,#555,#111 60%,#000);
-  box-shadow:0 30px 70px rgba(0,0,0,.35);
-  display:grid;
-  place-items:center;
-  border:18px solid #222;
-}
-.vaultInner{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  background:radial-gradient(circle,#888,#222);
-  border:10px solid #111;
-  display:grid;
-  place-items:center;
+button{
+  background:#0b70ff;
   color:white;
-  font-weight:900;
-  font-size:28px;
+}
+select{
+  background:white;
+  color:#111;
+}
+.hero{
+  padding:55px 8%;
+  background:linear-gradient(135deg,#07111f,#123a66);
+  color:white;
+}
+.hero h1{
+  font-size:58px;
+  margin:0 0 12px;
+}
+.hero p{
+  max-width:650px;
+  color:#d9ecff;
+  font-size:18px;
 }
 .section{
-  padding:50px 8%;
-}
-.section h2{
-  font-size:42px;
-  margin:0 0 25px;
+  padding:40px 8%;
 }
 .products{
   display:grid;
@@ -100,14 +122,12 @@ p{
   box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 .card h3{
-  margin:0 0 10px;
-  font-size:20px;
+  margin:10px 0;
 }
 .category{
   font-size:13px;
-  color:#777;
+  color:#0b70ff;
   font-weight:900;
-  text-transform:uppercase;
 }
 .price{
   font-size:24px;
@@ -121,8 +141,9 @@ p{
   width:330px;
   height:100%;
   background:white;
-  box-shadow:-10px 0 30px rgba(0,0,0,.2);
-  z-index:50;
+  color:#111;
+  box-shadow:-10px 0 30px rgba(0,0,0,.25);
+  z-index:80;
   padding:25px;
   transition:.3s;
   overflow:auto;
@@ -134,202 +155,206 @@ p{
   border-bottom:1px solid #ddd;
   padding:12px 0;
 }
-.closeCart{
-  background:#ddd;
-  color:#111;
-  margin-bottom:15px;
-}
 footer{
-  padding:40px 8%;
+  padding:35px 8%;
   text-align:center;
-  color:#777;
-}
-@media(max-width:800px){
-  .hero{
-    grid-template-columns:1fr;
-    padding-top:40px;
-  }
-  h1{
-    font-size:52px;
-  }
-  .vault{
-    width:240px;
-    height:240px;
-  }
+  background:#07111f;
+  color:white;
 }
 </style>
 </head>
 
 <body>
 
+<section id="landing">
+  <div class="logo">MOONWAVE</div>
+  <div class="moon" onclick="enterShop()"></div>
+  <div class="clickText">Click the moon to enter</div>
+</section>
+
+<div class="wave" id="wave"></div>
+
+<div id="shopPage">
 <header>
-  <div class="logo">Iron Vault</div>
-  <div class="nav">
-    <button onclick="showHome()">Home</button>
+  <div class="logo">MOONWAVE</div>
+  <nav>
+    <button onclick="goHome()">Home</button>
     <select id="categorySelect" onchange="filterCategory()">
       <option value="All">All Categories</option>
     </select>
     <button onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
-  </div>
+  </nav>
 </header>
 
-<section class="hero" id="home">
-  <div>
-    <h1>Unlock Better Finds</h1>
-    <p>Shop useful, fun, and hard-to-ignore products picked for everyday life, sports, camping, water days, parks, games, pets, cars, tech, and home.</p>
-    <button onclick="scrollToProducts()">Shop Products</button>
-  </div>
-  <div class="vaultBox">
-    <div class="vault">
-      <div class="vaultInner">VAULT</div>
-    </div>
-  </div>
+<section class="hero">
+  <h1>Products That Hit Different</h1>
+  <p>Trendy, useful, fun products for sports, games, camping, water days, parks, pets, auto, home, and tech.</p>
 </section>
 
-<section class="section" id="shop">
-  <h2>Products</h2>
+<section class="section">
   <div class="products" id="products"></div>
 </section>
 
+<footer>© 2026 Moonwave</footer>
+</div>
+
 <div class="cartPanel" id="cartPanel">
-  <button class="closeCart" onclick="toggleCart()">Close</button>
+  <button onclick="toggleCart()">Close</button>
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
   <h3>Total: $<span id="cartTotal">0</span></h3>
 </div>
 
-<footer>
-  © 2026 Iron Vault
-</footer>
-
 <script>
 const products = [
-  {name:"Portable Pickleball Net Set",category:"Sports",price:89},
-  {name:"Glow Pickleball Paddle Set",category:"Sports",price:49},
-  {name:"Basketball Return Trainer",category:"Sports",price:39},
-  {name:"Mini Basketball Arcade Game",category:"Sports",price:119},
-  {name:"LED Basketball Hoop Light",category:"Sports",price:34},
-  {name:"Over Door Basketball Hoop",category:"Sports",price:29},
-  {name:"Soccer Rebound Net",category:"Sports",price:69},
-  {name:"Baseball Swing Trainer",category:"Sports",price:44},
-  {name:"Golf Chipping Practice Net",category:"Sports",price:39},
-  {name:"Putting Mat Trainer",category:"Sports",price:54},
-  {name:"Spikeball Style Roundnet Set",category:"Sports",price:59},
-  {name:"Backyard Volleyball Set",category:"Sports",price:79},
-  {name:"Portable Badminton Set",category:"Sports",price:49},
-  {name:"Football Target Toss Game",category:"Sports",price:44},
-  {name:"Agility Ladder Training Kit",category:"Sports",price:24},
+{name:"Portable Pickleball Net Set",category:"Sports",price:89},
+{name:"Glow Pickleball Paddle Set",category:"Sports",price:49},
+{name:"Basketball Return Trainer",category:"Sports",price:39},
+{name:"Mini Basketball Arcade Game",category:"Sports",price:119},
+{name:"LED Basketball Hoop Light",category:"Sports",price:34},
+{name:"Over Door Basketball Hoop",category:"Sports",price:29},
+{name:"Soccer Rebound Net",category:"Sports",price:69},
+{name:"Baseball Swing Trainer",category:"Sports",price:44},
+{name:"Golf Chipping Practice Net",category:"Sports",price:39},
+{name:"Putting Mat Trainer",category:"Sports",price:54},
+{name:"Spikeball Style Roundnet Set",category:"Sports",price:59},
+{name:"Backyard Volleyball Set",category:"Sports",price:79},
+{name:"Portable Badminton Set",category:"Sports",price:49},
+{name:"Football Target Toss Game",category:"Sports",price:44},
+{name:"Agility Ladder Training Kit",category:"Sports",price:24},
 
-  {name:"Magnetic Chess Set",category:"Games",price:24},
-  {name:"Wooden Strategy Board Game",category:"Games",price:34},
-  {name:"Family Card Game Bundle",category:"Games",price:19},
-  {name:"Fast Sling Puck Game",category:"Games",price:29},
-  {name:"Tabletop Curling Game",category:"Games",price:24},
-  {name:"Ring Toss Yard Game",category:"Games",price:34},
-  {name:"Giant Wooden Yard Dice",category:"Games",price:29},
-  {name:"Cornhole Toss Set",category:"Games",price:89},
-  {name:"Giant Connect Four Game",category:"Games",price:99},
-  {name:"Giant Jenga Blocks",category:"Games",price:69},
-  {name:"Hook and Ring Game",category:"Games",price:19},
-  {name:"Tabletop Basketball Game",category:"Games",price:34},
-  {name:"Mini Air Hockey Table",category:"Games",price:69},
-  {name:"Trivia Card Game",category:"Games",price:17},
-  {name:"Outdoor Scavenger Hunt Game",category:"Games",price:22},
+{name:"Magnetic Chess Set",category:"Games",price:24},
+{name:"Wooden Strategy Board Game",category:"Games",price:34},
+{name:"Family Card Game Bundle",category:"Games",price:19},
+{name:"Fast Sling Puck Game",category:"Games",price:29},
+{name:"Tabletop Curling Game",category:"Games",price:24},
+{name:"Ring Toss Yard Game",category:"Games",price:34},
+{name:"Giant Wooden Yard Dice",category:"Games",price:29},
+{name:"Cornhole Toss Set",category:"Games",price:89},
+{name:"Giant Connect Four Game",category:"Games",price:99},
+{name:"Giant Jenga Blocks",category:"Games",price:69},
+{name:"Hook and Ring Game",category:"Games",price:19},
+{name:"Tabletop Basketball Game",category:"Games",price:34},
+{name:"Mini Air Hockey Table",category:"Games",price:69},
+{name:"Trivia Card Game",category:"Games",price:17},
+{name:"Outdoor Scavenger Hunt Game",category:"Games",price:22},
 
-  {name:"Waterproof Dry Bag Backpack",category:"Water",price:39},
-  {name:"Floating Waterproof Phone Pouch",category:"Water",price:14},
-  {name:"Inflatable Pool Lounger",category:"Water",price:34},
-  {name:"Mesh Pool Float Chair",category:"Water",price:29},
-  {name:"Rechargeable Pool Light Ball",category:"Water",price:24},
-  {name:"Waterproof Bluetooth Speaker",category:"Water",price:39},
-  {name:"Kids Splash Pad",category:"Water",price:49},
-  {name:"Backyard Water Slide Mat",category:"Water",price:59},
-  {name:"Inflatable Water Hammock",category:"Water",price:24},
-  {name:"Pool Basketball Hoop",category:"Water",price:44},
-  {name:"Pool Volleyball Set",category:"Water",price:49},
-  {name:"Floating Drink Holder Tray",category:"Water",price:19},
-  {name:"Water Balloon Filling Station",category:"Water",price:29},
-  {name:"Reusable Water Balloons",category:"Water",price:19},
-  {name:"Inflatable Paddle Board Seat",category:"Water",price:49},
+{name:"Waterproof Dry Bag Backpack",category:"Water",price:39},
+{name:"Floating Waterproof Phone Pouch",category:"Water",price:14},
+{name:"Inflatable Pool Lounger",category:"Water",price:34},
+{name:"Mesh Pool Float Chair",category:"Water",price:29},
+{name:"Rechargeable Pool Light Ball",category:"Water",price:24},
+{name:"Waterproof Bluetooth Speaker",category:"Water",price:39},
+{name:"Kids Splash Pad",category:"Water",price:49},
+{name:"Backyard Water Slide Mat",category:"Water",price:59},
+{name:"Inflatable Water Hammock",category:"Water",price:24},
+{name:"Pool Basketball Hoop",category:"Water",price:44},
+{name:"Pool Volleyball Set",category:"Water",price:49},
+{name:"Floating Drink Holder Tray",category:"Water",price:19},
+{name:"Water Balloon Filling Station",category:"Water",price:29},
+{name:"Reusable Water Balloons",category:"Water",price:19},
+{name:"Inflatable Paddle Board Seat",category:"Water",price:49},
 
-  {name:"Pop Up Camping Tent",category:"Camping",price:89},
-  {name:"Compact Camping Chair",category:"Camping",price:39},
-  {name:"Folding Camping Table",category:"Camping",price:49},
-  {name:"Rechargeable Camping Lantern",category:"Camping",price:29},
-  {name:"Solar Camping String Lights",category:"Camping",price:24},
-  {name:"Portable Camping Fan",category:"Camping",price:34},
-  {name:"Inflatable Sleeping Pad",category:"Camping",price:44},
-  {name:"Ultralight Sleeping Bag",category:"Camping",price:59},
-  {name:"Camping Cookware Set",category:"Camping",price:39},
-  {name:"Portable Fire Pit",category:"Camping",price:79},
-  {name:"Collapsible Water Container",category:"Camping",price:19},
-  {name:"Camping Utensil Kit",category:"Camping",price:17},
-  {name:"Hanging Camping Organizer",category:"Camping",price:24},
-  {name:"Emergency Survival Kit",category:"Camping",price:34},
-  {name:"Camping Hammock",category:"Camping",price:29},
+{name:"Pop Up Camping Tent",category:"Camping",price:89},
+{name:"Compact Camping Chair",category:"Camping",price:39},
+{name:"Folding Camping Table",category:"Camping",price:49},
+{name:"Rechargeable Camping Lantern",category:"Camping",price:29},
+{name:"Solar Camping String Lights",category:"Camping",price:24},
+{name:"Portable Camping Fan",category:"Camping",price:34},
+{name:"Inflatable Sleeping Pad",category:"Camping",price:44},
+{name:"Ultralight Sleeping Bag",category:"Camping",price:59},
+{name:"Camping Cookware Set",category:"Camping",price:39},
+{name:"Portable Fire Pit",category:"Camping",price:79},
+{name:"Collapsible Water Container",category:"Camping",price:19},
+{name:"Camping Utensil Kit",category:"Camping",price:17},
+{name:"Hanging Camping Organizer",category:"Camping",price:24},
+{name:"Emergency Survival Kit",category:"Camping",price:34},
+{name:"Camping Hammock",category:"Camping",price:29},
 
-  {name:"Insulated Picnic Backpack",category:"Park",price:49},
-  {name:"Foldable Picnic Blanket",category:"Park",price:29},
-  {name:"Portable Canopy Shade",category:"Park",price:89},
-  {name:"Outdoor Beach Wagon",category:"Park",price:99},
-  {name:"Clip On Chair Umbrella",category:"Park",price:24},
-  {name:"Portable Mist Fan",category:"Park",price:34},
-  {name:"Outdoor Blanket Stakes",category:"Park",price:12},
-  {name:"Collapsible Cooler Bag",category:"Park",price:29},
-  {name:"Portable Trash Bag Holder",category:"Park",price:19},
-  {name:"Kids Outdoor Explorer Kit",category:"Park",price:24},
-  {name:"Bubble Machine",category:"Park",price:29},
-  {name:"Kite Flying Set",category:"Park",price:19},
-  {name:"Frisbee Golf Starter Set",category:"Park",price:39},
-  {name:"Outdoor Lawn Bowling Set",category:"Park",price:34},
-  {name:"Portable Picnic Table",category:"Park",price:69},
+{name:"Insulated Picnic Backpack",category:"Park",price:49},
+{name:"Foldable Picnic Blanket",category:"Park",price:29},
+{name:"Portable Canopy Shade",category:"Park",price:89},
+{name:"Outdoor Beach Wagon",category:"Park",price:99},
+{name:"Clip On Chair Umbrella",category:"Park",price:24},
+{name:"Portable Mist Fan",category:"Park",price:34},
+{name:"Outdoor Blanket Stakes",category:"Park",price:12},
+{name:"Collapsible Cooler Bag",category:"Park",price:29},
+{name:"Portable Trash Bag Holder",category:"Park",price:19},
+{name:"Kids Outdoor Explorer Kit",category:"Park",price:24},
+{name:"Bubble Machine",category:"Park",price:29},
+{name:"Kite Flying Set",category:"Park",price:19},
+{name:"Frisbee Golf Starter Set",category:"Park",price:39},
+{name:"Outdoor Lawn Bowling Set",category:"Park",price:34},
+{name:"Portable Picnic Table",category:"Park",price:69},
 
-  {name:"LED Dog Collar",category:"Pets",price:19},
-  {name:"Portable Dog Water Bottle",category:"Pets",price:17},
-  {name:"Collapsible Dog Bowl Set",category:"Pets",price:14},
-  {name:"Dog Car Seat Cover",category:"Pets",price:39},
-  {name:"Pet Cooling Mat",category:"Pets",price:29},
-  {name:"Dog Treat Puzzle Toy",category:"Pets",price:24},
-  {name:"Hands Free Dog Leash",category:"Pets",price:24},
-  {name:"Pet Hair Remover Roller",category:"Pets",price:16},
-  {name:"Portable Pet Playpen",category:"Pets",price:49},
-  {name:"Dog Travel Bag",category:"Pets",price:44},
+{name:"LED Dog Collar",category:"Pets",price:19},
+{name:"Portable Dog Water Bottle",category:"Pets",price:17},
+{name:"Collapsible Dog Bowl Set",category:"Pets",price:14},
+{name:"Dog Car Seat Cover",category:"Pets",price:39},
+{name:"Pet Cooling Mat",category:"Pets",price:29},
+{name:"Dog Treat Puzzle Toy",category:"Pets",price:24},
+{name:"Hands Free Dog Leash",category:"Pets",price:24},
+{name:"Pet Hair Remover Roller",category:"Pets",price:16},
+{name:"Portable Pet Playpen",category:"Pets",price:49},
+{name:"Dog Travel Bag",category:"Pets",price:44},
 
-  {name:"Car Seat Gap Organizer",category:"Auto",price:24},
-  {name:"Magnetic Phone Car Mount",category:"Auto",price:17},
-  {name:"Portable Tire Inflator",category:"Auto",price:49},
-  {name:"Car Trunk Organizer",category:"Auto",price:34},
-  {name:"Windshield Sun Shade",category:"Auto",price:19},
-  {name:"Car Cleaning Gel Kit",category:"Auto",price:12},
-  {name:"Rechargeable Car Vacuum",category:"Auto",price:39},
-  {name:"Backseat Tablet Holder",category:"Auto",price:24},
-  {name:"Emergency Car Safety Kit",category:"Auto",price:34},
-  {name:"Cup Holder Expander",category:"Auto",price:19},
+{name:"Car Seat Gap Organizer",category:"Auto",price:24},
+{name:"Magnetic Phone Car Mount",category:"Auto",price:17},
+{name:"Portable Tire Inflator",category:"Auto",price:49},
+{name:"Car Trunk Organizer",category:"Auto",price:34},
+{name:"Windshield Sun Shade",category:"Auto",price:19},
+{name:"Car Cleaning Gel Kit",category:"Auto",price:12},
+{name:"Rechargeable Car Vacuum",category:"Auto",price:39},
+{name:"Backseat Tablet Holder",category:"Auto",price:24},
+{name:"Emergency Car Safety Kit",category:"Auto",price:34},
+{name:"Cup Holder Expander",category:"Auto",price:19},
 
-  {name:"Under Desk Foot Hammock",category:"Home",price:19},
-  {name:"Magnetic Cable Organizer",category:"Home",price:12},
-  {name:"Foldable Laptop Stand",category:"Home",price:29},
-  {name:"Motion Sensor Night Light",category:"Home",price:18},
-  {name:"Mini Desktop Vacuum",category:"Home",price:16},
-  {name:"Cord Management Box",category:"Home",price:24},
-  {name:"Reusable Cleaning Slippers",category:"Home",price:17},
-  {name:"Adjustable Phone Stand",category:"Home",price:14},
-  {name:"Silicone Food Storage Lids",category:"Home",price:15},
-  {name:"Wall Mounted Storage Hooks",category:"Home",price:19},
+{name:"Under Desk Foot Hammock",category:"Home",price:19},
+{name:"Magnetic Cable Organizer",category:"Home",price:12},
+{name:"Foldable Laptop Stand",category:"Home",price:29},
+{name:"Motion Sensor Night Light",category:"Home",price:18},
+{name:"Mini Desktop Vacuum",category:"Home",price:16},
+{name:"Cord Management Box",category:"Home",price:24},
+{name:"Reusable Cleaning Slippers",category:"Home",price:17},
+{name:"Adjustable Phone Stand",category:"Home",price:14},
+{name:"Silicone Food Storage Lids",category:"Home",price:15},
+{name:"Wall Mounted Storage Hooks",category:"Home",price:19},
 
-  {name:"Mini Projector",category:"Tech",price:89},
-  {name:"Bluetooth Sleep Headphones",category:"Tech",price:29},
-  {name:"Portable Power Bank",category:"Tech",price:34},
-  {name:"Wireless Charging Station",category:"Tech",price:39},
-  {name:"LED Desk Light Bar",category:"Tech",price:44},
-  {name:"Phone Camera Lens Kit",category:"Tech",price:24},
-  {name:"Rechargeable Hand Warmer",category:"Tech",price:29},
-  {name:"USB Mini Fan",category:"Tech",price:14},
-  {name:"Smart LED Light Strip",category:"Tech",price:24},
-  {name:"Bluetooth Item Tracker",category:"Tech",price:19}
+{name:"Mini Projector",category:"Tech",price:89},
+{name:"Bluetooth Sleep Headphones",category:"Tech",price:29},
+{name:"Portable Power Bank",category:"Tech",price:34},
+{name:"Wireless Charging Station",category:"Tech",price:39},
+{name:"LED Desk Light Bar",category:"Tech",price:44},
+{name:"Phone Camera Lens Kit",category:"Tech",price:24},
+{name:"Rechargeable Hand Warmer",category:"Tech",price:29},
+{name:"USB Mini Fan",category:"Tech",price:14},
+{name:"Smart LED Light Strip",category:"Tech",price:24},
+{name:"Bluetooth Item Tracker",category:"Tech",price:19}
 ];
 
 let cart = [];
+
+function enterShop(){
+  document.getElementById("wave").classList.add("active");
+
+  setTimeout(function(){
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("shopPage").style.display = "block";
+    document.body.style.background = "#f5f7fb";
+    document.getElementById("wave").style.bottom = "120%";
+  },1200);
+}
+
+function goHome(){
+  document.getElementById("cartPanel").classList.remove("open");
+  document.getElementById("shopPage").style.display = "none";
+  document.getElementById("landing").style.display = "flex";
+  document.body.style.background = "#07111f";
+
+  const wave = document.getElementById("wave");
+  wave.classList.remove("active");
+  wave.style.bottom = "-120%";
+}
 
 function loadCategories(){
   const select = document.getElementById("categorySelect");
@@ -350,14 +375,12 @@ function displayProducts(list){
   list.forEach((product,index) => {
     const card = document.createElement("div");
     card.className = "card";
-
     card.innerHTML = `
       <div class="category">${product.category}</div>
       <h3>${product.name}</h3>
       <div class="price">$${product.price}</div>
-      <button onclick="addToCart(${index})">Add to Cart</button>
+      <button onclick="addToCart('${product.name}')">Add to Cart</button>
     `;
-
     container.appendChild(card);
   });
 }
@@ -368,20 +391,13 @@ function filterCategory(){
   if(selected === "All"){
     displayProducts(products);
   }else{
-    const filtered = products.filter(product => product.category === selected);
-    displayProducts(filtered);
+    displayProducts(products.filter(p => p.category === selected));
   }
 }
 
-function addToCart(index){
-  const selectedCategory = document.getElementById("categorySelect").value;
-  let currentList = products;
-
-  if(selectedCategory !== "All"){
-    currentList = products.filter(product => product.category === selectedCategory);
-  }
-
-  cart.push(currentList[index]);
+function addToCart(productName){
+  const product = products.find(p => p.name === productName);
+  cart.push(product);
   updateCart();
 }
 
@@ -395,7 +411,6 @@ function updateCart(){
 
   cart.forEach(item => {
     total += item.price;
-
     const div = document.createElement("div");
     div.className = "cartItem";
     div.innerHTML = `<strong>${item.name}</strong><br>$${item.price}`;
@@ -407,14 +422,6 @@ function updateCart(){
 
 function toggleCart(){
   document.getElementById("cartPanel").classList.toggle("open");
-}
-
-function scrollToProducts(){
-  document.getElementById("shop").scrollIntoView({behavior:"smooth"});
-}
-
-function showHome(){
-  document.getElementById("home").scrollIntoView({behavior:"smooth"});
 }
 
 loadCategories();
