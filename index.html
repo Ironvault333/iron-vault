@@ -3,21 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Moonwave</title>
-
 <style>
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#07111f;
-  overflow-x:hidden;
-}
-
-/* FRONT PAGE */
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#07111f;overflow-x:hidden}
 
 #landing{
   height:100vh;
@@ -25,26 +13,24 @@ body{
   grid-template-columns:1fr 1fr;
   align-items:center;
   padding:0 8%;
-  background:linear-gradient(135deg,#ffffff,#f7f7f7,#eceff3);
-  overflow:hidden;
+  background:linear-gradient(135deg,#fff,#f7f7f7,#eceff3);
   position:relative;
+  overflow:hidden;
 }
 
 .brand{
   position:absolute;
-  top:32px;
+  top:30px;
   left:50%;
   transform:translateX(-50%);
   font-size:72px;
   font-weight:900;
   letter-spacing:5px;
-  color:#07111f;
-  z-index:5;
 }
 
 .landingText h1{
   font-size:40px;
-  line-height:1.08;
+  line-height:1.1;
   margin:0 0 20px;
   font-weight:900;
 }
@@ -56,43 +42,70 @@ body{
   line-height:1.5;
 }
 
-.landingText button{
-  margin-top:20px;
-  background:#07111f;
-  color:white;
+button,select{
   border:0;
-  border-radius:16px;
-  padding:16px 26px;
+  border-radius:12px;
+  padding:13px 18px;
   font-weight:900;
   cursor:pointer;
 }
 
+button{background:#0b70ff;color:white}
+select{background:white;color:#111}
+
+.landingText button{
+  margin-top:20px;
+  background:#07111f;
+  border-radius:16px;
+  padding:16px 26px;
+}
+
 .animationSide{
-  position:relative;
   height:600px;
   display:flex;
   align-items:center;
   justify-content:center;
+  position:relative;
 }
 
 .realMoon{
   width:360px;
   height:360px;
-  object-fit:cover;
   border-radius:50%;
   cursor:pointer;
+  position:relative;
   z-index:4;
-  display:block;
   animation:floatMoon 4s ease-in-out infinite;
-  filter:
-    drop-shadow(0 0 20px rgba(255,255,255,.55))
-    drop-shadow(0 0 45px rgba(255,255,255,.25));
-  background:none;
+  background:
+    radial-gradient(circle at 28% 25%,rgba(255,255,255,.85) 0 8%,transparent 18%),
+    radial-gradient(circle at 68% 32%,rgba(65,65,65,.38) 0 7%,transparent 12%),
+    radial-gradient(circle at 38% 34%,rgba(90,90,90,.28) 0 5%,transparent 10%),
+    radial-gradient(circle at 54% 52%,rgba(55,55,55,.35) 0 9%,transparent 16%),
+    radial-gradient(circle at 28% 62%,rgba(70,70,70,.32) 0 8%,transparent 15%),
+    radial-gradient(circle at 76% 64%,rgba(80,80,80,.3) 0 6%,transparent 12%),
+    radial-gradient(circle at 45% 75%,rgba(100,100,100,.26) 0 5%,transparent 10%),
+    radial-gradient(circle at 50% 50%,#f1f1f1 0%,#cfcfcf 38%,#9d9d9d 67%,#6d6d6d 100%);
+  box-shadow:
+    inset -35px -28px 45px rgba(0,0,0,.35),
+    inset 25px 20px 35px rgba(255,255,255,.45),
+    0 0 35px rgba(255,255,255,.65),
+    0 0 75px rgba(120,190,255,.35);
 }
 
-.realMoon:hover{
-  transform:scale(1.04);
+.realMoon:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 20% 42%,rgba(80,80,80,.22) 0 3%,transparent 7%),
+    radial-gradient(circle at 34% 48%,rgba(255,255,255,.24) 0 2%,transparent 5%),
+    radial-gradient(circle at 58% 24%,rgba(255,255,255,.18) 0 2%,transparent 6%),
+    radial-gradient(circle at 82% 48%,rgba(45,45,45,.26) 0 4%,transparent 9%),
+    radial-gradient(circle at 46% 18%,rgba(45,45,45,.2) 0 2%,transparent 5%);
 }
+
+.realMoon:hover{transform:scale(1.04)}
 
 .clickText{
   position:absolute;
@@ -107,29 +120,22 @@ body{
   bottom:-170%;
   width:100%;
   height:170%;
-  background:
-    radial-gradient(circle at 50% 10%,rgba(255,255,255,.65),transparent 18%),
-    linear-gradient(180deg,#8ff0ff,#22a7ff,#0458b7,#05284f);
+  background:linear-gradient(180deg,#8ff0ff,#22a7ff,#0458b7,#05284f);
   z-index:99;
   border-radius:50% 50% 0 0;
   transition:bottom 1.25s ease-in-out;
 }
 
-.waveTransition.active{
-  bottom:0;
-}
+.waveTransition.active{bottom:0}
 
 @keyframes floatMoon{
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-18px)}
 }
 
-/* PRODUCT PAGE */
-
 #shopPage{
   display:none;
   background:#f5f7fb;
-  color:#111;
   min-height:100vh;
 }
 
@@ -145,35 +151,8 @@ header{
   z-index:20;
 }
 
-.logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-nav{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-
-button,select{
-  border:0;
-  border-radius:12px;
-  padding:13px 18px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-button{
-  background:#0b70ff;
-  color:white;
-}
-
-select{
-  background:white;
-  color:#111;
-}
+.logo{font-size:28px;font-weight:900;letter-spacing:2px}
+nav{display:flex;gap:12px;align-items:center}
 
 .hero{
   padding:55px 8%;
@@ -181,20 +160,10 @@ select{
   color:white;
 }
 
-.hero h1{
-  font-size:58px;
-  margin:0 0 12px;
-}
+.hero h1{font-size:58px;margin:0 0 12px}
+.hero p{max-width:650px;color:#d9ecff;font-size:18px}
 
-.hero p{
-  max-width:650px;
-  color:#d9ecff;
-  font-size:18px;
-}
-
-.section{
-  padding:40px 8%;
-}
+.section{padding:40px 8%}
 
 .products{
   display:grid;
@@ -223,29 +192,10 @@ select{
   margin-bottom:18px;
 }
 
-.card h3{
-  margin:8px 0 8px;
-  font-size:24px;
-}
-
-.description{
-  color:#536273;
-  font-size:15px;
-  line-height:1.45;
-  flex:1;
-}
-
-.category{
-  font-size:13px;
-  color:#0b70ff;
-  font-weight:900;
-}
-
-.price{
-  font-size:25px;
-  font-weight:900;
-  margin:16px 0;
-}
+.card h3{margin:8px 0;font-size:24px}
+.description{color:#536273;font-size:15px;line-height:1.45;flex:1}
+.category{font-size:13px;color:#0b70ff;font-weight:900}
+.price{font-size:25px;font-weight:900;margin:16px 0}
 
 .cartPanel{
   position:fixed;
@@ -262,14 +212,8 @@ select{
   overflow:auto;
 }
 
-.cartPanel.open{
-  right:0;
-}
-
-.cartItem{
-  border-bottom:1px solid #ddd;
-  padding:12px 0;
-}
+.cartPanel.open{right:0}
+.cartItem{border-bottom:1px solid #ddd;padding:12px 0}
 
 footer{
   padding:35px 8%;
@@ -279,37 +223,13 @@ footer{
 }
 
 @media(max-width:850px){
-  #landing{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding-top:100px;
-  }
-
-  .brand{
-    font-size:42px;
-  }
-
-  .landingText h1{
-    font-size:32px;
-  }
-
-  .animationSide{
-    height:380px;
-  }
-
-  .realMoon{
-    width:230px;
-    height:230px;
-  }
-
-  header{
-    flex-direction:column;
-    gap:14px;
-  }
-
-  .products{
-    grid-template-columns:1fr;
-  }
+  #landing{grid-template-columns:1fr;text-align:center;padding-top:100px}
+  .brand{font-size:42px}
+  .landingText h1{font-size:32px}
+  .animationSide{height:380px}
+  .realMoon{width:230px;height:230px}
+  header{flex-direction:column;gap:14px}
+  .products{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -326,7 +246,7 @@ footer{
   </div>
 
   <div class="animationSide">
-    <img src="moon.png" class="realMoon" onclick="enterShop()" alt="Moon">
+    <div class="realMoon" onclick="enterShop()"></div>
     <div class="clickText">Click the moon to enter</div>
   </div>
 </section>
@@ -365,7 +285,7 @@ footer{
 </div>
 
 <script>
-const products = [
+const products=[
 {name:"Portable Pickleball Net Set",category:"Sports",price:89,description:"A quick setup backyard net for pickleball games at parks, driveways, and family events."},
 {name:"Glow Pickleball Paddle Set",category:"Sports",price:49,description:"A fun paddle set made for evening games, casual matches, and active outdoor play."},
 {name:"Basketball Return Trainer",category:"Sports",price:39,description:"Helps return made shots so players can practice shooting faster with less chasing."},
@@ -381,7 +301,6 @@ const products = [
 {name:"Portable Badminton Set",category:"Sports",price:49,description:"Lightweight net and racket set for quick outdoor games almost anywhere."},
 {name:"Football Target Toss Game",category:"Sports",price:44,description:"Fun football accuracy game for tailgates, parties, teams, and backyard practice."},
 {name:"Agility Ladder Training Kit",category:"Sports",price:24,description:"Training ladder for speed, footwork, balance, and sports conditioning drills."},
-
 {name:"Magnetic Chess Set",category:"Games",price:24,description:"Travel-friendly chess set with magnetic pieces that stay in place during play."},
 {name:"Wooden Strategy Board Game",category:"Games",price:34,description:"Classic strategy-style tabletop game with a clean wood look for family game night."},
 {name:"Family Card Game Bundle",category:"Games",price:19,description:"Easy-to-play card game pack for parties, family nights, and travel."},
@@ -397,7 +316,6 @@ const products = [
 {name:"Mini Air Hockey Table",category:"Games",price:69,description:"Compact air hockey table for kids, game rooms, and quick matches."},
 {name:"Trivia Card Game",category:"Games",price:17,description:"Easy trivia card game for groups, family nights, road trips, and parties."},
 {name:"Outdoor Scavenger Hunt Game",category:"Games",price:22,description:"Activity game that gets kids and groups moving outside while searching and exploring."},
-
 {name:"Waterproof Dry Bag Backpack",category:"Water",price:39,description:"Keeps gear dry during boating, beach days, lake trips, and outdoor adventures."},
 {name:"Floating Waterproof Phone Pouch",category:"Water",price:14,description:"Protects phones around pools, lakes, beaches, and water parks while staying accessible."},
 {name:"Inflatable Pool Lounger",category:"Water",price:34,description:"Comfortable floating lounger for relaxing in pools, lakes, and calm water."},
@@ -413,7 +331,6 @@ const products = [
 {name:"Water Balloon Filling Station",category:"Water",price:29,description:"Makes filling water balloons faster and easier for summer games."},
 {name:"Reusable Water Balloons",category:"Water",price:19,description:"Reusable splash toys that reduce cleanup and make water fights easier."},
 {name:"Inflatable Paddle Board Seat",category:"Water",price:49,description:"Seat attachment that adds comfort and versatility to paddle board trips."},
-
 {name:"Pop Up Camping Tent",category:"Camping",price:89,description:"Fast setup tent for camping trips, festivals, backyard sleepouts, and weekend travel."},
 {name:"Compact Camping Chair",category:"Camping",price:39,description:"Foldable chair that is easy to carry for camping, parks, and outdoor events."},
 {name:"Folding Camping Table",category:"Camping",price:49,description:"Portable table for meals, games, cooking, and campsite organization."},
@@ -429,7 +346,6 @@ const products = [
 {name:"Hanging Camping Organizer",category:"Camping",price:24,description:"Keeps campsite supplies, tools, and small gear organized and easy to reach."},
 {name:"Emergency Survival Kit",category:"Camping",price:34,description:"Compact kit with useful emergency items for camping, cars, and outdoor adventures."},
 {name:"Camping Hammock",category:"Camping",price:29,description:"Lightweight hammock for relaxing at campsites, parks, and backyard spaces."},
-
 {name:"Insulated Picnic Backpack",category:"Park",price:49,description:"Backpack cooler designed for picnics, park days, hikes, and outdoor lunches."},
 {name:"Foldable Picnic Blanket",category:"Park",price:29,description:"Portable blanket for parks, beaches, concerts, sports games, and family outings."},
 {name:"Portable Canopy Shade",category:"Park",price:89,description:"Quick shade canopy for parks, sports sidelines, beaches, and outdoor events."},
@@ -445,7 +361,6 @@ const products = [
 {name:"Frisbee Golf Starter Set",category:"Park",price:39,description:"Starter disc golf set for parks, backyards, and casual outdoor competition."},
 {name:"Outdoor Lawn Bowling Set",category:"Park",price:34,description:"Fun bowling-style lawn game for families, parties, and park activities."},
 {name:"Portable Picnic Table",category:"Park",price:69,description:"Compact folding table for snacks, meals, games, and outdoor setup."},
-
 {name:"LED Dog Collar",category:"Pets",price:19,description:"Light-up collar that helps dogs stay visible during nighttime walks."},
 {name:"Portable Dog Water Bottle",category:"Pets",price:17,description:"Travel water bottle for keeping dogs hydrated on walks, hikes, and road trips."},
 {name:"Collapsible Dog Bowl Set",category:"Pets",price:14,description:"Foldable pet bowls for food and water during travel or outdoor adventures."},
@@ -456,7 +371,6 @@ const products = [
 {name:"Pet Hair Remover Roller",category:"Pets",price:16,description:"Reusable tool for removing pet hair from furniture, clothes, and car seats."},
 {name:"Portable Pet Playpen",category:"Pets",price:49,description:"Foldable playpen for pets at parks, campsites, travel stops, and home."},
 {name:"Dog Travel Bag",category:"Pets",price:44,description:"Organized travel bag for pet food, bowls, toys, treats, and supplies."},
-
 {name:"Car Seat Gap Organizer",category:"Auto",price:24,description:"Fills the seat gap while adding storage for phones, wallets, and small items."},
 {name:"Magnetic Phone Car Mount",category:"Auto",price:17,description:"Simple phone mount for safer navigation and hands-free viewing while driving."},
 {name:"Portable Tire Inflator",category:"Auto",price:49,description:"Compact air compressor for topping off tires at home or on the road."},
@@ -467,7 +381,6 @@ const products = [
 {name:"Backseat Tablet Holder",category:"Auto",price:24,description:"Holds tablets for backseat entertainment during road trips and errands."},
 {name:"Emergency Car Safety Kit",category:"Auto",price:34,description:"Useful roadside kit for unexpected car trouble, travel, and emergencies."},
 {name:"Cup Holder Expander",category:"Auto",price:19,description:"Makes small cup holders fit larger bottles, tumblers, and travel mugs."},
-
 {name:"Under Desk Foot Hammock",category:"Home",price:19,description:"Comfort accessory for desks that helps feet relax during work or study."},
 {name:"Magnetic Cable Organizer",category:"Home",price:12,description:"Keeps charging cords neat, reachable, and organized on desks or nightstands."},
 {name:"Foldable Laptop Stand",category:"Home",price:29,description:"Raises laptops for better viewing, airflow, and workspace comfort."},
@@ -478,7 +391,6 @@ const products = [
 {name:"Adjustable Phone Stand",category:"Home",price:14,description:"Simple stand for video calls, charging, watching videos, and desk use."},
 {name:"Silicone Food Storage Lids",category:"Home",price:15,description:"Reusable stretch lids for covering bowls, cups, leftovers, and containers."},
 {name:"Wall Mounted Storage Hooks",category:"Home",price:19,description:"Easy hooks for organizing bags, towels, tools, cords, and household items."},
-
 {name:"Mini Projector",category:"Tech",price:89,description:"Compact projector for movie nights, gaming, bedrooms, and backyard viewing."},
 {name:"Bluetooth Sleep Headphones",category:"Tech",price:29,description:"Soft headphones designed for sleeping, travel, relaxing, and quiet listening."},
 {name:"Portable Power Bank",category:"Tech",price:34,description:"Rechargeable battery pack for phones, tablets, travel, school, and emergencies."},
@@ -491,57 +403,57 @@ const products = [
 {name:"Bluetooth Item Tracker",category:"Tech",price:19,description:"Small tracker to help locate keys, bags, wallets, and everyday items."}
 ];
 
-let cart = [];
+let cart=[];
 
 function enterShop(){
-  const wave = document.getElementById("wave");
-  wave.style.transition = "bottom 1.25s ease-in-out";
+  const wave=document.getElementById("wave");
+  wave.style.transition="bottom 1.25s ease-in-out";
   wave.classList.add("active");
 
   setTimeout(function(){
-    document.getElementById("landing").style.display = "none";
-    document.getElementById("shopPage").style.display = "block";
-    document.body.style.background = "#f5f7fb";
+    document.getElementById("landing").style.display="none";
+    document.getElementById("shopPage").style.display="block";
+    document.body.style.background="#f5f7fb";
 
     setTimeout(function(){
-      wave.style.transition = "bottom .75s ease-in-out";
-      wave.style.bottom = "170%";
+      wave.style.transition="bottom .75s ease-in-out";
+      wave.style.bottom="170%";
     },180);
   },1250);
 }
 
 function goHome(){
   document.getElementById("cartPanel").classList.remove("open");
-  document.getElementById("shopPage").style.display = "none";
-  document.getElementById("landing").style.display = "grid";
-  document.body.style.background = "#f4f6f8";
+  document.getElementById("shopPage").style.display="none";
+  document.getElementById("landing").style.display="grid";
+  document.body.style.background="#f4f6f8";
 
-  const wave = document.getElementById("wave");
+  const wave=document.getElementById("wave");
   wave.classList.remove("active");
-  wave.style.transition = "bottom 1.25s ease-in-out";
-  wave.style.bottom = "-170%";
+  wave.style.transition="bottom 1.25s ease-in-out";
+  wave.style.bottom="-170%";
 }
 
 function loadCategories(){
-  const select = document.getElementById("categorySelect");
-  const categories = [...new Set(products.map(p => p.category))];
+  const select=document.getElementById("categorySelect");
+  const categories=[...new Set(products.map(p=>p.category))];
 
-  categories.forEach(category => {
-    const option = document.createElement("option");
-    option.value = category;
-    option.textContent = category;
+  categories.forEach(category=>{
+    const option=document.createElement("option");
+    option.value=category;
+    option.textContent=category;
     select.appendChild(option);
   });
 }
 
 function displayProducts(list){
-  const container = document.getElementById("products");
-  container.innerHTML = "";
+  const container=document.getElementById("products");
+  container.innerHTML="";
 
-  list.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
+  list.forEach(product=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
       <div class="imageSpot">Product Image</div>
       <div class="category">${product.category}</div>
       <h3>${product.name}</h3>
@@ -554,38 +466,32 @@ function displayProducts(list){
 }
 
 function filterCategory(){
-  const selected = document.getElementById("categorySelect").value;
-
-  if(selected === "All"){
-    displayProducts(products);
-  }else{
-    displayProducts(products.filter(p => p.category === selected));
-  }
+  const selected=document.getElementById("categorySelect").value;
+  if(selected==="All"){displayProducts(products)}
+  else{displayProducts(products.filter(p=>p.category===selected))}
 }
 
 function addToCart(productName){
-  const product = products.find(p => p.name === productName);
+  const product=products.find(p=>p.name===productName);
   cart.push(product);
   updateCart();
 }
 
 function updateCart(){
-  document.getElementById("cartCount").textContent = cart.length;
+  document.getElementById("cartCount").textContent=cart.length;
+  const cartItems=document.getElementById("cartItems");
+  cartItems.innerHTML="";
+  let total=0;
 
-  const cartItems = document.getElementById("cartItems");
-  cartItems.innerHTML = "";
-
-  let total = 0;
-
-  cart.forEach(item => {
-    total += item.price;
-    const div = document.createElement("div");
-    div.className = "cartItem";
-    div.innerHTML = `<strong>${item.name}</strong><br>$${item.price}`;
+  cart.forEach(item=>{
+    total+=item.price;
+    const div=document.createElement("div");
+    div.className="cartItem";
+    div.innerHTML=`<strong>${item.name}</strong><br>$${item.price}`;
     cartItems.appendChild(div);
   });
 
-  document.getElementById("cartTotal").textContent = total;
+  document.getElementById("cartTotal").textContent=total;
 }
 
 function toggleCart(){
