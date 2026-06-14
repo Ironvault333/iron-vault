@@ -5,7 +5,9 @@
 <title>Moonwave</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -15,34 +17,40 @@ body{
   overflow-x:hidden;
 }
 
+/* FRONT PAGE */
+
 #landing{
   height:100vh;
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
   padding:0 8%;
-  background:linear-gradient(135deg,#ffffff,#f1f4f7,#e8edf2);
+  background:linear-gradient(135deg,#ffffff,#f5f5f5,#e8edf2);
   overflow:hidden;
+  position:relative;
 }
 
 .brand{
   position:absolute;
-  top:30px;
-  left:8%;
-  font-size:28px;
+  top:32px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:56px;
   font-weight:900;
-  letter-spacing:2px;
+  letter-spacing:5px;
+  color:#07111f;
+  z-index:5;
 }
 
 .landingText h1{
-  font-size:78px;
-  line-height:.88;
-  margin:0 0 24px;
+  font-size:46px;
+  line-height:1.05;
+  margin:0 0 20px;
   font-weight:900;
 }
 
 .landingText p{
-  font-size:20px;
+  font-size:18px;
   color:#3f5263;
   max-width:520px;
   line-height:1.5;
@@ -66,59 +74,21 @@ body{
   place-items:center;
 }
 
-.moon{
-  width:260px;
-  height:260px;
+.realMoon{
+  width:310px;
+  height:310px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 32% 25%,rgba(255,255,255,.95),transparent 18%),
-    radial-gradient(circle at 65% 70%,rgba(130,130,130,.35),transparent 9%),
-    radial-gradient(circle at 38% 62%,rgba(120,120,120,.28),transparent 7%),
-    radial-gradient(circle at 72% 38%,rgba(150,150,150,.3),transparent 6%),
-    radial-gradient(circle at 48% 42%,rgba(90,90,90,.18),transparent 10%),
-    radial-gradient(circle at 35% 30%,#fff,#e1e1e1 45%,#aaa 72%,#888);
-  box-shadow:
-    inset -35px -30px 45px rgba(0,0,0,.22),
-    inset 25px 20px 35px rgba(255,255,255,.7),
-    0 0 45px rgba(255,255,255,.9),
-    0 0 100px rgba(97,179,255,.45);
+  object-fit:cover;
   cursor:pointer;
-  position:relative;
-  z-index:3;
+  z-index:4;
   animation:floatMoon 3.5s ease-in-out infinite;
+  box-shadow:
+    0 0 35px rgba(255,255,255,.9),
+    0 0 90px rgba(120,190,255,.45);
 }
 
-.crater{
-  position:absolute;
-  border-radius:50%;
-  background:rgba(120,120,120,.25);
-  box-shadow:inset 6px 6px 10px rgba(0,0,0,.18);
-}
-
-.c1{width:42px;height:42px;left:62px;top:70px}
-.c2{width:26px;height:26px;right:62px;top:88px}
-.c3{width:34px;height:34px;left:108px;bottom:58px}
-.c4{width:20px;height:20px;right:84px;bottom:72px}
-.c5{width:18px;height:18px;left:72px;bottom:105px}
-
-.orbit{
-  position:absolute;
-  width:405px;
-  height:405px;
-  border:2px solid rgba(20,40,65,.12);
-  border-radius:50%;
-  animation:spin 13s linear infinite;
-}
-
-.orbit:after{
-  content:"";
-  position:absolute;
-  width:18px;
-  height:18px;
-  background:#07111f;
-  border-radius:50%;
-  top:35px;
-  left:75px;
+.realMoon:hover{
+  transform:scale(1.04);
 }
 
 .frontWave{
@@ -155,15 +125,15 @@ body{
 .waveTransition{
   position:fixed;
   left:0;
-  bottom:-150%;
+  bottom:-170%;
   width:100%;
-  height:150%;
+  height:170%;
   background:
-    radial-gradient(circle at 50% 12%,rgba(255,255,255,.55),transparent 16%),
+    radial-gradient(circle at 50% 10%,rgba(255,255,255,.65),transparent 18%),
     linear-gradient(180deg,#8ff0ff,#22a7ff,#0458b7,#05284f);
   z-index:99;
   border-radius:50% 50% 0 0;
-  transition:bottom 1.2s ease-in-out;
+  transition:bottom 1.25s ease-in-out;
 }
 
 .waveTransition.active{
@@ -175,15 +145,12 @@ body{
   50%{transform:translateY(-18px)}
 }
 
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
 @keyframes waveFloat{
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(14px)}
 }
+
+/* PRODUCT PAGE */
 
 #shopPage{
   display:none;
@@ -341,20 +308,24 @@ footer{
   #landing{
     grid-template-columns:1fr;
     text-align:center;
-    padding-top:80px;
+    padding-top:90px;
+  }
+
+  .brand{
+    font-size:40px;
   }
 
   .landingText h1{
-    font-size:52px;
+    font-size:36px;
   }
 
   .animationSide{
     height:380px;
   }
 
-  .moon{
-    width:190px;
-    height:190px;
+  .realMoon{
+    width:220px;
+    height:220px;
   }
 
   .frontWave{
@@ -379,20 +350,13 @@ footer{
   <div class="brand">MOONWAVE</div>
 
   <div class="landingText">
-    <h1>Faster.<br>Cooler.<br>Stronger.</h1>
-    <p>Unlock products that feel different — useful, fun, trendy finds for sports, games, camping, water days, parks, pets, home, tech, and more.</p>
+    <h1>Find What Feels New</h1>
+    <p>Useful, fun, and trending products for everyday life, sports, water days, camping, games, pets, home, tech, and more.</p>
     <button onclick="enterShop()">Enter Moonwave</button>
   </div>
 
   <div class="animationSide">
-    <div class="orbit"></div>
-    <div class="moon" onclick="enterShop()">
-      <div class="crater c1"></div>
-      <div class="crater c2"></div>
-      <div class="crater c3"></div>
-      <div class="crater c4"></div>
-      <div class="crater c5"></div>
-    </div>
+    <img src="moon.png" class="realMoon" onclick="enterShop()" alt="Moon">
     <div class="frontWave"></div>
     <div class="clickText">Click the moon to enter</div>
   </div>
@@ -562,6 +526,7 @@ let cart = [];
 
 function enterShop(){
   const wave = document.getElementById("wave");
+  wave.style.transition = "bottom 1.25s ease-in-out";
   wave.classList.add("active");
 
   setTimeout(function(){
@@ -570,10 +535,10 @@ function enterShop(){
     document.body.style.background = "#f5f7fb";
 
     setTimeout(function(){
-      wave.style.transition = "bottom .7s ease-in-out";
-      wave.style.bottom = "150%";
+      wave.style.transition = "bottom .75s ease-in-out";
+      wave.style.bottom = "170%";
     },180);
-  },1200);
+  },1250);
 }
 
 function goHome(){
@@ -584,8 +549,8 @@ function goHome(){
 
   const wave = document.getElementById("wave");
   wave.classList.remove("active");
-  wave.style.transition = "bottom 1.2s ease-in-out";
-  wave.style.bottom = "-150%";
+  wave.style.transition = "bottom 1.25s ease-in-out";
+  wave.style.bottom = "-170%";
 }
 
 function loadCategories(){
