@@ -2,310 +2,405 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Side Quests Admin</title>
+<title>MOOWAVE Admin</title>
+
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#f7efe6;color:#111}
-header{height:58px;background:#080b10;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 8%;box-sizing:border-box}
-.logo{font-size:25px;font-weight:900}
-a{color:white;text-decoration:none;font-weight:900}
-main{padding:35px 8%}
-.card{background:white;border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
-input,textarea{width:100%;padding:12px;margin:8px 0 14px;border:1px solid #ccc;border-radius:10px;font-size:15px;box-sizing:border-box}
-textarea{min-height:90px}
-button{background:#111;color:white;border:0;border-radius:12px;padding:12px 18px;font-weight:900;cursor:pointer}
-.danger{background:#b00020}
-.yellow{background:#ffc400;color:#111}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.catBox{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.catLabel{background:#eee;border-radius:999px;padding:8px 12px;font-size:13px}
-.product{border:1px solid #ddd;border-radius:14px;padding:15px;margin-top:14px}
-.small{font-size:13px;color:#666}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#07111f;
+}
+
+header{
+  background:#07111f;
+  color:white;
+  padding:24px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:4px;
+}
+
+.adminBadge{
+  background:#0b70ff;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:900;
+}
+
+.loginPage{
+  min-height:calc(100vh - 86px);
+  display:grid;
+  place-items:center;
+  padding:30px;
+}
+
+.loginBox{
+  width:100%;
+  max-width:430px;
+  background:white;
+  border-radius:24px;
+  padding:32px;
+  box-shadow:0 12px 35px rgba(0,0,0,.12);
+}
+
+.loginBox h1{
+  margin:0 0 12px;
+  font-size:36px;
+}
+
+.loginBox p{
+  color:#536273;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid #d7dce2;
+  border-radius:12px;
+  margin:8px 0 14px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:13px 18px;
+  font-weight:900;
+  cursor:pointer;
+  background:#0b70ff;
+  color:white;
+}
+
+.darkBtn{
+  background:#07111f;
+}
+
+.redBtn{
+  background:#d62828;
+}
+
+.grayBtn{
+  background:#6c757d;
+}
+
+.adminPage{
+  display:none;
+}
+
+.wrapper{
+  padding:35px 8%;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:28px;
+}
+
+.panel{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.panel h2{
+  margin-top:0;
+}
+
+.productList{
+  display:grid;
+  gap:18px;
+}
+
+.productCard{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:start;
+}
+
+.productCard h3{
+  margin:0 0 8px;
+}
+
+.meta{
+  color:#0b70ff;
+  font-weight:900;
+  font-size:13px;
+  text-transform:uppercase;
+}
+
+.description{
+  color:#536273;
+  line-height:1.45;
+}
+
+.actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.topTools{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+
+.notice{
+  background:#eaf4ff;
+  color:#123a66;
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:18px;
+  font-weight:700;
+}
+
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  header{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .productCard{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:row;
+    flex-wrap:wrap;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">Side Quests Admin</div>
-  <a href="index.html">View Store</a>
+  <div class="logo">MOOWAVE</div>
+  <div class="adminBadge">ADMIN</div>
 </header>
 
-<main>
-
-<div class="card">
-  <h2>Add / Manage Categories</h2>
-  <input id="newCategory" placeholder="New category name">
-  <button onclick="addCategory()">Add Category</button>
-  <div id="categoryList"></div>
-</div>
-
-<div class="card">
-  <h2>Add Product</h2>
-
-  <div class="grid">
-    <input id="productName" placeholder="Product name">
-    <input id="productPrice" placeholder="Price">
+<section class="loginPage" id="loginPage">
+  <div class="loginBox">
+    <h1>Admin Access</h1>
+    <p>Enter the admin code to manage MOOWAVE products.</p>
+    <input type="password" id="adminPassword" placeholder="Enter admin code">
+    <button class="darkBtn" onclick="login()">Unlock Admin</button>
+    <p id="loginError" style="color:#d62828;font-weight:900;"></p>
   </div>
+</section>
 
-  <input id="productImage" placeholder="Image URL">
-  <textarea id="productDescription" placeholder="Description"></textarea>
+<section class="adminPage" id="adminPage">
+  <div class="wrapper">
 
-  <h3>Categories</h3>
-  <p class="small">Check as many categories as you want.</p>
-  <div id="categoryCheckboxes" class="catBox"></div>
+    <div class="notice">
+      Admin access changed. Use code: <strong>moowave2026</strong>
+    </div>
 
-  <h3>Search Keywords</h3>
-  <p class="small">Add words people might search. Example: cleaning supplies, cleaner, scrub, brush, wash</p>
-  <textarea id="productKeywords" placeholder="Search keywords"></textarea>
+    <div class="topTools">
+      <button onclick="newProduct()">New Product</button>
+      <button class="grayBtn" onclick="exportProducts()">Export Products</button>
+      <button class="redBtn" onclick="resetProducts()">Reset Products</button>
+      <button class="darkBtn" onclick="logout()">Logout</button>
+    </div>
 
-  <button class="yellow" onclick="addProduct()">Add Product</button>
-</div>
+    <div class="grid">
 
-<div class="card">
-  <h2>Current Products</h2>
-  <div id="productList"></div>
-</div>
+      <div class="panel">
+        <h2>Product Editor</h2>
 
-</main>
+        <input type="hidden" id="editIndex">
+
+        <label>Product Name</label>
+        <input id="productName" placeholder="Product name">
+
+        <label>Category</label>
+        <input id="productCategory" placeholder="Sports, Games, Camping, etc.">
+
+        <label>Price</label>
+        <input id="productPrice" type="number" placeholder="Price">
+
+        <label>Description</label>
+        <textarea id="productDescription" placeholder="Product description"></textarea>
+
+        <button onclick="saveProduct()">Save Product</button>
+      </div>
+
+      <div>
+        <h2>Products</h2>
+        <div class="productList" id="productList"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <script>
-const defaultCategories=[
-"Home","Kitchen","Pets","Car","Travel","Cleaning","Sports","Water","Games","Camping","Outdoor","Tools","Safety","Kids","Tech","Storage"
+const ADMIN_CODE = "moowave2026";
+
+let products = JSON.parse(localStorage.getItem("moowaveProducts")) || [
+  {name:"Portable Pickleball Net Set",category:"Sports",price:89,description:"A quick setup backyard net for pickleball games at parks, driveways, and family events."},
+  {name:"Glow Pickleball Paddle Set",category:"Sports",price:49,description:"A fun paddle set made for evening games, casual matches, and active outdoor play."},
+  {name:"Basketball Return Trainer",category:"Sports",price:39,description:"Helps return made shots so players can practice shooting faster with less chasing."},
+  {name:"Mini Basketball Arcade Game",category:"Sports",price:119,description:"A compact arcade-style game for bedrooms, basements, parties, and game rooms."},
+  {name:"LED Basketball Hoop Light",category:"Sports",price:34,description:"Adds a bright glow to a hoop for nighttime shooting and backyard games."},
+  {name:"Over Door Basketball Hoop",category:"Sports",price:29,description:"Easy indoor basketball hoop for rooms, offices, dorms, and quick mini games."},
+  {name:"Soccer Rebound Net",category:"Sports",price:69,description:"Great for solo soccer practice, passing, shooting, and ball control training."},
+  {name:"Baseball Swing Trainer",category:"Sports",price:44,description:"A useful practice tool for improving swings, timing, and hand-eye coordination."},
+  {name:"Golf Chipping Practice Net",category:"Sports",price:39,description:"Portable golf net for practicing short chips in the backyard or garage."},
+  {name:"Putting Mat Trainer",category:"Sports",price:54,description:"Indoor putting practice mat for improving aim, touch, and consistency."}
 ];
 
-const defaultProducts=[
-{id:1,name:"Water Basketball Hoop",price:"39.99",description:"A floating pool basketball hoop for summer games.",image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",categories:["Water","Sports","Games","Kids","Outdoor"],keywords:"pool swim floating basketball ball summer toy"},
-{id:2,name:"Portable Cleaning Brush Kit",price:"19.99",description:"A compact brush kit for cleaning shoes, tools, gear, and tight spaces.",image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",categories:["Cleaning","Home","Tools","Travel"],keywords:"clean cleaning cleaner supplies product scrub brush wash"},
-{id:3,name:"Magnetic Cable Clips",price:"12.99",description:"Small clips that keep charging cables from falling behind desks.",image:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",categories:["Tech","Home","Storage"],keywords:"cord cable charger desk organize organizer"}
-];
+function login(){
+  const entered = document.getElementById("adminPassword").value;
 
-let savedCategories=JSON.parse(localStorage.getItem("categories"));
-let savedProducts=JSON.parse(localStorage.getItem("products"));
-
-let categories=Array.isArray(savedCategories)&&savedCategories.length?savedCategories:defaultCategories;
-let products=Array.isArray(savedProducts)&&savedProducts.length?savedProducts:defaultProducts;
-
-function saveData(){
-  localStorage.setItem("categories",JSON.stringify(categories));
-  localStorage.setItem("products",JSON.stringify(products));
-}
-
-function renderCategories(){
-  let list=document.getElementById("categoryList");
-  let boxes=document.getElementById("categoryCheckboxes");
-
-  list.innerHTML="";
-  boxes.innerHTML="";
-
-  categories.forEach((cat,index)=>{
-    list.innerHTML+=`
-      <div class="product">
-        <input value="${cat}" onchange="renameCategory(${index},this.value)">
-        <button class="danger" onclick="deleteCategory(${index})">Delete Category</button>
-      </div>
-    `;
-
-    boxes.innerHTML+=`
-      <label class="catLabel">
-        <input type="checkbox" value="${cat}" class="productCategoryBox"> ${cat}
-      </label>
-    `;
-  });
-}
-
-function addCategory(){
-  let name=document.getElementById("newCategory").value.trim();
-
-  if(!name){
-    alert("Enter a category name.");
-    return;
+  if(entered === ADMIN_CODE){
+    localStorage.setItem("moowaveAdminLoggedIn","yes");
+    showAdmin();
+  }else{
+    document.getElementById("loginError").textContent = "Wrong admin code.";
   }
-
-  if(categories.some(cat=>cat.toLowerCase()===name.toLowerCase())){
-    alert("That category already exists.");
-    return;
-  }
-
-  categories.push(name);
-  document.getElementById("newCategory").value="";
-  saveData();
-  renderCategories();
-  renderProducts();
 }
 
-function renameCategory(index,newName){
-  newName=newName.trim();
-
-  if(!newName){
-    alert("Category cannot be blank.");
-    renderCategories();
-    return;
-  }
-
-  let oldName=categories[index];
-  categories[index]=newName;
-
-  products.forEach(product=>{
-    if(Array.isArray(product.categories)){
-      product.categories=product.categories.map(cat=>cat===oldName?newName:cat);
-    }
-
-    if(product.category===oldName){
-      product.category=newName;
-    }
-  });
-
-  saveData();
-  renderCategories();
-  renderProducts();
+function showAdmin(){
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("adminPage").style.display = "block";
+  displayProducts();
 }
 
-function deleteCategory(index){
-  let category=categories[index];
-
-  if(products.some(product=>getProductCategories(product).includes(category))){
-    alert("This category is being used by a product. Remove it from products first.");
-    return;
-  }
-
-  categories.splice(index,1);
-  saveData();
-  renderCategories();
-  renderProducts();
+function logout(){
+  localStorage.removeItem("moowaveAdminLoggedIn");
+  location.reload();
 }
 
-function getCheckedCategories(){
-  return Array.from(document.querySelectorAll(".productCategoryBox:checked")).map(box=>box.value);
-}
+function displayProducts(){
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
 
-function clearProductForm(){
-  document.getElementById("productName").value="";
-  document.getElementById("productPrice").value="";
-  document.getElementById("productImage").value="";
-  document.getElementById("productDescription").value="";
-  document.getElementById("productKeywords").value="";
-  document.querySelectorAll(".productCategoryBox").forEach(box=>box.checked=false);
-}
+  products.forEach((product,index) => {
+    const card = document.createElement("div");
+    card.className = "productCard";
 
-function addProduct(){
-  let name=document.getElementById("productName").value.trim();
-  let price=document.getElementById("productPrice").value.trim();
-  let image=document.getElementById("productImage").value.trim();
-  let description=document.getElementById("productDescription").value.trim();
-  let keywords=document.getElementById("productKeywords").value.trim();
-  let selectedCategories=getCheckedCategories();
-
-  if(!name||!price){
-    alert("Product name and price are required.");
-    return;
-  }
-
-  if(selectedCategories.length===0){
-    alert("Choose at least one category.");
-    return;
-  }
-
-  products.push({
-    id:Date.now(),
-    name,
-    price,
-    image,
-    description,
-    categories:selectedCategories,
-    keywords
-  });
-
-  saveData();
-  clearProductForm();
-  renderProducts();
-}
-
-function getProductCategories(product){
-  if(Array.isArray(product.categories)) return product.categories;
-  if(product.category) return [product.category];
-  return [];
-}
-
-function renderProducts(){
-  let list=document.getElementById("productList");
-  list.innerHTML="";
-
-  if(products.length===0){
-    list.innerHTML="<p>No products yet.</p>";
-    return;
-  }
-
-  products.forEach((product,index)=>{
-    let cats=getProductCategories(product);
-
-    list.innerHTML+=`
-      <div class="product">
+    card.innerHTML = `
+      <div>
+        <div class="meta">${product.category} • $${product.price}</div>
         <h3>${product.name}</h3>
-        <p><strong>Price:</strong> $${product.price}</p>
-        <p><strong>Categories:</strong> ${cats.join(", ")}</p>
-        <p><strong>Search Keywords:</strong> ${product.keywords||""}</p>
+        <div class="description">${product.description}</div>
+      </div>
+
+      <div class="actions">
         <button onclick="editProduct(${index})">Edit</button>
-        <button class="danger" onclick="deleteProduct(${index})">Delete</button>
+        <button class="redBtn" onclick="deleteProduct(${index})">Delete</button>
       </div>
     `;
+
+    list.appendChild(card);
   });
+}
+
+function saveProduct(){
+  const name = document.getElementById("productName").value.trim();
+  const category = document.getElementById("productCategory").value.trim();
+  const price = Number(document.getElementById("productPrice").value);
+  const description = document.getElementById("productDescription").value.trim();
+  const editIndex = document.getElementById("editIndex").value;
+
+  if(!name || !category || !price || !description){
+    alert("Fill out all product fields.");
+    return;
+  }
+
+  const product = {name,category,price,description};
+
+  if(editIndex === ""){
+    products.push(product);
+  }else{
+    products[editIndex] = product;
+  }
+
+  saveToStorage();
+  clearForm();
+  displayProducts();
 }
 
 function editProduct(index){
-  let product=products[index];
+  const product = products[index];
 
-  let name=prompt("Product name:",product.name);
-  if(name===null) return;
+  document.getElementById("editIndex").value = index;
+  document.getElementById("productName").value = product.name;
+  document.getElementById("productCategory").value = product.category;
+  document.getElementById("productPrice").value = product.price;
+  document.getElementById("productDescription").value = product.description;
 
-  let price=prompt("Price:",product.price);
-  if(price===null) return;
-
-  let image=prompt("Image URL:",product.image||"");
-  if(image===null) return;
-
-  let description=prompt("Description:",product.description||"");
-  if(description===null) return;
-
-  let currentCats=getProductCategories(product).join(", ");
-  let catsInput=prompt("Categories separated by commas:",currentCats);
-  if(catsInput===null) return;
-
-  let keywords=prompt("Search keywords:",product.keywords||"");
-  if(keywords===null) return;
-
-  let newCats=catsInput.split(",").map(cat=>cat.trim()).filter(Boolean);
-
-  newCats.forEach(cat=>{
-    if(!categories.includes(cat)){
-      categories.push(cat);
-    }
-  });
-
-  products[index]={
-    ...product,
-    name:name.trim(),
-    price:price.trim(),
-    image:image.trim(),
-    description:description.trim(),
-    categories:newCats,
-    keywords:keywords.trim()
-  };
-
-  saveData();
-  renderCategories();
-  renderProducts();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function deleteProduct(index){
-  if(!confirm("Delete this product?")) return;
-
-  products.splice(index,1);
-  saveData();
-  renderProducts();
+  if(confirm("Delete this product?")){
+    products.splice(index,1);
+    saveToStorage();
+    displayProducts();
+  }
 }
 
-renderCategories();
-renderProducts();
+function newProduct(){
+  clearForm();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function clearForm(){
+  document.getElementById("editIndex").value = "";
+  document.getElementById("productName").value = "";
+  document.getElementById("productCategory").value = "";
+  document.getElementById("productPrice").value = "";
+  document.getElementById("productDescription").value = "";
+}
+
+function saveToStorage(){
+  localStorage.setItem("moowaveProducts",JSON.stringify(products));
+}
+
+function exportProducts(){
+  const output = JSON.stringify(products,null,2);
+  navigator.clipboard.writeText(output);
+  alert("Products copied to clipboard.");
+}
+
+function resetProducts(){
+  if(confirm("Reset all admin products?")){
+    localStorage.removeItem("moowaveProducts");
+    location.reload();
+  }
+}
+
+if(localStorage.getItem("moowaveAdminLoggedIn") === "yes"){
+  showAdmin();
+}
 </script>
 
 </body>
