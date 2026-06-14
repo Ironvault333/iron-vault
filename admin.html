@@ -3,201 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>MOOWAVE Admin</title>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#07111f;
-}
-
-header{
-  background:#07111f;
-  color:white;
-  padding:24px 8%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:4px;
-}
-
-.adminBadge{
-  background:#0b70ff;
-  padding:10px 16px;
-  border-radius:999px;
-  font-weight:900;
-}
-
-.loginPage{
-  min-height:calc(100vh - 86px);
-  display:grid;
-  place-items:center;
-  padding:30px;
-}
-
-.loginBox{
-  width:100%;
-  max-width:430px;
-  background:white;
-  border-radius:24px;
-  padding:32px;
-  box-shadow:0 12px 35px rgba(0,0,0,.12);
-}
-
-.loginBox h1{
-  margin:0 0 12px;
-  font-size:36px;
-}
-
-.loginBox p{
-  color:#536273;
-}
-
-input,select,textarea{
-  width:100%;
-  padding:14px;
-  border:1px solid #d7dce2;
-  border-radius:12px;
-  margin:8px 0 14px;
-  font-size:15px;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-button{
-  border:0;
-  border-radius:12px;
-  padding:13px 18px;
-  font-weight:900;
-  cursor:pointer;
-  background:#0b70ff;
-  color:white;
-}
-
-.darkBtn{
-  background:#07111f;
-}
-
-.redBtn{
-  background:#d62828;
-}
-
-.grayBtn{
-  background:#6c757d;
-}
-
-.adminPage{
-  display:none;
-}
-
-.wrapper{
-  padding:35px 8%;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:380px 1fr;
-  gap:28px;
-}
-
-.panel{
-  background:white;
-  border-radius:22px;
-  padding:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.panel h2{
-  margin-top:0;
-}
-
-.productList{
-  display:grid;
-  gap:18px;
-}
-
-.productCard{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:18px;
-  align-items:start;
-}
-
-.productCard h3{
-  margin:0 0 8px;
-}
-
-.meta{
-  color:#0b70ff;
-  font-weight:900;
-  font-size:13px;
-  text-transform:uppercase;
-}
-
-.description{
-  color:#536273;
-  line-height:1.45;
-}
-
-.actions{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.topTools{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:22px;
-}
-
-.notice{
-  background:#eaf4ff;
-  color:#123a66;
-  padding:14px;
-  border-radius:14px;
-  margin-bottom:18px;
-  font-weight:700;
-}
-
-@media(max-width:900px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  header{
-    flex-direction:column;
-    gap:12px;
-  }
-
-  .productCard{
-    grid-template-columns:1fr;
-  }
-
-  .actions{
-    flex-direction:row;
-    flex-wrap:wrap;
-  }
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#07111f}
+header{background:#07111f;color:white;padding:24px 8%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:34px;font-weight:900;letter-spacing:4px}
+.adminBadge{background:#0b70ff;padding:10px 16px;border-radius:999px;font-weight:900}
+.loginPage{min-height:calc(100vh - 86px);display:grid;place-items:center;padding:30px}
+.loginBox{width:100%;max-width:430px;background:white;border-radius:24px;padding:32px;box-shadow:0 12px 35px rgba(0,0,0,.12)}
+.loginBox h1{margin:0 0 12px;font-size:36px}
+.loginBox p{color:#536273}
+input,textarea{width:100%;padding:14px;border:1px solid #d7dce2;border-radius:12px;margin:8px 0 14px;font-size:15px}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:12px;padding:13px 18px;font-weight:900;cursor:pointer;background:#0b70ff;color:white}
+.darkBtn{background:#07111f}.redBtn{background:#d62828}.grayBtn{background:#6c757d}
+.adminPage{display:none}.wrapper{padding:35px 8%}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:28px}
+.panel{background:white;border-radius:22px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,.08)}
+.productList{display:grid;gap:18px}
+.productCard{background:white;border-radius:18px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,.08);display:grid;grid-template-columns:1fr auto;gap:18px}
+.productCard h3{margin:0 0 8px}.meta{color:#0b70ff;font-weight:900;font-size:13px;text-transform:uppercase}
+.description{color:#536273;line-height:1.45}.actions{display:flex;flex-direction:column;gap:10px}
+.topTools{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.notice{background:#eaf4ff;color:#123a66;padding:14px;border-radius:14px;margin-bottom:18px;font-weight:700}
+@media(max-width:900px){.grid{grid-template-columns:1fr}header{flex-direction:column;gap:12px}.productCard{grid-template-columns:1fr}.actions{flex-direction:row;flex-wrap:wrap}}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -217,23 +48,20 @@ button{
 
 <section class="adminPage" id="adminPage">
   <div class="wrapper">
-
     <div class="notice">
-      Admin access changed. Use code: <strong>moowave2026</strong>
+      Admin code: <strong>moowave2026</strong>. Products save to the same storage key as the customer page: <strong>moowaveProducts</strong>.
     </div>
 
     <div class="topTools">
       <button onclick="newProduct()">New Product</button>
-      <button class="grayBtn" onclick="exportProducts()">Export Products</button>
-      <button class="redBtn" onclick="resetProducts()">Reset Products</button>
+      <button class="grayBtn" onclick="exportProducts()">Copy Product Code</button>
+      <button class="redBtn" onclick="resetProducts()">Reset to Default 115</button>
       <button class="darkBtn" onclick="logout()">Logout</button>
     </div>
 
     <div class="grid">
-
       <div class="panel">
         <h2>Product Editor</h2>
-
         <input type="hidden" id="editIndex">
 
         <label>Product Name</label>
@@ -255,30 +83,136 @@ button{
         <h2>Products</h2>
         <div class="productList" id="productList"></div>
       </div>
-
     </div>
   </div>
 </section>
 
 <script>
 const ADMIN_CODE = "moowave2026";
+const STORAGE_KEY = "moowaveProducts";
 
-let products = JSON.parse(localStorage.getItem("moowaveProducts")) || [
-  {name:"Portable Pickleball Net Set",category:"Sports",price:89,description:"A quick setup backyard net for pickleball games at parks, driveways, and family events."},
-  {name:"Glow Pickleball Paddle Set",category:"Sports",price:49,description:"A fun paddle set made for evening games, casual matches, and active outdoor play."},
-  {name:"Basketball Return Trainer",category:"Sports",price:39,description:"Helps return made shots so players can practice shooting faster with less chasing."},
-  {name:"Mini Basketball Arcade Game",category:"Sports",price:119,description:"A compact arcade-style game for bedrooms, basements, parties, and game rooms."},
-  {name:"LED Basketball Hoop Light",category:"Sports",price:34,description:"Adds a bright glow to a hoop for nighttime shooting and backyard games."},
-  {name:"Over Door Basketball Hoop",category:"Sports",price:29,description:"Easy indoor basketball hoop for rooms, offices, dorms, and quick mini games."},
-  {name:"Soccer Rebound Net",category:"Sports",price:69,description:"Great for solo soccer practice, passing, shooting, and ball control training."},
-  {name:"Baseball Swing Trainer",category:"Sports",price:44,description:"A useful practice tool for improving swings, timing, and hand-eye coordination."},
-  {name:"Golf Chipping Practice Net",category:"Sports",price:39,description:"Portable golf net for practicing short chips in the backyard or garage."},
-  {name:"Putting Mat Trainer",category:"Sports",price:54,description:"Indoor putting practice mat for improving aim, touch, and consistency."}
+const defaultProducts = [
+{name:"Portable Pickleball Net Set",category:"Sports",price:89,description:"A quick setup backyard net for pickleball games at parks, driveways, and family events."},
+{name:"Glow Pickleball Paddle Set",category:"Sports",price:49,description:"A fun paddle set made for evening games, casual matches, and active outdoor play."},
+{name:"Basketball Return Trainer",category:"Sports",price:39,description:"Helps return made shots so players can practice shooting faster with less chasing."},
+{name:"Mini Basketball Arcade Game",category:"Sports",price:119,description:"A compact arcade-style game for bedrooms, basements, parties, and game rooms."},
+{name:"LED Basketball Hoop Light",category:"Sports",price:34,description:"Adds a bright glow to a hoop for nighttime shooting and backyard games."},
+{name:"Over Door Basketball Hoop",category:"Sports",price:29,description:"Easy indoor basketball hoop for rooms, offices, dorms, and quick mini games."},
+{name:"Soccer Rebound Net",category:"Sports",price:69,description:"Great for solo soccer practice, passing, shooting, and ball control training."},
+{name:"Baseball Swing Trainer",category:"Sports",price:44,description:"A useful practice tool for improving swings, timing, and hand-eye coordination."},
+{name:"Golf Chipping Practice Net",category:"Sports",price:39,description:"Portable golf net for practicing short chips in the backyard or garage."},
+{name:"Putting Mat Trainer",category:"Sports",price:54,description:"Indoor putting practice mat for improving aim, touch, and consistency."},
+{name:"Spikeball Style Roundnet Set",category:"Sports",price:59,description:"Fast outdoor game set for beaches, parks, parties, and competitive backyard play."},
+{name:"Backyard Volleyball Set",category:"Sports",price:79,description:"Portable volleyball set for lawns, parks, family events, and summer hangouts."},
+{name:"Portable Badminton Set",category:"Sports",price:49,description:"Lightweight net and racket set for quick outdoor games almost anywhere."},
+{name:"Football Target Toss Game",category:"Sports",price:44,description:"Fun football accuracy game for tailgates, parties, teams, and backyard practice."},
+{name:"Agility Ladder Training Kit",category:"Sports",price:24,description:"Training ladder for speed, footwork, balance, and sports conditioning drills."},
+{name:"Magnetic Chess Set",category:"Games",price:24,description:"Travel-friendly chess set with magnetic pieces that stay in place during play."},
+{name:"Wooden Strategy Board Game",category:"Games",price:34,description:"Classic strategy-style tabletop game with a clean wood look for family game night."},
+{name:"Family Card Game Bundle",category:"Games",price:19,description:"Easy-to-play card game pack for parties, family nights, and travel."},
+{name:"Fast Sling Puck Game",category:"Games",price:29,description:"Fast-paced tabletop game that is simple, competitive, and fun for all ages."},
+{name:"Tabletop Curling Game",category:"Games",price:24,description:"Mini curling game for desks, game rooms, and quick head-to-head competition."},
+{name:"Ring Toss Yard Game",category:"Games",price:34,description:"Simple outdoor game for parties, barbecues, camping, and park days."},
+{name:"Giant Wooden Yard Dice",category:"Games",price:29,description:"Oversized dice set for outdoor games, camping trips, and family activities."},
+{name:"Cornhole Toss Set",category:"Games",price:89,description:"Popular yard game set for tailgates, parties, parks, and backyard events."},
+{name:"Giant Connect Four Game",category:"Games",price:99,description:"Large party game that works well for events, families, and outdoor gatherings."},
+{name:"Giant Jenga Blocks",category:"Games",price:69,description:"Oversized stacking game that brings excitement to parties and backyard nights."},
+{name:"Hook and Ring Game",category:"Games",price:19,description:"Simple wall-mounted challenge game for garages, patios, and hangout spaces."},
+{name:"Tabletop Basketball Game",category:"Games",price:34,description:"Small competitive shooting game for desks, parties, and indoor fun."},
+{name:"Mini Air Hockey Table",category:"Games",price:69,description:"Compact air hockey table for kids, game rooms, and quick matches."},
+{name:"Trivia Card Game",category:"Games",price:17,description:"Easy trivia card game for groups, family nights, road trips, and parties."},
+{name:"Outdoor Scavenger Hunt Game",category:"Games",price:22,description:"Activity game that gets kids and groups moving outside while searching and exploring."},
+{name:"Waterproof Dry Bag Backpack",category:"Water",price:39,description:"Keeps gear dry during boating, beach days, lake trips, and outdoor adventures."},
+{name:"Floating Waterproof Phone Pouch",category:"Water",price:14,description:"Protects phones around pools, lakes, beaches, and water parks while staying accessible."},
+{name:"Inflatable Pool Lounger",category:"Water",price:34,description:"Comfortable floating lounger for relaxing in pools, lakes, and calm water."},
+{name:"Mesh Pool Float Chair",category:"Water",price:29,description:"Relaxed floating chair with cooling mesh for hot summer pool days."},
+{name:"Rechargeable Pool Light Ball",category:"Water",price:24,description:"Floating light ball that adds color and atmosphere to nighttime pool parties."},
+{name:"Waterproof Bluetooth Speaker",category:"Water",price:39,description:"Portable speaker designed for music near pools, beaches, showers, and campsites."},
+{name:"Kids Splash Pad",category:"Water",price:49,description:"Backyard water play mat for kids to run, splash, and cool off."},
+{name:"Backyard Water Slide Mat",category:"Water",price:59,description:"Long outdoor slide mat for summer fun, parties, and backyard water games."},
+{name:"Inflatable Water Hammock",category:"Water",price:24,description:"Lightweight float that lets users relax partially in the water."},
+{name:"Pool Basketball Hoop",category:"Water",price:44,description:"Floating or poolside basketball hoop for active pool games and family fun."},
+{name:"Pool Volleyball Set",category:"Water",price:49,description:"Pool volleyball setup for group games, parties, and summer competition."},
+{name:"Floating Drink Holder Tray",category:"Water",price:19,description:"Keeps drinks and snacks floating nearby during pool or lake lounging."},
+{name:"Water Balloon Filling Station",category:"Water",price:29,description:"Makes filling water balloons faster and easier for summer games."},
+{name:"Reusable Water Balloons",category:"Water",price:19,description:"Reusable splash toys that reduce cleanup and make water fights easier."},
+{name:"Inflatable Paddle Board Seat",category:"Water",price:49,description:"Seat attachment that adds comfort and versatility to paddle board trips."},
+{name:"Pop Up Camping Tent",category:"Camping",price:89,description:"Fast setup tent for camping trips, festivals, backyard sleepouts, and weekend travel."},
+{name:"Compact Camping Chair",category:"Camping",price:39,description:"Foldable chair that is easy to carry for camping, parks, and outdoor events."},
+{name:"Folding Camping Table",category:"Camping",price:49,description:"Portable table for meals, games, cooking, and campsite organization."},
+{name:"Rechargeable Camping Lantern",category:"Camping",price:29,description:"Bright portable lantern for tents, trails, power outages, and nighttime use."},
+{name:"Solar Camping String Lights",category:"Camping",price:24,description:"Solar-powered lights that add visibility and atmosphere around campsites."},
+{name:"Portable Camping Fan",category:"Camping",price:34,description:"Rechargeable fan for tents, hot nights, outdoor events, and travel."},
+{name:"Inflatable Sleeping Pad",category:"Camping",price:44,description:"Comfortable sleeping pad that packs down small for camping and backpacking."},
+{name:"Ultralight Sleeping Bag",category:"Camping",price:59,description:"Lightweight sleeping bag for camping, road trips, and overnight adventures."},
+{name:"Camping Cookware Set",category:"Camping",price:39,description:"Compact pot and pan set for simple campsite cooking and outdoor meals."},
+{name:"Portable Fire Pit",category:"Camping",price:79,description:"Easy-to-move fire pit for camping, patios, and controlled outdoor fires."},
+{name:"Collapsible Water Container",category:"Camping",price:19,description:"Space-saving water storage for campsites, emergencies, and road trips."},
+{name:"Camping Utensil Kit",category:"Camping",price:17,description:"Reusable utensil set for eating outdoors, camping, hiking, and travel."},
+{name:"Hanging Camping Organizer",category:"Camping",price:24,description:"Keeps campsite supplies, tools, and small gear organized and easy to reach."},
+{name:"Emergency Survival Kit",category:"Camping",price:34,description:"Compact kit with useful emergency items for camping, cars, and outdoor adventures."},
+{name:"Camping Hammock",category:"Camping",price:29,description:"Lightweight hammock for relaxing at campsites, parks, and backyard spaces."},
+{name:"Insulated Picnic Backpack",category:"Park",price:49,description:"Backpack cooler designed for picnics, park days, hikes, and outdoor lunches."},
+{name:"Foldable Picnic Blanket",category:"Park",price:29,description:"Portable blanket for parks, beaches, concerts, sports games, and family outings."},
+{name:"Portable Canopy Shade",category:"Park",price:89,description:"Quick shade canopy for parks, sports sidelines, beaches, and outdoor events."},
+{name:"Outdoor Beach Wagon",category:"Park",price:99,description:"Wagon for hauling chairs, coolers, toys, and gear across parks or beaches."},
+{name:"Clip On Chair Umbrella",category:"Park",price:24,description:"Small shade umbrella that clips to chairs for sunny outdoor days."},
+{name:"Portable Mist Fan",category:"Park",price:34,description:"Cooling fan with mist for hot park days, sports games, and summer events."},
+{name:"Outdoor Blanket Stakes",category:"Park",price:12,description:"Simple stakes that help keep blankets from sliding or blowing away."},
+{name:"Collapsible Cooler Bag",category:"Park",price:29,description:"Soft cooler bag that folds down after keeping drinks and snacks cold."},
+{name:"Portable Trash Bag Holder",category:"Park",price:19,description:"Keeps trash bags open and organized during picnics, camping, and parties."},
+{name:"Kids Outdoor Explorer Kit",category:"Park",price:24,description:"Fun outdoor kit that encourages kids to explore, observe, and play outside."},
+{name:"Bubble Machine",category:"Park",price:29,description:"Automatic bubble maker for parties, parks, birthdays, and backyard fun."},
+{name:"Kite Flying Set",category:"Park",price:19,description:"Easy kite set for windy park days, beaches, and family activities."},
+{name:"Frisbee Golf Starter Set",category:"Park",price:39,description:"Starter disc golf set for parks, backyards, and casual outdoor competition."},
+{name:"Outdoor Lawn Bowling Set",category:"Park",price:34,description:"Fun bowling-style lawn game for families, parties, and park activities."},
+{name:"Portable Picnic Table",category:"Park",price:69,description:"Compact folding table for snacks, meals, games, and outdoor setup."},
+{name:"LED Dog Collar",category:"Pets",price:19,description:"Light-up collar that helps dogs stay visible during nighttime walks."},
+{name:"Portable Dog Water Bottle",category:"Pets",price:17,description:"Travel water bottle for keeping dogs hydrated on walks, hikes, and road trips."},
+{name:"Collapsible Dog Bowl Set",category:"Pets",price:14,description:"Foldable pet bowls for food and water during travel or outdoor adventures."},
+{name:"Dog Car Seat Cover",category:"Pets",price:39,description:"Protects vehicle seats from pet hair, dirt, scratches, and spills."},
+{name:"Pet Cooling Mat",category:"Pets",price:29,description:"Cooling mat that helps pets stay comfortable during warm weather."},
+{name:"Dog Treat Puzzle Toy",category:"Pets",price:24,description:"Interactive toy that keeps dogs busy while encouraging problem solving."},
+{name:"Hands Free Dog Leash",category:"Pets",price:24,description:"Convenient leash for walking, jogging, hiking, and active pet owners."},
+{name:"Pet Hair Remover Roller",category:"Pets",price:16,description:"Reusable tool for removing pet hair from furniture, clothes, and car seats."},
+{name:"Portable Pet Playpen",category:"Pets",price:49,description:"Foldable playpen for pets at parks, campsites, travel stops, and home."},
+{name:"Dog Travel Bag",category:"Pets",price:44,description:"Organized travel bag for pet food, bowls, toys, treats, and supplies."},
+{name:"Car Seat Gap Organizer",category:"Auto",price:24,description:"Fills the seat gap while adding storage for phones, wallets, and small items."},
+{name:"Magnetic Phone Car Mount",category:"Auto",price:17,description:"Simple phone mount for safer navigation and hands-free viewing while driving."},
+{name:"Portable Tire Inflator",category:"Auto",price:49,description:"Compact air compressor for topping off tires at home or on the road."},
+{name:"Car Trunk Organizer",category:"Auto",price:34,description:"Keeps groceries, tools, sports gear, and car supplies neat in the trunk."},
+{name:"Windshield Sun Shade",category:"Auto",price:19,description:"Helps block sun and reduce heat buildup inside parked vehicles."},
+{name:"Car Cleaning Gel Kit",category:"Auto",price:12,description:"Cleaning gel for vents, cup holders, dashboards, and tight car spaces."},
+{name:"Rechargeable Car Vacuum",category:"Auto",price:39,description:"Small vacuum for quick car cleanups, crumbs, dirt, and pet hair."},
+{name:"Backseat Tablet Holder",category:"Auto",price:24,description:"Holds tablets for backseat entertainment during road trips and errands."},
+{name:"Emergency Car Safety Kit",category:"Auto",price:34,description:"Useful roadside kit for unexpected car trouble, travel, and emergencies."},
+{name:"Cup Holder Expander",category:"Auto",price:19,description:"Makes small cup holders fit larger bottles, tumblers, and travel mugs."},
+{name:"Under Desk Foot Hammock",category:"Home",price:19,description:"Comfort accessory for desks that helps feet relax during work or study."},
+{name:"Magnetic Cable Organizer",category:"Home",price:12,description:"Keeps charging cords neat, reachable, and organized on desks or nightstands."},
+{name:"Foldable Laptop Stand",category:"Home",price:29,description:"Raises laptops for better viewing, airflow, and workspace comfort."},
+{name:"Motion Sensor Night Light",category:"Home",price:18,description:"Automatic light for hallways, bathrooms, closets, stairs, and bedrooms."},
+{name:"Mini Desktop Vacuum",category:"Home",price:16,description:"Tiny vacuum for crumbs, dust, keyboards, desks, and small messes."},
+{name:"Cord Management Box",category:"Home",price:24,description:"Hides messy power strips and cables for a cleaner room or desk setup."},
+{name:"Reusable Cleaning Slippers",category:"Home",price:17,description:"Fun cleaning slippers that pick up dust while walking around the house."},
+{name:"Adjustable Phone Stand",category:"Home",price:14,description:"Simple stand for video calls, charging, watching videos, and desk use."},
+{name:"Silicone Food Storage Lids",category:"Home",price:15,description:"Reusable stretch lids for covering bowls, cups, leftovers, and containers."},
+{name:"Wall Mounted Storage Hooks",category:"Home",price:19,description:"Easy hooks for organizing bags, towels, tools, cords, and household items."},
+{name:"Mini Projector",category:"Tech",price:89,description:"Compact projector for movie nights, gaming, bedrooms, and backyard viewing."},
+{name:"Bluetooth Sleep Headphones",category:"Tech",price:29,description:"Soft headphones designed for sleeping, travel, relaxing, and quiet listening."},
+{name:"Portable Power Bank",category:"Tech",price:34,description:"Rechargeable battery pack for phones, tablets, travel, school, and emergencies."},
+{name:"Wireless Charging Station",category:"Tech",price:39,description:"Charging station for organizing and powering multiple everyday devices."},
+{name:"LED Desk Light Bar",category:"Tech",price:44,description:"Modern desk light for workspaces, gaming setups, studying, and reading."},
+{name:"Phone Camera Lens Kit",category:"Tech",price:24,description:"Clip-on lens kit for wider, closer, and more creative phone photos."},
+{name:"Rechargeable Hand Warmer",category:"Tech",price:29,description:"Pocket-sized warmer for cold games, camping, commuting, and outdoor events."},
+{name:"USB Mini Fan",category:"Tech",price:14,description:"Small USB fan for desks, travel, bedrooms, dorms, and warm workspaces."},
+{name:"Smart LED Light Strip",category:"Tech",price:24,description:"Color-changing light strip for bedrooms, gaming rooms, shelves, and parties."},
+{name:"Bluetooth Item Tracker",category:"Tech",price:19,description:"Small tracker to help locate keys, bags, wallets, and everyday items."}
 ];
+
+let products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultProducts;
 
 function login(){
   const entered = document.getElementById("adminPassword").value;
-
   if(entered === ADMIN_CODE){
     localStorage.setItem("moowaveAdminLoggedIn","yes");
     showAdmin();
@@ -305,20 +239,17 @@ function displayProducts(){
   products.forEach((product,index) => {
     const card = document.createElement("div");
     card.className = "productCard";
-
     card.innerHTML = `
       <div>
         <div class="meta">${product.category} • $${product.price}</div>
         <h3>${product.name}</h3>
         <div class="description">${product.description}</div>
       </div>
-
       <div class="actions">
         <button onclick="editProduct(${index})">Edit</button>
         <button class="redBtn" onclick="deleteProduct(${index})">Delete</button>
       </div>
     `;
-
     list.appendChild(card);
   });
 }
@@ -350,13 +281,11 @@ function saveProduct(){
 
 function editProduct(index){
   const product = products[index];
-
   document.getElementById("editIndex").value = index;
   document.getElementById("productName").value = product.name;
   document.getElementById("productCategory").value = product.category;
   document.getElementById("productPrice").value = product.price;
   document.getElementById("productDescription").value = product.description;
-
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -382,19 +311,19 @@ function clearForm(){
 }
 
 function saveToStorage(){
-  localStorage.setItem("moowaveProducts",JSON.stringify(products));
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(products));
 }
 
 function exportProducts(){
-  const output = JSON.stringify(products,null,2);
-  navigator.clipboard.writeText(output);
+  navigator.clipboard.writeText(JSON.stringify(products,null,2));
   alert("Products copied to clipboard.");
 }
 
 function resetProducts(){
-  if(confirm("Reset all admin products?")){
-    localStorage.removeItem("moowaveProducts");
-    location.reload();
+  if(confirm("Reset products back to the default 115?")){
+    products = defaultProducts;
+    saveToStorage();
+    displayProducts();
   }
 }
 
