@@ -69,27 +69,26 @@ select{background:white;color:#111}
 }
 
 .realMoon{
-  width:360px;
-  height:360px;
+  width:400px;
+  height:400px;
   border-radius:50%;
   cursor:pointer;
   position:relative;
   z-index:4;
-  animation:floatMoon 4s ease-in-out infinite;
+  animation:floatMoon 5s ease-in-out infinite;
   background:
-    radial-gradient(circle at 28% 25%,rgba(255,255,255,.85) 0 8%,transparent 18%),
-    radial-gradient(circle at 68% 32%,rgba(65,65,65,.38) 0 7%,transparent 12%),
-    radial-gradient(circle at 38% 34%,rgba(90,90,90,.28) 0 5%,transparent 10%),
-    radial-gradient(circle at 54% 52%,rgba(55,55,55,.35) 0 9%,transparent 16%),
-    radial-gradient(circle at 28% 62%,rgba(70,70,70,.32) 0 8%,transparent 15%),
-    radial-gradient(circle at 76% 64%,rgba(80,80,80,.3) 0 6%,transparent 12%),
-    radial-gradient(circle at 45% 75%,rgba(100,100,100,.26) 0 5%,transparent 10%),
-    radial-gradient(circle at 50% 50%,#f1f1f1 0%,#cfcfcf 38%,#9d9d9d 67%,#6d6d6d 100%);
+    radial-gradient(circle at 22% 18%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.8) 8%,transparent 14%),
+    radial-gradient(circle at 68% 24%,rgba(60,60,60,.45) 0%,rgba(60,60,60,.28) 7%,transparent 13%),
+    radial-gradient(circle at 40% 34%,rgba(85,85,85,.35) 0%,rgba(85,85,85,.18) 9%,transparent 16%),
+    radial-gradient(circle at 72% 44%,rgba(55,55,55,.28) 0%,rgba(55,55,55,.15) 10%,transparent 18%),
+    radial-gradient(circle at 25% 62%,rgba(70,70,70,.30) 0%,rgba(70,70,70,.16) 12%,transparent 20%),
+    radial-gradient(circle at 58% 68%,rgba(50,50,50,.22) 0%,rgba(50,50,50,.10) 14%,transparent 24%),
+    radial-gradient(circle at 50% 50%,#fafafa 0%,#ededed 18%,#d8d8d8 40%,#b6b6b6 68%,#8c8c8c 100%);
   box-shadow:
-    inset -35px -28px 45px rgba(0,0,0,.35),
-    inset 25px 20px 35px rgba(255,255,255,.45),
-    0 0 35px rgba(255,255,255,.65),
-    0 0 75px rgba(120,190,255,.35);
+    inset -70px -55px 90px rgba(0,0,0,.45),
+    inset 40px 35px 55px rgba(255,255,255,.28),
+    0 0 40px rgba(255,255,255,.75),
+    0 0 120px rgba(180,220,255,.35);
 }
 
 .realMoon:before{
@@ -98,11 +97,22 @@ select{background:white;color:#111}
   inset:0;
   border-radius:50%;
   background:
-    radial-gradient(circle at 20% 42%,rgba(80,80,80,.22) 0 3%,transparent 7%),
-    radial-gradient(circle at 34% 48%,rgba(255,255,255,.24) 0 2%,transparent 5%),
-    radial-gradient(circle at 58% 24%,rgba(255,255,255,.18) 0 2%,transparent 6%),
-    radial-gradient(circle at 82% 48%,rgba(45,45,45,.26) 0 4%,transparent 9%),
-    radial-gradient(circle at 46% 18%,rgba(45,45,45,.2) 0 2%,transparent 5%);
+    radial-gradient(circle at 18% 42%,rgba(50,50,50,.25) 0 4%,transparent 8%),
+    radial-gradient(circle at 32% 55%,rgba(55,55,55,.22) 0 6%,transparent 11%),
+    radial-gradient(circle at 47% 28%,rgba(65,65,65,.18) 0 5%,transparent 10%),
+    radial-gradient(circle at 64% 20%,rgba(70,70,70,.20) 0 4%,transparent 8%),
+    radial-gradient(circle at 78% 46%,rgba(60,60,60,.24) 0 7%,transparent 12%),
+    radial-gradient(circle at 70% 72%,rgba(55,55,55,.20) 0 6%,transparent 11%),
+    radial-gradient(circle at 40% 80%,rgba(65,65,65,.18) 0 5%,transparent 10%);
+}
+
+.realMoon:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.20),transparent 42%);
+  mix-blend-mode:screen;
 }
 
 .realMoon:hover{transform:scale(1.04)}
@@ -133,11 +143,7 @@ select{background:white;color:#111}
   50%{transform:translateY(-18px)}
 }
 
-#shopPage{
-  display:none;
-  background:#f5f7fb;
-  min-height:100vh;
-}
+#shopPage{display:none;background:#f5f7fb;min-height:100vh}
 
 header{
   padding:22px 8%;
@@ -162,7 +168,6 @@ nav{display:flex;gap:12px;align-items:center}
 
 .hero h1{font-size:58px;margin:0 0 12px}
 .hero p{max-width:650px;color:#d9ecff;font-size:18px}
-
 .section{padding:40px 8%}
 
 .products{
@@ -238,13 +243,11 @@ footer{
 
 <section id="landing">
   <div class="brand">MOONWAVE</div>
-
   <div class="landingText">
     <h1>Curated. Trending. Unexpected.</h1>
     <p>Useful, fun, and trending products for everyday life, sports, water days, camping, games, pets, home, tech, and more.</p>
     <button onclick="enterShop()">Enter Moonwave</button>
   </div>
-
   <div class="animationSide">
     <div class="realMoon" onclick="enterShop()"></div>
     <div class="clickText">Click the moon to enter</div>
