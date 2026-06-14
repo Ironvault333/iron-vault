@@ -75,20 +75,16 @@ select{background:white;color:#111}
   cursor:pointer;
   position:relative;
   z-index:4;
+  overflow:hidden;
   animation:floatMoon 5s ease-in-out infinite;
   background:
-    radial-gradient(circle at 22% 18%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.8) 8%,transparent 14%),
-    radial-gradient(circle at 68% 24%,rgba(60,60,60,.45) 0%,rgba(60,60,60,.28) 7%,transparent 13%),
-    radial-gradient(circle at 40% 34%,rgba(85,85,85,.35) 0%,rgba(85,85,85,.18) 9%,transparent 16%),
-    radial-gradient(circle at 72% 44%,rgba(55,55,55,.28) 0%,rgba(55,55,55,.15) 10%,transparent 18%),
-    radial-gradient(circle at 25% 62%,rgba(70,70,70,.30) 0%,rgba(70,70,70,.16) 12%,transparent 20%),
-    radial-gradient(circle at 58% 68%,rgba(50,50,50,.22) 0%,rgba(50,50,50,.10) 14%,transparent 24%),
-    radial-gradient(circle at 50% 50%,#fafafa 0%,#ededed 18%,#d8d8d8 40%,#b6b6b6 68%,#8c8c8c 100%);
+    radial-gradient(circle at 18% 16%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.65) 5%,transparent 10%),
+    radial-gradient(circle at 50% 50%,#f5f5f5 0%,#e3e3e3 20%,#cdcdcd 45%,#b3b3b3 70%,#8e8e8e 100%);
   box-shadow:
-    inset -70px -55px 90px rgba(0,0,0,.45),
-    inset 40px 35px 55px rgba(255,255,255,.28),
-    0 0 40px rgba(255,255,255,.75),
-    0 0 120px rgba(180,220,255,.35);
+    inset -95px -75px 120px rgba(0,0,0,.55),
+    inset 50px 40px 55px rgba(255,255,255,.10),
+    0 0 35px rgba(255,255,255,.70),
+    0 0 100px rgba(180,220,255,.20);
 }
 
 .realMoon:before{
@@ -97,13 +93,14 @@ select{background:white;color:#111}
   inset:0;
   border-radius:50%;
   background:
-    radial-gradient(circle at 18% 42%,rgba(50,50,50,.25) 0 4%,transparent 8%),
-    radial-gradient(circle at 32% 55%,rgba(55,55,55,.22) 0 6%,transparent 11%),
-    radial-gradient(circle at 47% 28%,rgba(65,65,65,.18) 0 5%,transparent 10%),
-    radial-gradient(circle at 64% 20%,rgba(70,70,70,.20) 0 4%,transparent 8%),
-    radial-gradient(circle at 78% 46%,rgba(60,60,60,.24) 0 7%,transparent 12%),
-    radial-gradient(circle at 70% 72%,rgba(55,55,55,.20) 0 6%,transparent 11%),
-    radial-gradient(circle at 40% 80%,rgba(65,65,65,.18) 0 5%,transparent 10%);
+    radial-gradient(circle at 22% 26%,rgba(60,60,60,.55) 0 4%,rgba(130,130,130,.18) 5%,transparent 10%),
+    radial-gradient(circle at 40% 18%,rgba(70,70,70,.45) 0 3%,transparent 8%),
+    radial-gradient(circle at 68% 24%,rgba(55,55,55,.50) 0 5%,rgba(140,140,140,.18) 6%,transparent 11%),
+    radial-gradient(circle at 78% 42%,rgba(60,60,60,.42) 0 6%,transparent 12%),
+    radial-gradient(circle at 28% 60%,rgba(55,55,55,.40) 0 7%,transparent 13%),
+    radial-gradient(circle at 55% 55%,rgba(80,80,80,.28) 0 12%,transparent 18%),
+    radial-gradient(circle at 70% 70%,rgba(55,55,55,.35) 0 6%,transparent 11%),
+    radial-gradient(circle at 42% 82%,rgba(55,55,55,.30) 0 5%,transparent 10%);
 }
 
 .realMoon:after{
@@ -111,8 +108,9 @@ select{background:white;color:#111}
   position:absolute;
   inset:0;
   border-radius:50%;
-  background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.20),transparent 42%);
-  mix-blend-mode:screen;
+  background:
+    radial-gradient(circle at 25% 22%,rgba(255,255,255,.22),transparent 35%),
+    radial-gradient(circle at 78% 75%,rgba(0,0,0,.15),transparent 25%);
 }
 
 .realMoon:hover{transform:scale(1.04)}
